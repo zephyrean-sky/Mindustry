@@ -4,14 +4,14 @@ import io.anuke.arc.*;
 import io.anuke.arc.Net.*;
 import io.anuke.arc.collection.*;
 import io.anuke.arc.files.*;
-import io.anuke.arc.function.*;
+import io.anuke.arc.func.*;
 import io.anuke.arc.util.*;
 import io.anuke.arc.util.io.*;
 import io.anuke.arc.util.serialization.*;
 import io.anuke.arc.util.serialization.JsonValue.*;
 import io.anuke.arc.util.serialization.JsonWriter.*;
 import io.anuke.mindustry.*;
-import io.anuke.mindustry.core.Version;
+import io.anuke.mindustry.core.*;
 
 import java.io.*;
 import java.text.*;
@@ -21,28 +21,28 @@ import static io.anuke.mindustry.Vars.net;
 
 public class CrashSender{
 
-    public static void send(Throwable exception, Consumer<File> writeListener){
+    public static void send(Throwable exception, Cons<File> writeListener){
         try{
             exception.printStackTrace();
 
             //don't create crash logs for custom builds, as it's expected
-            if(io.anuke.mindustry.core.Version.build == -1 || (System.getProperty("user.name").equals("anuke") && "release".equals(io.anuke.mindustry.core.Version.modifier))) return;
+            if(Version.build == -1 || (System.getProperty("user.name").equals("anuke") && "release".equals(Version.modifier))) return;
 
             //attempt to load version regardless
-            if(io.anuke.mindustry.core.Version.number == 0){
+            if(Version.number == 0){
                 try{
                     ObjectMap<String, String> map = new ObjectMap<>();
                     PropertiesUtils.load(map, new InputStreamReader(CrashSender.class.getResourceAsStream("/version.properties")));
 
-                    io.anuke.mindustry.core.Version.type = map.get("type");
-                    io.anuke.mindustry.core.Version.number = Integer.parseInt(map.get("number"));
-                    io.anuke.mindustry.core.Version.modifier = map.get("modifier");
+                    Version.type = map.get("type");
+                    Version.number = Integer.parseInt(map.get("number"));
+                    Version.modifier = map.get("modifier");
                     if(map.get("build").contains(".")){
                         String[] split = map.get("build").split("\\.");
-                        io.anuke.mindustry.core.Version.build = Integer.parseInt(split[0]);
-                        io.anuke.mindustry.core.Version.revision = Integer.parseInt(split[1]);
+                        Version.build = Integer.parseInt(split[0]);
+                        Version.revision = Integer.parseInt(split[1]);
                     }else{
-                        io.anuke.mindustry.core.Version.build = Strings.canParseInt(map.get("build")) ? Integer.parseInt(map.get("build")) : -1;
+                        Version.build = Strings.canParseInt(map.get("build")) ? Integer.parseInt(map.get("build")) : -1;
                     }
                 }catch(Throwable ignored){
                     ignored.printStackTrace();
@@ -54,7 +54,7 @@ public class CrashSender{
                 File file = new File(OS.getAppDataDirectoryString(Vars.appName), "crashes/crash-report-" + new SimpleDateFormat("MM_dd_yyyy_HH_mm_ss").format(new Date()) + ".txt");
                 new FileHandle(OS.getAppDataDirectoryString(Vars.appName)).child("crashes").mkdirs();
                 new FileHandle(file).writeString(parseException(exception));
-                writeListener.accept(file);
+                writeListener.get(file);
             }catch(Throwable e){
                 e.printStackTrace();
                 Log.err("Failed to save local crash report.");
@@ -70,7 +70,7 @@ public class CrashSender{
             }
 
             //do not send exceptions that occur for versions that can't be parsed
-            if(io.anuke.mindustry.core.Version.number == 0){
+            if(Version.number == 0){
                 return;
             }
 
@@ -89,10 +89,10 @@ public class CrashSender{
             boolean fn = netActive, fs = netServer;
 
             //add all relevant info, ignoring exceptions
-            ex(() -> value.addChild("versionType", new JsonValue(io.anuke.mindustry.core.Version.type)));
-            ex(() -> value.addChild("versionNumber", new JsonValue(io.anuke.mindustry.core.Version.number)));
-            ex(() -> value.addChild("versionModifier", new JsonValue(io.anuke.mindustry.core.Version.modifier)));
-            ex(() -> value.addChild("build", new JsonValue(io.anuke.mindustry.core.Version.build)));
+            ex(() -> value.addChild("versionType", new JsonValue(Version.type)));
+            ex(() -> value.addChild("versionNumber", new JsonValue(Version.number)));
+            ex(() -> value.addChild("versionModifier", new JsonValue(Version.modifier)));
+            ex(() -> value.addChild("build", new JsonValue(Version.build)));
             ex(() -> value.addChild("revision", new JsonValue(Version.revision)));
             ex(() -> value.addChild("net", new JsonValue(fn)));
             ex(() -> value.addChild("server", new JsonValue(fs)));
@@ -130,7 +130,7 @@ public class CrashSender{
         }
     }
 
-    private static void httpPost(String url, String content, Consumer<HttpResponse> success, Consumer<Throwable> failure){
+    private static void httpPost(String url, String content, Cons<HttpResponse> success, Cons<Throwable> failure){
         new NetJavaImpl().http(new HttpRequest().method(HttpMethod.POST).content(content).url(url), success, failure);
     }
 

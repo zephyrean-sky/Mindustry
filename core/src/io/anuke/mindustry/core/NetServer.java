@@ -292,7 +292,7 @@ public class NetServer implements ApplicationListener{
         }
 
         //cooldown between votes
-        int voteTime = 60 * 5;
+        int voteTime = 60 * 3;
         Timekeeper vtime = new Timekeeper(voteTime);
         //current kick sessions
         VoteSession[] currentlyKicking = {null};
@@ -331,6 +331,8 @@ public class NetServer implements ApplicationListener{
                         player.sendMessage("[scarlet]Did you really expect to be able to kick an admin?");
                     }else if(found.isLocal){
                         player.sendMessage("[scarlet]Local players cannot be kicked.");
+                    }else if(found.getTeam() != player.getTeam()){
+                        player.sendMessage("[scarlet]Only players on your team can be kicked.");
                     }else{
                         if(!vtime.get()){
                             player.sendMessage("[scarlet]You must wait " + voteTime/60 + " minutes between votekicks.");
@@ -450,7 +452,7 @@ public class NetServer implements ApplicationListener{
         float rotation, float baseRotation,
         float xVelocity, float yVelocity,
         Tile mining,
-        boolean boosting, boolean shooting, boolean chatting,
+        boolean boosting, boolean shooting, boolean chatting, boolean building,
         BuildRequest[] requests,
         float viewX, float viewY, float viewWidth, float viewHeight
     ){
@@ -477,11 +479,12 @@ public class NetServer implements ApplicationListener{
         player.isTyping = chatting;
         player.isBoosting = boosting;
         player.isShooting = shooting;
+        player.isBuilding = building;
         player.buildQueue().clear();
         for(BuildRequest req : requests){
             if(req == null) continue;
             Tile tile = world.tile(req.x, req.y);
-            if(tile == null) continue;
+            if(tile == null || (!req.breaking && req.block == null)) continue;
             //auto-skip done requests
             if(req.breaking && tile.block() == Blocks.air){
                 continue;

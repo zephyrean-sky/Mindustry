@@ -104,6 +104,11 @@ public class TechTree implements ContentList{
                         node(door, () -> {
                             node(doorLarge);
                         });
+                        node(plastaniumWall, () -> {
+                            node(plastaniumWallLarge, () -> {
+
+                            });
+                        });
                         node(titaniumWallLarge);
                         node(thoriumWall, () -> {
                             node(thoriumWallLarge);
@@ -194,6 +199,10 @@ public class TechTree implements ContentList{
                                     node(phaseConduit, () -> {
 
                                     });
+
+                                    node(platedConduit, () -> {
+
+                                    });
                                 });
 
                                 node(rotaryPump, () -> {
@@ -210,8 +219,10 @@ public class TechTree implements ContentList{
                 node(combustionGenerator, () -> {
                     node(powerNode, () -> {
                         node(powerNodeLarge, () -> {
-                            node(surgeTower, () -> {
+                            node(diode, () -> {
+                                node(surgeTower, () -> {
 
+                                });
                             });
                         });
 

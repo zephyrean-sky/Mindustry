@@ -3,7 +3,7 @@ package io.anuke.mindustry.ui.fragments;
 import io.anuke.annotations.Annotations.*;
 import io.anuke.arc.*;
 import io.anuke.arc.collection.*;
-import io.anuke.arc.function.*;
+import io.anuke.arc.func.*;
 import io.anuke.arc.graphics.g2d.*;
 import io.anuke.arc.input.*;
 import io.anuke.arc.math.*;
@@ -130,7 +130,7 @@ public class BlockInventoryFragment extends Fragment{
 
                 container.add(i);
 
-                BooleanProvider canPick = () -> player.acceptsItem(item) && !state.isPaused();
+                Boolp canPick = () -> player.acceptsItem(item) && !state.isPaused();
 
                 HandCursorListener l = new HandCursorListener();
                 l.setEnabled(canPick);
@@ -189,9 +189,9 @@ public class BlockInventoryFragment extends Fragment{
     private String round(float f){
         f = (int)f;
         if(f >= 1000000){
-            return (int)(f / 1000000f) + "[gray]mil[]";
+            return (int)(f / 1000000f) + "[gray]" + Core.bundle.getOrNull("unit.millions") + "[]";
         }else if(f >= 1000){
-            return (int)(f / 1000) + "k";
+            return (int)(f / 1000) + Core.bundle.getOrNull("unit.thousands");
         }else{
             return (int)f + "";
         }
@@ -203,7 +203,7 @@ public class BlockInventoryFragment extends Fragment{
         table.setPosition(v.x, v.y, Align.topLeft);
     }
 
-    private Element itemImage(TextureRegion region, Supplier<CharSequence> text){
+    private Element itemImage(TextureRegion region, Prov<CharSequence> text){
         Stack stack = new Stack();
 
         Table t = new Table().left().bottom();

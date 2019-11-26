@@ -9,7 +9,7 @@ import io.anuke.mindustry.type.*;
 @Serialize
 public class Stats{
     /** Items delivered to global resoure counter. Zones only. */
-    public transient ObjectIntMap<Item> itemsDelivered = new ObjectIntMap<>();
+    public ObjectIntMap<Item> itemsDelivered = new ObjectIntMap<>();
     /** Enemy (red team) units destroyed. */
     public int enemyUnitsDestroyed;
     /** Total waves lasted. */
@@ -33,7 +33,7 @@ public class Stats{
             score += (float)((wavesLasted - zone.conditionWave) / zone.launchPeriod + 1) * 1.2f;
         }
 
-        int capacity = zone.loadout.core().itemCapacity;
+        int capacity = zone.loadout.findCore().itemCapacity;
 
         //weigh used fractions
         float frac = 0f;

@@ -47,6 +47,7 @@ public class GlobalData{
 
         try(OutputStream fos = file.write(false, 2048); ZipOutputStream zos = new ZipOutputStream(fos)){
             for(FileHandle add : files){
+                if(add.isDirectory()) continue;
                 zos.putNextEntry(new ZipEntry(add.path().substring(base.length())));
                 Streams.copyStream(add.read(), zos);
                 zos.closeEntry();
@@ -65,14 +66,8 @@ public class GlobalData{
             throw new IllegalArgumentException("Not valid save data.");
         }
 
-        //purge existing data
-        for(FileHandle f : base.list()){
-            if(f.isDirectory()){
-                f.deleteDirectory();
-            }else if(!f.name().equals("zipdata.zip")){
-                f.delete();
-            }
-        }
+        //purge existing tmp data, keep everything else
+        tmpDirectory.deleteDirectory();
 
         zipped.walk(f -> f.copyTo(base.child(f.path())));
         dest.delete();
@@ -132,7 +127,7 @@ public class GlobalData{
     }
 
     /** Returns whether or not this piece of content is unlocked yet. */
-    public boolean isUnlocked(io.anuke.mindustry.ctype.UnlockableContent content){
+    public boolean isUnlocked(UnlockableContent content){
         return content.alwaysUnlocked() || unlocked.getOr(content.getContentType(), ObjectSet::new).contains(content.name);
     }
 

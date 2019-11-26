@@ -66,6 +66,7 @@ public class Drill extends Block{
         hasLiquids = true;
         liquidCapacity = 5f;
         hasItems = true;
+        entityType = DrillEntity::new;
 
         idleSound = Sounds.drill;
         idleSoundVolume = 0.003f;
@@ -129,8 +130,13 @@ public class Drill extends Block{
     }
 
     @Override
-    public boolean canProduce(Tile tile){
+    public boolean shouldConsume(Tile tile){
         return tile.entity.items.total() < itemCapacity;
+    }
+
+    @Override
+    public boolean shouldIdleSound(Tile tile){
+        return tile.entity.efficiency() > 0.01f;
     }
 
     @Override
@@ -194,7 +200,9 @@ public class Drill extends Block{
         });
 
         stats.add(BlockStat.drillSpeed, 60f / drillTime * size * size, StatUnit.itemsSecond);
-        stats.add(BlockStat.boostEffect, liquidBoostIntensity, StatUnit.timesSpeed);
+        if(liquidBoostIntensity > 0){
+            stats.add(BlockStat.boostEffect, liquidBoostIntensity * liquidBoostIntensity, StatUnit.timesSpeed);
+        }
     }
 
     void countOre(Tile tile){
@@ -255,9 +263,7 @@ public class Drill extends Block{
                 speed = liquidBoostIntensity;
             }
 
-            if(hasPower){
-                speed *= entity.power.satisfaction; // Drill slower when not at full power
-            }
+            speed *= entity.efficiency(); // Drill slower when not at full power
 
             entity.lastDrillSpeed = (speed * entity.dominantItems * entity.warmup) / (drillTime + hardnessDrillMultiplier * entity.dominantItem.hardness);
             entity.warmup = Mathf.lerpDelta(entity.warmup, speed, warmupSpeed);
@@ -298,11 +304,6 @@ public class Drill extends Block{
         }else{
             return isValid(tile);
         }
-    }
-
-    @Override
-    public TileEntity newEntity(){
-        return new DrillEntity();
     }
 
     public int tier(){

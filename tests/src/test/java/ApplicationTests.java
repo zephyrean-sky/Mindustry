@@ -60,6 +60,7 @@ public class ApplicationTests{
                     super.init();
                     begins[0] = true;
                     testMap = maps.loadInternalMap("groundZero");
+                    Thread.currentThread().interrupt();
                 }
             };
 
@@ -198,7 +199,7 @@ public class ApplicationTests{
     void save(){
         world.loadMap(testMap);
         assertTrue(state.teams.get(defaultTeam).cores.size > 0);
-        SaveIO.saveToSlot(0);
+        SaveIO.save(saveDirectory.child("0.msav"));
     }
 
     @Test
@@ -206,9 +207,9 @@ public class ApplicationTests{
         world.loadMap(testMap);
         Map map = world.getMap();
 
-        SaveIO.saveToSlot(0);
+        SaveIO.save(saveDirectory.child("0.msav"));
         resetWorld();
-        SaveIO.loadFromSlot(0);
+        SaveIO.load(saveDirectory.child("0.msav"));
 
         assertEquals(world.width(), map.width);
         assertEquals(world.height(), map.height);
@@ -216,13 +217,22 @@ public class ApplicationTests{
     }
 
     @Test
-    void loadOldSave(){
+    void load77Save(){
         resetWorld();
-        SaveIO.load(Core.files.internal("build77.msav"));
+        SaveIO.load(Core.files.internal("77.msav"));
 
         //just tests if the map was loaded properly and didn't crash, no validity checks currently
         assertEquals(276, world.width());
         assertEquals(10, world.height());
+    }
+
+    @Test
+    void load85Save(){
+        resetWorld();
+        SaveIO.load(Core.files.internal("85.msav"));
+
+        assertEquals(250, world.width());
+        assertEquals(300, world.height());
     }
 
     @Test

@@ -9,8 +9,9 @@ import io.anuke.arc.math.*;
 import io.anuke.arc.scene.ui.*;
 import io.anuke.arc.scene.ui.layout.*;
 import io.anuke.arc.util.*;
+import io.anuke.arc.util.serialization.*;
 import io.anuke.mindustry.*;
-import io.anuke.mindustry.core.Version;
+import io.anuke.mindustry.core.*;
 import io.anuke.mindustry.gen.*;
 import io.anuke.mindustry.net.*;
 import io.anuke.mindustry.net.Packets.*;
@@ -32,14 +33,14 @@ public class JoinDialog extends FloatingDialog{
 
         loadServers();
 
-        buttons.add().width(60f);
-        buttons.add().growX();
+        if(!steam) buttons.add().width(60f);
+        buttons.add().growX().width(-1);
 
         addCloseButton();
 
-        buttons.add().growX();
+        buttons.add().growX().width(-1);
         if(!steam){
-            buttons.addButton("?", () -> ui.showInfo("$join.info")).size(60f, 64f);
+            buttons.addButton("?", () -> ui.showInfo("$join.info")).size(60f, 64f).width(-1);
         }
 
         add = new FloatingDialog("$joingame.title");
@@ -105,9 +106,8 @@ public class JoinDialog extends FloatingDialog{
 
             TextButton button = buttons[0] = remote.addButton("[accent]" + server.displayIP(), Styles.cleart, () -> {
                 if(!buttons[0].childrenPressed()){
-                    if(server.lastHost != null && server.lastHost.version != io.anuke.mindustry.core.Version.build && io.anuke.mindustry.core.Version.build != -1 && server.lastHost.version != -1){
-                        ui.showInfo("[scarlet]" + (server.lastHost.version > io.anuke.mindustry.core.Version.build ? KickReason.clientOutdated : KickReason.serverOutdated).toString() + "\n[]" +
-                                Core.bundle.format("server.versions", io.anuke.mindustry.core.Version.build, server.lastHost.version));
+                    if(server.lastHost != null){
+                        safeConnect(server.ip, server.port, server.lastHost.version);
                     }else{
                         connect(server.ip, server.port);
                     }
@@ -196,13 +196,13 @@ public class JoinDialog extends FloatingDialog{
             versionString = Core.bundle.format("server.version", Core.bundle.get("server.custombuild"), "");
         }else if(host.version == 0){
             versionString = Core.bundle.get("server.outdated");
-        }else if(host.version < io.anuke.mindustry.core.Version.build && io.anuke.mindustry.core.Version.build != -1){
+        }else if(host.version < Version.build && Version.build != -1){
             versionString = Core.bundle.get("server.outdated") + "\n" +
             Core.bundle.format("server.version", host.version, "");
-        }else if(host.version > io.anuke.mindustry.core.Version.build && io.anuke.mindustry.core.Version.build != -1){
+        }else if(host.version > Version.build && Version.build != -1){
             versionString = Core.bundle.get("server.outdated.client") + "\n" +
             Core.bundle.format("server.version", host.version, "");
-        }else if(host.version == io.anuke.mindustry.core.Version.build && Version.type.equals(host.versionType)){
+        }else if(host.version == Version.build && Version.type.equals(host.versionType)){
             //not important
             versionString = "";
         }else{
@@ -248,7 +248,7 @@ public class JoinDialog extends FloatingDialog{
             }
 
             ImageButton button = t.addImageButton(Tex.whiteui, Styles.clearFulli, 40, () -> {
-                new ColorPickDialog().show(color -> {
+                new PaletteDialog().show(color -> {
                     player.color.set(color);
                     Core.settings.put("color-0", Color.rgba8888(color));
                     Core.settings.save();
@@ -272,7 +272,7 @@ public class JoinDialog extends FloatingDialog{
 
             Cell cell = ((Table)pane.getParent()).getCell(button);
 
-            if(!Mathf.isEqual(cell.minWidth(), pw)){
+            if(!Mathf.equal(cell.minWidth(), pw)){
                 cell.width(pw);
                 cell.padLeft(pad);
                 pane.getParent().invalidateHierarchy();
@@ -314,7 +314,7 @@ public class JoinDialog extends FloatingDialog{
 
         local.row();
 
-        TextButton button = local.addButton("", Styles.cleart, () -> connect(host.address, port))
+        TextButton button = local.addButton("", Styles.cleart, () -> safeConnect(host.address, port, host.version))
         .width(w).pad(5f).get();
         button.clearChildren();
         buildServer(host, button);
@@ -344,6 +344,15 @@ public class JoinDialog extends FloatingDialog{
         });
     }
 
+    void safeConnect(String ip, int port, int version){
+        if(version != Version.build && Version.build != -1 && version != -1){
+            ui.showInfo("[scarlet]" + (version > Version.build ? KickReason.clientOutdated : KickReason.serverOutdated).toString() + "\n[]" +
+            Core.bundle.format("server.versions", Version.build, version));
+        }else{
+            connect(ip, port);
+        }
+    }
+
     float targetWidth(){
         return Core.graphics.isPortrait() ? 350f : 500f;
     }
@@ -351,6 +360,20 @@ public class JoinDialog extends FloatingDialog{
     @SuppressWarnings("unchecked")
     private void loadServers(){
         servers = Core.settings.getObject("server-list", Array.class, Array::new);
+
+        //get servers
+        Core.net.httpGet(serverJsonURL, result -> {
+            try{
+                Jval val = Jval.read(result.getResultAsString());
+                Core.app.post(() -> {
+                    try{
+                        defaultServers.clear();
+                        val.asArray().each(child -> defaultServers.add(child.getString("address", "<invalid>")));
+                        Log.info("Fetched {0} global servers.", defaultServers.size);
+                    }catch(Throwable ignored){}
+                });
+            }catch(Throwable ignored){}
+        }, t -> {});
     }
 
     private void saveServers(){

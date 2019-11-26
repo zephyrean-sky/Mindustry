@@ -40,10 +40,15 @@ public class TechTreeDialog extends FloatingDialog{
 
         titleTable.remove();
         margin(0f).marginBottom(8);
-        cont.stack(view = new View(), items = new ItemsDisplay()).grow();
+        Stack stack = cont.stack(view = new View(), items = new ItemsDisplay()).grow().get();
 
         Events.on(ContentReloadEvent.class, e -> {
+            nodes.clear();
             root = new TechTreeNode(TechTree.root, null);
+            checkNodes(root);
+            treeLayout();
+            stack.getChildren().get(0).remove();
+            stack.addChildAt(0, view = new View());
         });
 
         shown(() -> {
@@ -61,7 +66,6 @@ public class TechTreeDialog extends FloatingDialog{
         }).size(210f, 64f);
 
         //scaling/drag input
-
         addListener(new InputListener(){
             @Override
             public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY){
@@ -356,7 +360,6 @@ public class TechTreeDialog extends FloatingDialog{
             if(node.block.description != null){
                 infoTable.table(t -> t.margin(3f).left().labelWrap(node.block.description).color(Color.lightGray).growX()).fillX();
             }
-
 
             addChild(infoTable);
             infoTable.pack();

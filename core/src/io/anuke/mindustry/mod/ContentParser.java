@@ -2,21 +2,21 @@ package io.anuke.mindustry.mod;
 
 import io.anuke.arc.*;
 import io.anuke.arc.audio.*;
+import io.anuke.arc.audio.mock.*;
 import io.anuke.arc.collection.Array;
 import io.anuke.arc.collection.*;
 import io.anuke.arc.files.*;
-import io.anuke.arc.function.*;
+import io.anuke.arc.func.*;
 import io.anuke.arc.graphics.*;
 import io.anuke.arc.util.ArcAnnotate.*;
 import io.anuke.arc.util.*;
-import io.anuke.arc.util.reflect.Field;
-import io.anuke.arc.util.reflect.*;
 import io.anuke.arc.util.serialization.*;
 import io.anuke.arc.util.serialization.Json.*;
+import io.anuke.arc.util.serialization.Jval.*;
 import io.anuke.mindustry.*;
 import io.anuke.mindustry.content.*;
 import io.anuke.mindustry.content.TechTree.*;
-import io.anuke.mindustry.ctype.UnlockableContent;
+import io.anuke.mindustry.ctype.*;
 import io.anuke.mindustry.entities.Effects.*;
 import io.anuke.mindustry.entities.bullet.*;
 import io.anuke.mindustry.entities.type.*;
@@ -38,7 +38,19 @@ public class ContentParser{
     private ObjectMap<Class<?>, FieldParser> classParsers = new ObjectMap<Class<?>, FieldParser>(){{
         put(Effect.class, (type, data) -> field(Fx.class, data));
         put(StatusEffect.class, (type, data) -> field(StatusEffects.class, data));
-        put(Loadout.class, (type, data) -> field(Loadouts.class, data));
+        put(Schematic.class, (type, data) -> {
+            Object result = fieldOpt(Loadouts.class, data);
+            if(result != null){
+                return result;
+            }else{
+                String str = data.asString();
+                if(str.startsWith(Schematics.base64Header)){
+                    return Schematics.readBase64(str);
+                }else{
+                    return Schematics.read(Vars.tree.get("schematics/" + str + "." + Vars.schematicExtension));
+                }
+            }
+        });
         put(Color.class, (type, data) -> Color.valueOf(data.asString()));
         put(BulletType.class, (type, data) -> {
             if(data.isString()){
@@ -52,9 +64,11 @@ public class ContentParser{
         });
         put(Sound.class, (type, data) -> {
             if(fieldOpt(Sounds.class, data) != null) return fieldOpt(Sounds.class, data);
+            if(Vars.headless) return new MockSound();
 
-            String path = "sounds/" + data.asString() + (Vars.ios ? ".mp3" : ".ogg");
-            ProxySound sound = new ProxySound();
+            String name = "sounds/" + data.asString();
+            String path = Vars.tree.get(name + ".ogg").exists() && !Vars.ios ? name + ".ogg" : name + ".mp3";
+            ModLoadingSound sound = new ModLoadingSound();
             Core.assets.load(path, Sound.class).loaded = result -> {
                 sound.sound = (Sound)result;
             };
@@ -67,13 +81,20 @@ public class ContentParser{
             readFields(obj, data);
             return obj;
         });
+        put(Weapon.class, (type, data) -> {
+            Weapon weapon = new Weapon();
+            readFields(weapon, data);
+            weapon.name = currentMod.name + "-" + weapon.name;
+            return weapon;
+        });
     }};
     /** Stores things that need to be parsed fully, e.g. reading fields of content.
      * This is done to accomodate binding of content names first.*/
     private Array<Runnable> reads = new Array<>();
     private Array<Runnable> postreads = new Array<>();
+    private ObjectSet<Object> toBeParsed = new ObjectSet<>();
     private LoadedMod currentMod;
-    private io.anuke.mindustry.ctype.Content currentContent;
+    private Content currentContent;
 
     private Json parser = new Json(){
         @Override
@@ -83,7 +104,7 @@ public class ContentParser{
             return t;
         }
 
-        private <T> T  internalRead(Class<T> type, Class elementType, JsonValue jsonData, Class keyType){
+        private <T> T internalRead(Class<T> type, Class elementType, JsonValue jsonData, Class keyType){
             if(type != null){
                 if(classParsers.containsKey(type)){
                     try{
@@ -93,7 +114,30 @@ public class ContentParser{
                     }
                 }
 
-                if(io.anuke.mindustry.ctype.Content.class.isAssignableFrom(type)){
+                //try to parse "item/amount" syntax
+                try{
+                    if(type == ItemStack.class && jsonData.isString() && jsonData.asString().contains("/")){
+                        String[] split = jsonData.asString().split("/");
+
+                        return (T)fromJson(ItemStack.class, "{item: " + split[0] + ", amount: " + split[1] + "}");
+                    }
+                }catch(Throwable ignored){
+                }
+
+                //try to parse "liquid/amount" syntax
+                try{
+                    if(jsonData.isString() && jsonData.asString().contains("/")){
+                        String[] split = jsonData.asString().split("/");
+                        if(type == LiquidStack.class){
+                            return (T)fromJson(LiquidStack.class, "{liquid: " + split[0] + ", amount: " + split[1] + "}");
+                        }else if(type == ConsumeLiquid.class){
+                            return (T)fromJson(ConsumeLiquid.class, "{liquid: " + split[0] + ", amount: " + split[1] + "}");
+                        }
+                    }
+                }catch(Throwable ignored){
+                }
+
+                if(Content.class.isAssignableFrom(type)){
                     ContentType ctype = contentTypes.getThrow(type, () -> new IllegalArgumentException("No content type for class: " + type.getSimpleName()));
                     String prefix = currentMod != null ? currentMod.name + "-" : "";
                     T one = (T)Vars.content.getByName(ctype, prefix + jsonData.asString());
@@ -119,16 +163,17 @@ public class ContentParser{
                 block = Vars.content.getByName(ContentType.block, name);
 
                 if(value.has("type")){
-                    throw new IllegalArgumentException("When overwriting an existing block, you must not re-declared its type. The original type will be used. Block: " + name);
+                    throw new IllegalArgumentException("When overwriting an existing block, you must not re-declare its type. The original type will be used. Block: " + name);
                 }
             }else{
                 //TODO generate dynamically instead of doing.. this
-                Class<? extends Block> type = resolve(value.getString("type"),
+                Class<? extends Block> type = resolve(getType(value),
                 "io.anuke.mindustry.world",
                 "io.anuke.mindustry.world.blocks",
                 "io.anuke.mindustry.world.blocks.defense",
                 "io.anuke.mindustry.world.blocks.defense.turrets",
                 "io.anuke.mindustry.world.blocks.distribution",
+                "io.anuke.mindustry.world.blocks.liquid",
                 "io.anuke.mindustry.world.blocks.logic",
                 "io.anuke.mindustry.world.blocks.power",
                 "io.anuke.mindustry.world.blocks.production",
@@ -160,7 +205,7 @@ public class ContentParser{
                         }else if(child.name.equals("liquid")){
                             block.consumes.add((Consume)parser.readValue(ConsumeLiquid.class, child));
                         }else if(child.name.equals("power")){
-                            if(child.isDouble()){
+                            if(child.isNumber()){
                                 block.consumes.power(child.asFloat());
                             }else{
                                 block.consumes.add((Consume)parser.readValue(ConsumePower.class, child));
@@ -183,6 +228,9 @@ public class ContentParser{
 
                     postreads.add(() -> {
                         TechNode parnode = TechTree.all.find(t -> t.block == parent);
+                        if(parnode == null){
+                            throw new ModLoadException("Block '" + parent.name + "' isn't in the tech tree, but '" + block.name + "' requires it to be researched.", block);
+                        }
                         if(!parnode.children.contains(baseNode)){
                             parnode.children.add(baseNode);
                         }
@@ -200,7 +248,7 @@ public class ContentParser{
         ContentType.unit, (TypeParser<UnitType>)(mod, name, value) -> {
             readBundle(ContentType.unit, name, value);
 
-            Class<BaseUnit> type = resolve(value.getString("type"), "io.anuke.mindustry.entities.type.base");
+            Class<BaseUnit> type = resolve(getType(value), "io.anuke.mindustry.entities.type.base");
             UnitType unit = new UnitType(mod + "-" + name, supply(type));
             currentContent = unit;
             read(() -> readFields(unit, value, true));
@@ -213,14 +261,26 @@ public class ContentParser{
         ContentType.zone, parser(ContentType.zone, Zone::new)
     );
 
-    private <T extends io.anuke.mindustry.ctype.Content> T find(ContentType type, String name){
-        io.anuke.mindustry.ctype.Content c = Vars.content.getByName(type, name);
+    private String getString(JsonValue value, String key){
+        if(value.has(key)){
+            return value.getString(key);
+        }else{
+            throw new IllegalArgumentException((currentContent == null ? "" : currentContent.sourceFile + ": ") + "You are missing a \"" + key + "\". It must be added before the file can be parsed.");
+        }
+    }
+
+    private String getType(JsonValue value){
+        return getString(value, "type");
+    }
+
+    private <T extends Content> T find(ContentType type, String name){
+        Content c = Vars.content.getByName(type, name);
         if(c == null) c = Vars.content.getByName(type, currentMod.name + "-" + name);
         if(c == null) throw new IllegalArgumentException("No " + type + " found with name '" + name + "'");
         return (T)c;
     }
 
-    private <T extends io.anuke.mindustry.ctype.Content> TypeParser<T> parser(ContentType type, Function<String, T> constructor){
+    private <T extends Content> TypeParser<T> parser(ContentType type, Func<String, T> constructor){
         return (mod, name, value) -> {
             T item;
             if(Vars.content.getByName(type, name) != null){
@@ -237,7 +297,7 @@ public class ContentParser{
     }
 
     private void readBundle(ContentType type, String name, JsonValue value){
-        io.anuke.mindustry.ctype.UnlockableContent cont = Vars.content.getByName(type, name) instanceof io.anuke.mindustry.ctype.UnlockableContent ?
+        UnlockableContent cont = Vars.content.getByName(type, name) instanceof UnlockableContent ?
                                 Vars.content.getByName(type, name) : null;
 
         String entryName = cont == null ? type + "." + currentMod.name + "-" + name + "." : type + "." + cont.name + ".";
@@ -259,7 +319,7 @@ public class ContentParser{
 
     /** Call to read a content's extra info later.*/
     private void read(Runnable run){
-        io.anuke.mindustry.ctype.Content cont = currentContent;
+        Content cont = currentContent;
         LoadedMod mod = currentMod;
         reads.add(() -> {
             this.currentMod = mod;
@@ -270,11 +330,11 @@ public class ContentParser{
 
     private void init(){
         for(ContentType type : ContentType.all){
-            Array<io.anuke.mindustry.ctype.Content> arr = Vars.content.getBy(type);
+            Array<Content> arr = Vars.content.getBy(type);
             if(!arr.isEmpty()){
                 Class<?> c = arr.first().getClass();
                 //get base content class, skipping intermediates
-                while(!(c.getSuperclass() == io.anuke.mindustry.ctype.Content.class || c.getSuperclass() == UnlockableContent.class || Modifier.isAbstract(c.getSuperclass().getModifiers()))){
+                while(!(c.getSuperclass() == Content.class || c.getSuperclass() == UnlockableContent.class || Modifier.isAbstract(c.getSuperclass().getModifiers()))){
                     c = c.getSuperclass();
                 }
 
@@ -292,6 +352,7 @@ public class ContentParser{
         }
         reads.clear();
         postreads.clear();
+        toBeParsed.clear();
     }
 
     /**
@@ -302,19 +363,26 @@ public class ContentParser{
      * @param file file that this content is being parsed from
      * @return the content that was parsed
      */
-    public io.anuke.mindustry.ctype.Content parse(LoadedMod mod, String name, String json, FileHandle file, ContentType type) throws Exception{
+    public Content parse(LoadedMod mod, String name, String json, FileHandle file, ContentType type) throws Exception{
         if(contentTypes.isEmpty()){
             init();
         }
 
-        JsonValue value = parser.fromJson(null, json);
+        //remove extra # characters to make it valid json... apparently some people have *unquoted* # characters in their json
+        if(file.extension().equals("json")){
+            json = json.replace("#", "\\#");
+        }
+
+        JsonValue value = parser.fromJson(null, Jval.read(json).toString(Jformat.plain));
+
         if(!parsers.containsKey(type)){
             throw new SerializationException("No parsers for content type '" + type + "'");
         }
 
         currentMod = mod;
         boolean exists = Vars.content.getByName(type, name) != null;
-        io.anuke.mindustry.ctype.Content c = parsers.get(type).parse(mod.name, name, value);
+        Content c = parsers.get(type).parse(mod.name, name, value);
+        toBeParsed.add(c);
         if(!exists){
             c.sourceFile = file;
             c.mod = mod;
@@ -324,7 +392,7 @@ public class ContentParser{
 
     private <T> T make(Class<T> type){
         try{
-            java.lang.reflect.Constructor<T> cons = type.getDeclaredConstructor();
+            Constructor<T> cons = type.getDeclaredConstructor();
             cons.setAccessible(true);
             return cons.newInstance();
         }catch(Exception e){
@@ -334,7 +402,7 @@ public class ContentParser{
 
     private <T> T make(Class<T> type, String name){
         try{
-            java.lang.reflect.Constructor<T> cons = type.getDeclaredConstructor(String.class);
+            Constructor<T> cons = type.getDeclaredConstructor(String.class);
             cons.setAccessible(true);
             return cons.newInstance(name);
         }catch(Exception e){
@@ -342,9 +410,9 @@ public class ContentParser{
         }
     }
 
-    private <T> Supplier<T> supply(Class<T> type){
+    private <T> Prov<T> supply(Class<T> type){
         try{
-            java.lang.reflect.Constructor<T> cons = type.getDeclaredConstructor();
+            Constructor<T> cons = type.getDeclaredConstructor();
             return () -> {
                 try{
                     return cons.newInstance();
@@ -381,7 +449,7 @@ public class ContentParser{
     }
 
     private void checkNullFields(Object object){
-        if(object instanceof Number || object instanceof String) return;
+        if(object instanceof Number || object instanceof String || toBeParsed.contains(object)) return;
 
         parser.getFields(object.getClass()).values().toArray().each(field -> {
             try{
@@ -402,6 +470,7 @@ public class ContentParser{
     }
 
     private void readFields(Object object, JsonValue jsonMap){
+        toBeParsed.remove(object);
         Class type = object.getClass();
         ObjectMap<String, FieldMetadata> fields = parser.getFields(type);
         for(JsonValue child = jsonMap.child; child != null; child = child.next){
@@ -419,7 +488,7 @@ public class ContentParser{
             Field field = metadata.field;
             try{
                 field.set(object, parser.readValue(field.getType(), metadata.elementType, child, metadata.keyType));
-            }catch(ReflectionException ex){
+            }catch(IllegalAccessException ex){
                 throw new SerializationException("Error accessing field: " + field.getName() + " (" + type.getName() + ")", ex);
             }catch(SerializationException ex){
                 ex.addTrace(field.getName() + " (" + type.getName() + ")");
@@ -454,7 +523,7 @@ public class ContentParser{
         Object parse(Class<?> type, JsonValue value) throws Exception;
     }
 
-    private interface TypeParser<T extends io.anuke.mindustry.ctype.Content>{
+    private interface TypeParser<T extends Content>{
         T parse(String mod, String name, JsonValue value) throws Exception;
     }
 

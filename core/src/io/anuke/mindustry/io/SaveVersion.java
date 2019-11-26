@@ -3,15 +3,15 @@ package io.anuke.mindustry.io;
 import io.anuke.arc.collection.*;
 import io.anuke.arc.util.*;
 import io.anuke.arc.util.io.*;
-import io.anuke.mindustry.core.Version;
-import io.anuke.mindustry.ctype.MappableContent;
+import io.anuke.mindustry.content.*;
+import io.anuke.mindustry.core.*;
+import io.anuke.mindustry.ctype.*;
 import io.anuke.mindustry.entities.*;
 import io.anuke.mindustry.entities.traits.*;
 import io.anuke.mindustry.game.*;
 import io.anuke.mindustry.game.Teams.*;
 import io.anuke.mindustry.maps.*;
 import io.anuke.mindustry.type.*;
-import io.anuke.mindustry.type.TypeID;
 import io.anuke.mindustry.world.*;
 
 import java.io.*;
@@ -167,6 +167,7 @@ public abstract class SaveVersion extends SaveFileReader{
                 short floorid = stream.readShort();
                 short oreid = stream.readShort();
                 int consecutives = stream.readUnsignedByte();
+                if(content.block(floorid) == Blocks.air) floorid = Blocks.stone.id;
 
                 context.create(x, y, floorid, oreid, (short)0);
 
@@ -183,6 +184,7 @@ public abstract class SaveVersion extends SaveFileReader{
                 int x = i % width, y = i / width;
                 Block block = content.block(stream.readShort());
                 Tile tile = context.tile(x, y);
+                if(block == null) block = Blocks.air;
                 tile.setBlock(block);
 
                 if(tile.entity != null){
@@ -283,12 +285,12 @@ public abstract class SaveVersion extends SaveFileReader{
     public void readContentHeader(DataInput stream) throws IOException{
         byte mapped = stream.readByte();
 
-        io.anuke.mindustry.ctype.MappableContent[][] map = new io.anuke.mindustry.ctype.MappableContent[ContentType.values().length][0];
+        MappableContent[][] map = new MappableContent[ContentType.values().length][0];
 
         for(int i = 0; i < mapped; i++){
             ContentType type = ContentType.values()[stream.readByte()];
             short total = stream.readShort();
-            map[type.ordinal()] = new io.anuke.mindustry.ctype.MappableContent[total];
+            map[type.ordinal()] = new MappableContent[total];
 
             for(int j = 0; j < total; j++){
                 String name = stream.readUTF();
@@ -300,21 +302,21 @@ public abstract class SaveVersion extends SaveFileReader{
     }
 
     public void writeContentHeader(DataOutput stream) throws IOException{
-        Array<io.anuke.mindustry.ctype.Content>[] map = content.getContentMap();
+        Array<Content>[] map = content.getContentMap();
 
         int mappable = 0;
-        for(Array<io.anuke.mindustry.ctype.Content> arr : map){
-            if(arr.size > 0 && arr.first() instanceof io.anuke.mindustry.ctype.MappableContent){
+        for(Array<Content> arr : map){
+            if(arr.size > 0 && arr.first() instanceof MappableContent){
                 mappable++;
             }
         }
 
         stream.writeByte(mappable);
-        for(Array<io.anuke.mindustry.ctype.Content> arr : map){
-            if(arr.size > 0 && arr.first() instanceof io.anuke.mindustry.ctype.MappableContent){
+        for(Array<Content> arr : map){
+            if(arr.size > 0 && arr.first() instanceof MappableContent){
                 stream.writeByte(arr.first().getContentType().ordinal());
                 stream.writeShort(arr.size);
-                for(io.anuke.mindustry.ctype.Content c : arr){
+                for(Content c : arr){
                     stream.writeUTF(((MappableContent)c).name);
                 }
             }

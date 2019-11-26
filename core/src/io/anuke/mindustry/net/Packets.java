@@ -1,12 +1,12 @@
 package io.anuke.mindustry.net;
 
-import io.anuke.arc.Core;
+import io.anuke.arc.*;
 import io.anuke.arc.collection.*;
-import io.anuke.arc.util.serialization.Base64Coder;
-import io.anuke.mindustry.core.Version;
-import io.anuke.mindustry.io.TypeIO;
+import io.anuke.arc.util.serialization.*;
+import io.anuke.mindustry.core.*;
+import io.anuke.mindustry.io.*;
 
-import java.nio.ByteBuffer;
+import java.nio.*;
 
 /**
  * Class for storing all packets.
@@ -80,7 +80,7 @@ public class Packets{
             buffer.put(mobile ? (byte)1 : 0);
             buffer.putInt(color);
             buffer.put(Base64Coder.decode(uuid));
-            buffer.putInt(mods.size);
+            buffer.put((byte)mods.size);
             for(int i = 0; i < mods.size; i++){
                 TypeIO.writeString(buffer, mods.get(i));
             }
@@ -97,7 +97,7 @@ public class Packets{
             byte[] idbytes = new byte[8];
             buffer.get(idbytes);
             uuid = new String(Base64Coder.encode(idbytes));
-            int totalMods = buffer.getInt();
+            int totalMods = buffer.get();
             mods = new Array<>(totalMods);
             for(int i = 0; i < totalMods; i++){
                 mods.add(TypeIO.readString(buffer));
