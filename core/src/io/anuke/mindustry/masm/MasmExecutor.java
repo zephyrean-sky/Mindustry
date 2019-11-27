@@ -1,5 +1,7 @@
 package io.anuke.mindustry.masm;
 
+import java.nio.*;
+
 public class MasmExecutor{
     /** All instructions to execute. */
     public int[] instructions;
@@ -8,11 +10,11 @@ public class MasmExecutor{
     /** Program counter. */
     public int pcounter;
     /** Memory bytes. */
-    public byte[] memory;
+    public ByteBuffer memory;
 
     public MasmExecutor(int[] instructions, int totalMemory){
         this.instructions = instructions;
-        this.memory = new byte[totalMemory];
+        this.memory = ByteBuffer.allocate(totalMemory);
     }
 
     /** Executes a single instruction. */
@@ -21,5 +23,10 @@ public class MasmExecutor{
 
 
         pcounter ++;
+    }
+
+    public enum MasmInstruction{
+        add,
+        and,
     }
 }
