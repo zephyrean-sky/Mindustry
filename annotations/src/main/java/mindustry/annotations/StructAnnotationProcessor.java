@@ -1,17 +1,14 @@
 package mindustry.annotations;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.Annotations.Struct;
-import mindustry.annotations.Annotations.StructField;
+import mindustry.annotations.Annotations.*;
 
 import javax.annotation.processing.*;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
-import javax.lang.model.type.TypeKind;
-import javax.lang.model.util.ElementFilter;
-import javax.tools.Diagnostic.Kind;
-import java.util.List;
-import java.util.Set;
+import javax.lang.model.type.*;
+import javax.lang.model.util.*;
+import javax.tools.Diagnostic.*;
+import java.util.*;
 
 /**
  * Generates ""value types"" classes that are packed into integer primitives of the most aproppriate size.

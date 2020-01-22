@@ -5,7 +5,6 @@ import javax.lang.model.*;
 import javax.lang.model.element.*;
 import java.util.*;
 
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public abstract class BaseProcessor extends AbstractProcessor{
     /** Name of the base package to put all the generated classes. */
     public static final String packageName = "mindustry.gen";
@@ -32,6 +31,11 @@ public abstract class BaseProcessor extends AbstractProcessor{
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion(){
+        return SourceVersion.RELEASE_8;
     }
 
     public abstract void process(RoundEnvironment env) throws Exception;

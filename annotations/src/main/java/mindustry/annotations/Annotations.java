@@ -4,9 +4,16 @@ import java.lang.annotation.*;
 
 public class Annotations{
 
+    /** Automatically registers a system to be used at startup. */
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface StyleDefaults {
+    public @interface AutoSystem{
+        int priority() default 0;
+    }
+
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface StyleDefaults{
     }
 
     /** Indicates that a method should always call its super version. */
@@ -16,10 +23,10 @@ public class Annotations{
 
     }
 
-    /** Annotation that allows overriding CallSuper annotation. To be used on method that overrides method with CallSuper annotation from parent class.*/
+    /** Annotation that allows overriding CallSuper annotation. To be used on method that overrides method with CallSuper annotation from parent class. */
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface OverrideCallSuper {
+    public @interface OverrideCallSuper{
     }
 
     /** Marks a class as serializable. */

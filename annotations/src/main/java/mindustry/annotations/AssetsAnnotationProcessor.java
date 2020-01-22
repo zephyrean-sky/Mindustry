@@ -41,7 +41,7 @@ public class AssetsAnnotationProcessor extends BaseProcessor{
         Jval icons = Jval.read(Fi.get(path + "/assets-raw/fontgen/config.json").readString());
 
         ictype.addField(FieldSpec.builder(ParameterizedTypeName.get(ObjectMap.class, String.class, TextureRegionDrawable.class),
-                "icons", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer("new ObjectMap<>()").build());
+        "icons", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer("new ObjectMap<>()").build());
 
         for(Jval val : icons.get("glyphs").asArray()){
             String name = capitalize(val.getString("css", ""));
@@ -72,7 +72,7 @@ public class AssetsAnnotationProcessor extends BaseProcessor{
             if(SourceVersion.isKeyword(varname)) varname += "s";
 
             type.addField(ClassName.bestGuess(dtype), varname, Modifier.STATIC, Modifier.PUBLIC);
-            load.addStatement(varname + " = ("+dtype+")arc.Core.atlas.drawable($S)", sfilen);
+            load.addStatement(varname + " = (" + dtype + ")arc.Core.atlas.drawable($S)", sfilen);
         });
 
         for(Element elem : elements){
@@ -115,17 +115,17 @@ public class AssetsAnnotationProcessor extends BaseProcessor{
 
             String filepath = path.substring(path.lastIndexOf("/") + 1) + "/" + fname;
 
-            String filename = "arc.Core.app.getType() != arc.Application.ApplicationType.iOS ? \"" + filepath + "\" : \"" + filepath.replace(".ogg", ".mp3")+"\"";
+            String filename = "arc.Core.app.getType() != arc.Application.ApplicationType.iOS ? \"" + filepath + "\" : \"" + filepath.replace(".ogg", ".mp3") + "\"";
 
-            loadBegin.addStatement("arc.Core.assets.load("+filename +", "+rtype+".class).loaded = a -> " + name + " = ("+rtype+")a", filepath, filepath.replace(".ogg", ".mp3"));
+            loadBegin.addStatement("arc.Core.assets.load(" + filename + ", " + rtype + ".class).loaded = a -> " + name + " = (" + rtype + ")a", filepath, filepath.replace(".ogg", ".mp3"));
 
             dispose.addStatement("arc.Core.assets.unload(" + filename + ")");
             dispose.addStatement(name + " = null");
-            type.addField(FieldSpec.builder(ClassName.bestGuess(rtype), name, Modifier.STATIC, Modifier.PUBLIC).initializer("new arc.audio.mock.Mock" + rtype.substring(rtype.lastIndexOf(".") + 1)+ "()").build());
+            type.addField(FieldSpec.builder(ClassName.bestGuess(rtype), name, Modifier.STATIC, Modifier.PUBLIC).initializer("new arc.audio.mock.Mock" + rtype.substring(rtype.lastIndexOf(".") + 1) + "()").build());
         });
 
         if(classname.equals("Sounds")){
-            type.addField(FieldSpec.builder(ClassName.bestGuess(rtype), "none", Modifier.STATIC, Modifier.PUBLIC).initializer("new arc.audio.mock.Mock" + rtype.substring(rtype.lastIndexOf(".") + 1)+ "()").build());
+            type.addField(FieldSpec.builder(ClassName.bestGuess(rtype), "none", Modifier.STATIC, Modifier.PUBLIC).initializer("new arc.audio.mock.Mock" + rtype.substring(rtype.lastIndexOf(".") + 1) + "()").build());
         }
 
         type.addMethod(loadBegin.build());

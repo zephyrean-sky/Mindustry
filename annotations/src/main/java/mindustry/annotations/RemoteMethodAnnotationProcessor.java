@@ -1,16 +1,15 @@
 package mindustry.annotations;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.Annotations.Loc;
-import mindustry.annotations.Annotations.Remote;
-import mindustry.annotations.IOFinder.ClassSerializer;
+import mindustry.annotations.Annotations.*;
+import mindustry.annotations.IOFinder.*;
 
 import javax.annotation.processing.*;
-import javax.lang.model.SourceVersion;
+import javax.lang.model.*;
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.Kind;
+import javax.tools.Diagnostic.*;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 
 /** The annotation processor for generating remote method call code. */

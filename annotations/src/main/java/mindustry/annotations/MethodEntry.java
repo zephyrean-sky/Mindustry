@@ -2,7 +2,7 @@ package mindustry.annotations;
 
 import mindustry.annotations.Annotations.*;
 
-import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.*;
 
 /** Class that repesents a remote method to be constructed and put into a class. */
 public class MethodEntry{

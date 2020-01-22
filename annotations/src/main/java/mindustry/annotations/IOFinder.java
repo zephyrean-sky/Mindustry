@@ -1,14 +1,12 @@
 package mindustry.annotations;
 
-import mindustry.annotations.Annotations.ReadClass;
-import mindustry.annotations.Annotations.WriteClass;
+import mindustry.annotations.Annotations.*;
 
-import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.element.Element;
-import javax.lang.model.type.MirroredTypeException;
-import javax.tools.Diagnostic.Kind;
-import java.util.HashMap;
-import java.util.Set;
+import javax.annotation.processing.*;
+import javax.lang.model.element.*;
+import javax.lang.model.type.*;
+import javax.tools.Diagnostic.*;
+import java.util.*;
 
 /**
  * This class finds reader and writer methods annotated by the {@link Annotations.WriteClass}

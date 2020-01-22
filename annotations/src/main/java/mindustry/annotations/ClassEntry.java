@@ -1,6 +1,6 @@
 package mindustry.annotations;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /** Represents a class witha list method entries to include in it. */
 public class ClassEntry{

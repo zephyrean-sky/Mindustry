@@ -3,9 +3,11 @@ package mindustry.ecs;
 import arc.ecs.*;
 import arc.ecs.annotations.*;
 import arc.ecs.systems.*;
+import mindustry.annotations.Annotations.*;
 import mindustry.ecs.Components.*;
 
 @All({Pos.class, Hitbox.class})
+@AutoSystem
 public class QuadTreeSystem extends IteratingSystem{
     private final QuadTree quad = new QuadTree(0f, 0f, 100f, 200f);
     private Mapper<Pos> posm;

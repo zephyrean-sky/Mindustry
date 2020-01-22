@@ -1,16 +1,15 @@
 package mindustry.annotations;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.IOFinder.ClassSerializer;
+import mindustry.annotations.IOFinder.*;
 
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.Kind;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.List;
+import javax.tools.Diagnostic.*;
+import java.io.*;
+import java.lang.reflect.*;
+import java.nio.*;
+import java.util.*;
 
 /** Generates code for reading remote invoke packets on the client and server. */
 public class RemoteReadGenerator{

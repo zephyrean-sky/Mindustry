@@ -3,3 +3,4 @@ mindustry.annotations.SerializeAnnotationProcessor
 mindustry.annotations.StructAnnotationProcessor
 mindustry.annotations.CallSuperAnnotationProcessor
 mindustry.annotations.AssetsAnnotationProcessor
+mindustry.annotations.EcsAnnotationProcessor

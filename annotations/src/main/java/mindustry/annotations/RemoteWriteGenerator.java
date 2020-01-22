@@ -1,15 +1,14 @@
 package mindustry.annotations;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.Annotations.Loc;
-import mindustry.annotations.IOFinder.ClassSerializer;
+import mindustry.annotations.Annotations.*;
+import mindustry.annotations.IOFinder.*;
 
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.Kind;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.List;
+import javax.tools.Diagnostic.*;
+import java.io.*;
+import java.nio.*;
+import java.util.*;
 
 /** Generates code for writing remote invoke packets on the client and server. */
 public class RemoteWriteGenerator{

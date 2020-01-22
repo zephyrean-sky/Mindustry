@@ -1,11 +1,8 @@
 package mindustry.annotations;
 
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
+import javax.annotation.processing.*;
+import javax.lang.model.element.*;
+import javax.lang.model.util.*;
 
 public class Utils{
     public static Types typeUtils;

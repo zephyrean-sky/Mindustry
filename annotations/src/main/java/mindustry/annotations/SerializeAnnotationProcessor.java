@@ -4,11 +4,9 @@ import com.squareup.javapoet.*;
 import mindustry.annotations.Annotations.*;
 
 import javax.annotation.processing.*;
-import javax.lang.model.*;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.*;
 import javax.lang.model.util.*;
-import javax.tools.Diagnostic.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
