@@ -25,7 +25,7 @@ public class Bullet extends SolidEntity implements DamageTrait, ScaleTrait, Pool
     private boolean supressCollision, supressOnce, initialized, deflected;
 
     protected BulletType type;
-    protected Entity owner;
+    protected Entity_ owner;
     protected float time;
 
     /** Internal use only! */
@@ -36,19 +36,19 @@ public class Bullet extends SolidEntity implements DamageTrait, ScaleTrait, Pool
         return create(type, owner, owner.getTeam(), x, y, angle);
     }
 
-    public static Bullet create(BulletType type, Entity owner, Team team, float x, float y, float angle){
+    public static Bullet create(BulletType type, Entity_ owner, Team team, float x, float y, float angle){
         return create(type, owner, team, x, y, angle, 1f);
     }
 
-    public static Bullet create(BulletType type, Entity owner, Team team, float x, float y, float angle, float velocityScl){
+    public static Bullet create(BulletType type, Entity_ owner, Team team, float x, float y, float angle, float velocityScl){
         return create(type, owner, team, x, y, angle, velocityScl, 1f, null);
     }
 
-    public static Bullet create(BulletType type, Entity owner, Team team, float x, float y, float angle, float velocityScl, float lifetimeScl){
+    public static Bullet create(BulletType type, Entity_ owner, Team team, float x, float y, float angle, float velocityScl, float lifetimeScl){
         return create(type, owner, team, x, y, angle, velocityScl, lifetimeScl, null);
     }
 
-    public static Bullet create(BulletType type, Entity owner, Team team, float x, float y, float angle, float velocityScl, float lifetimeScl, Object data){
+    public static Bullet create(BulletType type, Entity_ owner, Team team, float x, float y, float angle, float velocityScl, float lifetimeScl, Object data){
         Bullet bullet = Pools.obtain(Bullet.class, Bullet::new);
         bullet.type = type;
         bullet.owner = owner;
@@ -82,7 +82,7 @@ public class Bullet extends SolidEntity implements DamageTrait, ScaleTrait, Pool
         create(type, null, team, x, y, angle, velocityScl, lifetimeScl, null);
     }
 
-    public Entity getOwner(){
+    public Entity_ getOwner(){
         return owner;
     }
 
@@ -104,7 +104,7 @@ public class Bullet extends SolidEntity implements DamageTrait, ScaleTrait, Pool
         return type;
     }
 
-    public void resetOwner(Entity entity, Team team){
+    public void resetOwner(Entity_ entity, Team team){
         this.owner = entity;
         this.team = team;
     }
@@ -129,7 +129,7 @@ public class Bullet extends SolidEntity implements DamageTrait, ScaleTrait, Pool
     }
 
     @Override
-    public void killed(Entity other){
+    public void killed(Entity_ other){
         if(owner instanceof KillerTrait){
             ((KillerTrait)owner).killed(other);
         }

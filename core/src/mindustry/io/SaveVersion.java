@@ -242,7 +242,7 @@ public abstract class SaveVersion extends SaveFileReader{
         for(EntityGroup<?> group : entities.all()){
             if(!group.isEmpty() && group.all().get(0) instanceof SaveTrait){
                 stream.writeInt(group.size());
-                for(Entity entity : group.all()){
+                for(Entity_ entity : group.all()){
                     SaveTrait save = (SaveTrait)entity;
                     //each entity is a separate chunk.
                     writeChunk(stream, true, out -> {

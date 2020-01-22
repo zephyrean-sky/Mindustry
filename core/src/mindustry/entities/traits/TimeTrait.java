@@ -3,7 +3,7 @@ package mindustry.entities.traits;
 import arc.math.Mathf;
 import arc.util.Time;
 
-public interface TimeTrait extends ScaleTrait, Entity{
+public interface TimeTrait extends ScaleTrait, Entity_{
 
     float lifetime();
 

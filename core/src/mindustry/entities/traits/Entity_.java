@@ -2,7 +2,7 @@ package mindustry.entities.traits;
 
 import mindustry.entities.EntityGroup;
 
-public interface Entity extends MoveTrait{
+public interface Entity_ extends MoveTrait{
 
     int getID();
 

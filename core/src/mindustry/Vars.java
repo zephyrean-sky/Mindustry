@@ -3,6 +3,7 @@ package mindustry;
 import arc.Application.*;
 import arc.*;
 import arc.assets.*;
+import arc.ecs.*;
 import arc.files.*;
 import arc.graphics.*;
 import arc.scene.ui.layout.*;
@@ -153,6 +154,7 @@ public class Vars implements Loadable{
     /** list of all locales that can be switched to */
     public static Locale[] locales;
 
+    public static Base base;
     public static FileTree tree;
     public static Net net;
     public static ContentLoader content;

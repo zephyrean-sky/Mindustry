@@ -24,7 +24,7 @@ import static mindustry.Vars.*;
 import static mindustry.entities.traits.BuilderTrait.BuildDataStatic.*;
 
 /** Interface for units that build things.*/
-public interface BuilderTrait extends Entity, TeamTrait{
+public interface BuilderTrait extends Entity_, TeamTrait{
     //these are not instance variables!
     float placeDistance = 220f;
     float mineDistance = 70f;

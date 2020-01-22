@@ -739,7 +739,7 @@ public class NetServer implements ApplicationListener{
 
             int sent = 0;
 
-            for(Entity entity :  group.all()){
+            for(Entity_ entity :  group.all()){
                 SyncTrait sync = (SyncTrait)entity;
                 if(!sync.isSyncing()) continue;
 

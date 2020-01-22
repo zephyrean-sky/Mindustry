@@ -1,6 +1,6 @@
 package mindustry.entities.traits;
 
-public interface AbsorbTrait extends Entity, TeamTrait, DamageTrait{
+public interface AbsorbTrait extends Entity_, TeamTrait, DamageTrait{
     void absorb();
 
     default boolean canBeAbsorbed(){

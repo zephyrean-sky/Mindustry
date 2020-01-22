@@ -69,8 +69,8 @@ public class Renderer implements ApplicationListener{
                         entity.data = data;
                         entity.id++;
                         entity.set(x, y);
-                        if(data instanceof Entity){
-                            entity.setParent((Entity)data);
+                        if(data instanceof Entity_){
+                            entity.setParent((Entity_)data);
                         }
                         effectGroup.add(entity);
                     }else{
@@ -81,8 +81,8 @@ public class Renderer implements ApplicationListener{
                         entity.id++;
                         entity.data = data;
                         entity.set(x, y);
-                        if(data instanceof Entity){
-                            entity.setParent((Entity)data);
+                        if(data instanceof Entity_){
+                            entity.setParent((Entity_)data);
                         }
                         groundEffectGroup.add(entity);
                     }

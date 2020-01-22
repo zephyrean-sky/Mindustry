@@ -16,7 +16,7 @@ import mindustry.world.Tile;
 
 import static mindustry.Vars.*;
 
-public interface MinerTrait extends Entity{
+public interface MinerTrait extends Entity_{
 
     /** Returns the range at which this miner can mine blocks.*/
     default float getMiningRange(){

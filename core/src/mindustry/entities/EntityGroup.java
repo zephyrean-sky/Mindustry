@@ -13,7 +13,7 @@ import static mindustry.Vars.collisions;
 
 /** Represents a group of a certain type of entity.*/
 @SuppressWarnings("unchecked")
-public class EntityGroup<T extends Entity> implements Iterable<T>{
+public class EntityGroup<T extends Entity_> implements Iterable<T>{
     private final boolean useTree;
     private final int id;
     private final Class<T> type;
@@ -47,7 +47,7 @@ public class EntityGroup<T extends Entity> implements Iterable<T>{
             collisions.updatePhysics(this);
         }
 
-        for(Entity e : all()){
+        for(Entity_ e : all()){
             e.update();
         }
     }
@@ -70,7 +70,7 @@ public class EntityGroup<T extends Entity> implements Iterable<T>{
         Camera cam = Core.camera;
         viewport.set(cam.position.x - cam.width / 2, cam.position.y - cam.height / 2, cam.width, cam.height);
 
-        for(Entity e : all()){
+        for(Entity_ e : all()){
             if(!(e instanceof DrawTrait) || !toDraw.get((T)e) || !e.isAdded()) continue;
             DrawTrait draw = (DrawTrait)e;
 

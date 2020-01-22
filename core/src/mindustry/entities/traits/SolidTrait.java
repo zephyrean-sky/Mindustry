@@ -5,7 +5,7 @@ import arc.math.geom.*;
 import arc.math.geom.QuadTree.QuadTreeObject;
 import mindustry.Vars;
 
-public interface SolidTrait extends QuadTreeObject, MoveTrait, VelocityTrait, Entity, Position{
+public interface SolidTrait extends QuadTreeObject, MoveTrait, VelocityTrait, Entity_, Position{
 
     void hitbox(Rect rect);
 

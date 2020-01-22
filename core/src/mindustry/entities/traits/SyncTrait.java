@@ -4,7 +4,7 @@ import mindustry.net.Interpolator;
 
 import java.io.*;
 
-public interface SyncTrait extends Entity, TypeTrait{
+public interface SyncTrait extends Entity_, TypeTrait{
 
     /** Sets the position of this entity and updated the interpolator. */
     default void setNet(float x, float y){

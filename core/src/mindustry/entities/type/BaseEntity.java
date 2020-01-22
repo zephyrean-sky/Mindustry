@@ -2,9 +2,9 @@ package mindustry.entities.type;
 
 import mindustry.*;
 import mindustry.entities.EntityGroup;
-import mindustry.entities.traits.Entity;
+import mindustry.entities.traits.Entity_;
 
-public abstract class BaseEntity implements Entity{
+public abstract class BaseEntity implements Entity_{
     private static int lastid;
     /** Do not modify. Used for network operations and mapping. */
     public int id;

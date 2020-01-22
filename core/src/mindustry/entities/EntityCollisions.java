@@ -3,7 +3,7 @@ package mindustry.entities;
 import arc.struct.Array;
 import arc.math.Mathf;
 import arc.math.geom.*;
-import mindustry.entities.traits.Entity;
+import mindustry.entities.traits.Entity_;
 import mindustry.entities.traits.SolidTrait;
 import mindustry.world.Tile;
 
@@ -108,12 +108,12 @@ public class EntityCollisions{
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Entity> void updatePhysics(EntityGroup<T> group){
+    public <T extends Entity_> void updatePhysics(EntityGroup<T> group){
 
         QuadTree tree = group.tree();
         tree.clear();
 
-        for(Entity entity : group.all()){
+        for(Entity_ entity : group.all()){
             if(entity instanceof SolidTrait){
                 SolidTrait s = (SolidTrait)entity;
                 s.lastPosition().set(s.getX(), s.getY());
@@ -127,7 +127,7 @@ public class EntityCollisions{
         return tile != null && tile.solid();
     }
 
-    private void checkCollide(Entity entity, Entity other){
+    private void checkCollide(Entity_ entity, Entity_ other){
 
         SolidTrait a = (SolidTrait)entity;
         SolidTrait b = (SolidTrait)other;
@@ -209,7 +209,7 @@ public class EntityCollisions{
     @SuppressWarnings("unchecked")
     public void collideGroups(EntityGroup<?> groupa, EntityGroup<?> groupb){
 
-        for(Entity entity : groupa.all()){
+        for(Entity_ entity : groupa.all()){
             if(!(entity instanceof SolidTrait))
                 continue;
 

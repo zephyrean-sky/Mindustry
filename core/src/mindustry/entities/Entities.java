@@ -21,11 +21,11 @@ public class Entities{
         return groupArray;
     }
 
-    public <T extends Entity> EntityGroup<T> add(Class<T> type){
+    public <T extends Entity_> EntityGroup<T> add(Class<T> type){
         return add(type, true);
     }
 
-    public <T extends Entity> EntityGroup<T> add(Class<T> type, boolean useTree){
+    public <T extends Entity_> EntityGroup<T> add(Class<T> type, boolean useTree){
         EntityGroup<T> group = new EntityGroup<>(groupArray.size, type, useTree);
         groupArray.add(group);
         return group;

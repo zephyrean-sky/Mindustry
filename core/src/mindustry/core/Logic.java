@@ -16,7 +16,6 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
 import mindustry.world.blocks.BuildBlock.*;
-import mindustry.world.blocks.power.*;
 
 import java.util.*;
 
@@ -227,37 +226,6 @@ public class Logic implements ApplicationListener{
 
                 if(!net.client() && state.wavetime <= 0 && state.rules.waves){
                     runWave();
-                }
-
-                if(!headless){
-                    effectGroup.update();
-                    groundEffectGroup.update();
-                }
-
-                if(!state.isEditor()){
-                    unitGroup.update();
-                    puddleGroup.update();
-                    shieldGroup.update();
-                    bulletGroup.update();
-                    tileGroup.update();
-                    fireGroup.update();
-                }else{
-                    unitGroup.updateEvents();
-                    collisions.updatePhysics(unitGroup);
-                }
-
-
-                playerGroup.update();
-
-                //effect group only contains item transfers in the headless version, update it!
-                if(headless){
-                    effectGroup.update();
-                }
-
-                if(!state.isEditor()){
-                    //bulletGroup
-                    collisions.collideGroups(bulletGroup, unitGroup);
-                    collisions.collideGroups(bulletGroup, playerGroup);
                 }
             }
 

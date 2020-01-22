@@ -7,7 +7,7 @@ import mindustry.entities.Effects;
 import mindustry.entities.Effects.Effect;
 import mindustry.entities.EntityGroup;
 import mindustry.entities.traits.DrawTrait;
-import mindustry.entities.traits.Entity;
+import mindustry.entities.traits.Entity_;
 
 import static mindustry.Vars.effectGroup;
 
@@ -17,14 +17,14 @@ public class EffectEntity extends TimedEntity implements Poolable, DrawTrait{
     public Object data;
     public float rotation = 0f;
 
-    public Entity parent;
+    public Entity_ parent;
     public float poffsetx, poffsety;
 
     /** For pooling use only! */
     public EffectEntity(){
     }
 
-    public void setParent(Entity parent){
+    public void setParent(Entity_ parent){
         this.parent = parent;
         this.poffsetx = x - parent.getX();
         this.poffsety = y - parent.getY();
