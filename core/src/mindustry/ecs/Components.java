@@ -33,6 +33,7 @@ public class Components{
 
     public static class Velocityc extends Component{
         public Vec2 vec = new Vec2();
+        public float drag = 0f;
     }
 
     public static class Teamc extends Component{
@@ -49,7 +50,7 @@ public class Components{
         public boolean building;
     }
 
-    public static class Syncc{
+    public static class Syncc extends Component{
         //network ID
         public int id;
     }
@@ -58,28 +59,28 @@ public class Components{
         public Effect effect;
     }
 
-    public static class Flyingc{
+    public static class Flyingc extends Component{
         public boolean achievedFlight;
         public boolean flying;
     }
 
-    public static class Boostc{
+    public static class Boostc extends Component{
         public float boostHeat;
     }
 
-    public static class Legsc{
+    public static class Legsc extends Component{
         public float rotation;
     }
 
-    public static class Spawningc{
+    public static class Spawningc extends Component{
         public SpawnerTrait spawner, lastSpawner;
     }
 
-    public static class Itemc{
+    public static class Itemc extends Component{
         public ItemStack stack = new ItemStack();
     }
 
-    public static class Statusesc{
+    public static class Statusesc extends Component{
         public Array<StatusEntry> list = new Array<>();
 
         public static class StatusEntry{
@@ -94,15 +95,15 @@ public class Components{
         }
     }
 
-    public static class Shellc{
+    public static class Shellc extends Component{
         //insert unit type / mech here, for the mech-rework branch
     }
 
-    public static class Drawc{
+    public static class Drawc extends Component{
         //???
     }
 
-    public static class Playerc{
+    public static class Playerc extends Component{
         public String name = "noname";
         public @Nullable String uuid, usid;
         public boolean isAdmin, isTransferring, isShooting, isBoosting, isMobile, isTyping;
