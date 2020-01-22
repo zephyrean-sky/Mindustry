@@ -12,6 +12,7 @@ import mindustry.entities.type.*;
 import mindustry.type.*;
 
 import java.io.*;
+import java.util.*;
 
 import static mindustry.Vars.content;
 
@@ -80,27 +81,21 @@ public class Statuses implements Saveable{
         applied.clear();
         speedMultiplier = damageMultiplier = armorMultiplier = 1f;
 
-        if(statuses.size == 0) return;
-
-        removals.clear();
-
-        for(StatusEntry entry : statuses){
+        Iterator<StatusEntry> it = statuses.iterator();
+        while(it.hasNext()){
+            StatusEntry entry = it.next();
             entry.time = Math.max(entry.time - Time.delta(), 0);
             applied.set(entry.effect.id);
 
             if(entry.time <= 0){
                 Pools.free(entry);
-                removals.add(entry);
+                it.remove();
             }else{
                 speedMultiplier *= entry.effect.speedMultiplier;
                 armorMultiplier *= entry.effect.armorMultiplier;
                 damageMultiplier *= entry.effect.damageMultiplier;
                 entry.effect.update(unit, entry.time);
             }
-        }
-
-        if(removals.size > 0){
-            statuses.removeAll(removals, true);
         }
     }
 

@@ -179,8 +179,8 @@ public class QuadTree implements Poolable{
                     nodes[index].get(fill, x, y, width, height);
                 }else{
                     // if test bounds don't fully fit inside a node, we need to check them all
-                    for(int i = 0; i < nodes.length; i++){
-                        nodes[i].get(fill, x, y, width, height);
+                    for(QuadTree node : nodes){
+                        node.get(fill, x, y, width, height);
                     }
                 }
             }
@@ -203,8 +203,8 @@ public class QuadTree implements Poolable{
                     nodes[index].getExact(fill, x, y, width, height);
                 }else{
                     // if test bounds don't fully fit inside a node, we need to check them all
-                    for(int i = 0; i < nodes.length; i++){
-                        nodes[i].getExact(fill, x, y, width, height);
+                    for(QuadTree node : nodes){
+                        node.getExact(fill, x, y, width, height);
                     }
                 }
             }
@@ -329,13 +329,10 @@ public class QuadTree implements Poolable{
         }
 
         public boolean contains(float ox, float oy, float owidth, float oheight){
-            float xmin = ox;
-            float xmax = xmin + owidth;
+            float xmax = ox + owidth;
+            float ymax = oy + oheight;
 
-            float ymin = oy;
-            float ymax = ymin + oheight;
-
-            return ((xmin > x && xmin < x + width) && (xmax > x && xmax < x + width)) && ((ymin > y && ymin < y + height) && (ymax > y && ymax < y + height));
+            return ((ox > x && ox < x + width) && (xmax > x && xmax < x + width)) && ((oy > y && oy < y + height) && (ymax > y && ymax < y + height));
         }
 
         public boolean contains(Container c){

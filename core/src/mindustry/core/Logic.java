@@ -218,6 +218,8 @@ public class Logic implements ApplicationListener{
             if(!state.isPaused()){
                 Time.update();
 
+                base.process();
+
                 if(state.rules.waves && state.rules.waveTimer && !state.gameOver){
                     if(!state.rules.waitForWaveToEnd || state.enemies == 0){
                         state.wavetime = Math.max(state.wavetime - Time.delta(), 0);
