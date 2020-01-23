@@ -1,6 +1,6 @@
 buildscript{
     ext{
-        arcExtVersion = "7451f66f92abff5b4a237ff0f06114aedd6dde56"
+        arcExtVersion = "d322b433168588b1cdda23b38193e2aeb257baa1"
     }
     
     repositories{
@@ -18,6 +18,7 @@ buildscript{
         classpath "com.github.Anuken.Arc:packer:$arcExtVersion"
         classpath "com.github.Anuken.Arc:arc-core:$arcExtVersion"
         classpath "com.github.Anuken.Arc:ecs-fluid-gradle:$arcExtVersion"
+        classpath "com.github.Anuken.Arc:ecs-gradle:$arcExtVersion"
     }
 }
 
@@ -202,6 +203,7 @@ project(":ios"){
 
 project(":core"){
     apply plugin: "java"
+    apply plugin: arc.ecs.gradle.EcsGradlePlugin
     /*
     apply plugin: arc.ecs.fluid.gradle.FluidArtemisGradlePlugin
 
@@ -214,8 +216,18 @@ project(":core"){
         classpath = sourceSets.main.runtimeClasspath
     }
     compileJava.finalizedBy fluid*/
-    
-    */
+
+    weave{
+        classesDirs = sourceSets.main.output.classesDirs
+        enableArtemisPlugin = true
+        enablePooledWeaving = true
+        generateLinkMutators = true
+        optimizeEntitySystems = true
+        
+        //dependsOn build
+    }
+
+    compileJava.finalizedBy(weave)
 
     task preGen{
         outputs.upToDateWhen{ false }

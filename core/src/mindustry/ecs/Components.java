@@ -1,12 +1,14 @@
 package mindustry.ecs;
 
 import arc.ecs.*;
+import arc.ecs.annotations.*;
 import arc.func.*;
 import arc.graphics.*;
 import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.entities.Effects.*;
+import mindustry.entities.bullet.*;
 import mindustry.entities.traits.BuilderTrait.*;
 import mindustry.entities.traits.*;
 import mindustry.game.*;
@@ -17,6 +19,7 @@ import mindustry.world.blocks.BuildBlock.*;
 
 import static mindustry.Vars.*;
 
+//TODO sprinkle @PooledWeaver everywhere and test performance
 public class Components{
 
     public static class Healthc extends Component{
@@ -28,6 +31,7 @@ public class Components{
         public float width, height;
     }
 
+    @PooledWeaver
     public static class Posc extends Component implements Position{
         public float x, y;
 
@@ -70,6 +74,14 @@ public class Components{
         public boolean mines(Item item){
             return canMine.get(item);
         }
+    }
+
+    public static class Bulletc extends Component{
+        public BulletType type;
+    }
+
+    public static class Ownerc extends Component{
+        public @EntityId int owner;
     }
 
     public static class Buildc extends Component{
