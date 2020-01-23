@@ -1,4 +1,8 @@
 buildscript{
+    ext{
+        arcExtVersion = "7451f66f92abff5b4a237ff0f06114aedd6dde56"
+    }
+    
     repositories{
         mavenLocal()
         mavenCentral()
@@ -10,8 +14,10 @@ buildscript{
 
     dependencies{
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.8'
-        classpath "com.badlogicgames.gdx:gdx-tools:1.9.10"
         classpath "com.github.anuken:packr:-SNAPSHOT"
+        classpath "com.github.Anuken.Arc:packer:$arcExtVersion"
+        classpath "com.github.Anuken.Arc:arc-core:$arcExtVersion"
+        classpath "com.github.Anuken.Arc:ecs-fluid-gradle:$arcExtVersion"
     }
 }
 
@@ -196,6 +202,20 @@ project(":ios"){
 
 project(":core"){
     apply plugin: "java"
+    /*
+    apply plugin: arc.ecs.fluid.gradle.FluidArtemisGradlePlugin
+
+    ext{
+        fluidOutputDir = file("$buildDir/generated/sources/fluid/")
+    }
+        /*
+    fluid{
+        generatedSourcesDirectory = fluidOutputDir
+        classpath = sourceSets.main.runtimeClasspath
+    }
+    compileJava.finalizedBy fluid*/
+    
+    */
 
     task preGen{
         outputs.upToDateWhen{ false }
@@ -225,7 +245,7 @@ project(":core"){
     }
 
     dependencies{
-        if(System.properties["user.name"] == "anuke"){
+        if(false){
             task cleanGen{
                 doFirst{
                     delete{
@@ -309,11 +329,9 @@ project(":annotations"){
     apply plugin: "java"
 
     dependencies{
-        def arcVersion = "e287fdce0449a87fb15599c67b5167ac0273bcb6"
-        
         compile 'com.squareup:javapoet:1.11.0'
-        compile "com.github.Anuken.Arc:arc-core:$arcVersion"
-        compile "com.github.Anuken.Arc:ecs-core:$arcVersion"
+        compile "com.github.Anuken.Arc:arc-core:$arcExtVersion"
+        compile "com.github.Anuken.Arc:ecs-core:$arcExtVersion"
         compile files("${System.getProperty('java.home')}/../lib/tools.jar")
     }
 }

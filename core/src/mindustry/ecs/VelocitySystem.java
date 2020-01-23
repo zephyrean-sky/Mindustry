@@ -14,6 +14,15 @@ public class VelocitySystem extends IteratingSystem{
     Mapper<Posc> pos;
 
     @Override
+    protected void initialize(){
+        //TODO remove
+        int unit = base.create(Archetypes.baseUnit);
+        Posc p = pos.get(unit);
+        p.x = 100f;
+        p.y = 100f;
+    }
+
+    @Override
     protected void process(int entity){
         Velocityc v = vel.get(entity);
         Posc p = pos.get(entity);

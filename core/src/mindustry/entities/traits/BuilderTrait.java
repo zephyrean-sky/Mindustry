@@ -230,8 +230,7 @@ public interface BuilderTrait extends Entity_, TeamTrait{
      * Return the build requests currently active, or the one at the top of the queue.
      * May return null.
      */
-    default @Nullable
-    BuildRequest buildRequest(){
+    default @Nullable BuildRequest buildRequest(){
         return buildQueue().size == 0 ? null : buildQueue().first();
     }
 
