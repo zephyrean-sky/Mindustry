@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 public class Annotations{
 
     /** Automatically registers a system to be used at startup. */
-    @Target(ElementType.TYPE)
+    @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AutoSystem{
         int priority() default 0;
