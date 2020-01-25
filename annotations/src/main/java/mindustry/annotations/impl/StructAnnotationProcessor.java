@@ -1,14 +1,17 @@
-package mindustry.annotations;
+package mindustry.annotations.impl;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.Annotations.*;
+import mindustry.annotations.*;
+import mindustry.annotations.Annotations.Struct;
+import mindustry.annotations.Annotations.StructField;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
-import javax.lang.model.type.*;
-import javax.lang.model.util.*;
-import javax.tools.Diagnostic.*;
-import java.util.*;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.util.ElementFilter;
+import javax.tools.Diagnostic.Kind;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Generates ""value types"" classes that are packed into integer primitives of the most aproppriate size.
@@ -20,13 +23,13 @@ import java.util.*;
 public class StructAnnotationProcessor extends BaseProcessor{
 
     @Override
-    public void process(RoundEnvironment env) throws Exception{
+    public void process(RoundEnvironment env, int round) throws Exception{
         Set<TypeElement> elements = ElementFilter.typesIn(env.getElementsAnnotatedWith(Struct.class));
 
         for(TypeElement elem : elements){
 
             if(!elem.getSimpleName().toString().endsWith("Struct")){
-                Utils.messager.printMessage(Kind.ERROR, "All classes annotated with @Struct must have their class names end in 'Struct'.", elem);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "All classes annotated with @Struct must have their class names end in 'Struct'.", elem);
                 continue;
             }
 
@@ -42,7 +45,7 @@ public class StructAnnotationProcessor extends BaseProcessor{
                 int structTotalSize = (structSize <= 8 ? 8 : structSize <= 16 ? 16 : structSize <= 32 ? 32 : 64);
 
                 if(variables.size() == 0){
-                    Utils.messager.printMessage(Kind.ERROR, "making a struct with no fields is utterly pointles.", elem);
+                    BaseProcessor.messager.printMessage(Kind.ERROR, "making a struct with no fields is utterly pointles.", elem);
                     continue;
                 }
 
@@ -127,10 +130,10 @@ public class StructAnnotationProcessor extends BaseProcessor{
                 constructor.addStatement("return ($T)($L)", structType, cons.toString().substring(3));
                 classBuilder.addMethod(constructor.build());
 
-                JavaFile.builder(packageName, classBuilder.build()).build().writeTo(Utils.filer);
+                JavaFile.builder(packageName, classBuilder.build()).build().writeTo(BaseProcessor.filer);
             }catch(IllegalArgumentException e){
                 e.printStackTrace();
-                Utils.messager.printMessage(Kind.ERROR, e.getMessage(), elem);
+                BaseProcessor.messager.printMessage(Kind.ERROR, e.getMessage(), elem);
             }
         }
 

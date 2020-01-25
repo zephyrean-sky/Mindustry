@@ -1,16 +1,19 @@
-package mindustry.annotations;
+package mindustry.annotations.remote;
 
-import mindustry.annotations.Annotations.*;
+import mindustry.annotations.*;
+import mindustry.annotations.Annotations.ReadClass;
+import mindustry.annotations.Annotations.WriteClass;
 
-import javax.annotation.processing.*;
-import javax.lang.model.element.*;
-import javax.lang.model.type.*;
-import javax.tools.Diagnostic.*;
-import java.util.*;
+import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.element.Element;
+import javax.lang.model.type.MirroredTypeException;
+import javax.tools.Diagnostic.Kind;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
- * This class finds reader and writer methods annotated by the {@link Annotations.WriteClass}
- * and {@link Annotations.ReadClass} annotations.
+ * This class finds reader and writer methods annotated by the {@link WriteClass}
+ * and {@link ReadClass} annotations.
  */
 public class IOFinder{
 
@@ -32,21 +35,21 @@ public class IOFinder{
 
             //make sure there's only one read method
             if(readers.stream().filter(elem -> getValue(elem.getAnnotation(ReadClass.class)).equals(typeName)).count() > 1){
-                Utils.messager.printMessage(Kind.ERROR, "Multiple writer methods for type '" + typeName + "'", writer);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "Multiple writer methods for type '" + typeName + "'", writer);
             }
 
             //make sure there's only one write method
             long count = readers.stream().filter(elem -> getValue(elem.getAnnotation(ReadClass.class)).equals(typeName)).count();
             if(count == 0){
-                Utils.messager.printMessage(Kind.ERROR, "Writer method does not have an accompanying reader: ", writer);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "Writer method does not have an accompanying reader: ", writer);
             }else if(count > 1){
-                Utils.messager.printMessage(Kind.ERROR, "Writer method has multiple reader for type: ", writer);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "Writer method has multiple reader for type: ", writer);
             }
 
             Element reader = readers.stream().filter(elem -> getValue(elem.getAnnotation(ReadClass.class)).equals(typeName)).findFirst().get();
 
             //add to result list
-            result.put(typeName, new ClassSerializer(Utils.getMethodName(reader), Utils.getMethodName(writer), typeName));
+            result.put(typeName, new ClassSerializer(BaseProcessor.getMethodName(reader), BaseProcessor.getMethodName(writer), typeName));
         }
 
         return result;

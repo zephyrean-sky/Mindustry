@@ -1,6 +1,6 @@
-mindustry.annotations.RemoteMethodAnnotationProcessor
-mindustry.annotations.SerializeAnnotationProcessor
-mindustry.annotations.StructAnnotationProcessor
-mindustry.annotations.CallSuperAnnotationProcessor
-mindustry.annotations.AssetsAnnotationProcessor
-mindustry.annotations.EcsAnnotationProcessor
+mindustry.annotations.remote.RemoteMethodAnnotationProcessor
+mindustry.annotations.impl.EcsAnnotationProcessor
+mindustry.annotations.impl.StructAnnotationProcessor
+mindustry.annotations.impl.SerializeAnnotationProcessor
+mindustry.annotations.impl.AssetsAnnotationProcessor
+mindustry.annotations.impl.CallSuperAnnotationProcessor

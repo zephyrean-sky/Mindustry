@@ -1,15 +1,17 @@
-package mindustry.annotations;
+package mindustry.annotations.remote;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.IOFinder.*;
+import mindustry.annotations.*;
+import mindustry.annotations.remote.IOFinder.ClassSerializer;
 
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.*;
-import java.io.*;
-import java.lang.reflect.*;
-import java.nio.*;
-import java.util.*;
+import javax.tools.Diagnostic.Kind;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.List;
 
 /** Generates code for reading remote invoke packets on the client and server. */
 public class RemoteReadGenerator{
@@ -81,7 +83,7 @@ public class RemoteReadGenerator{
                     String capName = typeName.equals("byte") ? "" : Character.toUpperCase(typeName.charAt(0)) + typeName.substring(1);
 
                     //write primitives automatically
-                    if(Utils.isPrimitive(typeName)){
+                    if(BaseProcessor.isPrimitive(typeName)){
                         if(typeName.equals("boolean")){
                             readBlock.addStatement("boolean " + varName + " = buffer.get() == 1");
                         }else{
@@ -92,7 +94,7 @@ public class RemoteReadGenerator{
                         ClassSerializer ser = serializers.get(typeName);
 
                         if(ser == null){ //make sure a serializer exists!
-                            Utils.messager.printMessage(Kind.ERROR, "No @ReadClass method to read class type: '" + typeName + "'", var);
+                            BaseProcessor.messager.printMessage(Kind.ERROR, "No @ReadClass method to read class type: '" + typeName + "'", var);
                             return;
                         }
 
@@ -138,6 +140,6 @@ public class RemoteReadGenerator{
 
         //build and write resulting class
         TypeSpec spec = classBuilder.build();
-        JavaFile.builder(packageName, spec).build().writeTo(Utils.filer);
+        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
     }
 }

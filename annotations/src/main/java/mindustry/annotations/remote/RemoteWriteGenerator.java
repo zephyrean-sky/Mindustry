@@ -1,14 +1,16 @@
-package mindustry.annotations;
+package mindustry.annotations.remote;
 
 import com.squareup.javapoet.*;
-import mindustry.annotations.Annotations.*;
-import mindustry.annotations.IOFinder.*;
+import mindustry.annotations.*;
+import mindustry.annotations.Annotations.Loc;
+import mindustry.annotations.remote.IOFinder.ClassSerializer;
 
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.*;
-import java.io.*;
-import java.nio.*;
-import java.util.*;
+import javax.tools.Diagnostic.Kind;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.List;
 
 /** Generates code for writing remote invoke packets on the client and server. */
 public class RemoteWriteGenerator{
@@ -51,7 +53,7 @@ public class RemoteWriteGenerator{
 
             //build and write resulting class
             TypeSpec spec = classBuilder.build();
-            JavaFile.builder(packageName, spec).build().writeTo(Utils.filer);
+            JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
         }
     }
 
@@ -72,12 +74,12 @@ public class RemoteWriteGenerator{
         //validate client methods to make sure
         if(methodEntry.where.isClient){
             if(elem.getParameters().isEmpty()){
-                Utils.messager.printMessage(Kind.ERROR, "Client invoke methods must have a first parameter of type Player.", elem);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "Client invoke methods must have a first parameter of type Player.", elem);
                 return;
             }
 
             if(!elem.getParameters().get(0).asType().toString().equals("mindustry.entities.type.Player")){
-                Utils.messager.printMessage(Kind.ERROR, "Client invoke methods should have a first parameter of type Player.", elem);
+                BaseProcessor.messager.printMessage(Kind.ERROR, "Client invoke methods should have a first parameter of type Player.", elem);
                 return;
             }
         }
@@ -161,7 +163,7 @@ public class RemoteWriteGenerator{
                 method.beginControlFlow("if(mindustry.Vars.net.server())");
             }
 
-            if(Utils.isPrimitive(typeName)){ //check if it's a primitive, and if so write it
+            if(BaseProcessor.isPrimitive(typeName)){ //check if it's a primitive, and if so write it
                 if(typeName.equals("boolean")){ //booleans are special
                     method.addStatement("TEMP_BUFFER.put(" + varName + " ? (byte)1 : 0)");
                 }else{
@@ -173,7 +175,7 @@ public class RemoteWriteGenerator{
                 ClassSerializer ser = serializers.get(typeName);
 
                 if(ser == null){ //make sure a serializer exists!
-                    Utils.messager.printMessage(Kind.ERROR, "No @WriteClass method to write class type: '" + typeName + "'", var);
+                    BaseProcessor.messager.printMessage(Kind.ERROR, "No @WriteClass method to write class type: '" + typeName + "'", var);
                     return;
                 }
 
