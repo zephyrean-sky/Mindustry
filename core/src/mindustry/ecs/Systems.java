@@ -27,6 +27,11 @@ import static mindustry.Vars.*;
 public class Systems{
 
     @AutoSystem
+    public static void sync(Posc pos, Syncc sync){
+
+    }
+
+    @AutoSystem
     public static void draw(Posc pos, Drawc draw){
 
     }
