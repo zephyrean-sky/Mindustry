@@ -1,17 +1,22 @@
 package mindustry.annotations.impl;
 
+import arc.ecs.*;
+import arc.ecs.systems.*;
 import arc.func.*;
 import arc.struct.*;
+import arc.util.*;
 import com.squareup.javapoet.*;
-import mindustry.annotations.*;
 import mindustry.annotations.Annotations.*;
+import mindustry.annotations.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
+import javax.lang.model.type.*;
 
 @SuppressWarnings("unchecked")
 @SupportedAnnotationTypes({"mindustry.annotations.Annotations.AutoSystem"})
 public class EcsAnnotationProcessor extends BaseProcessor{
+    Array<TypeElement> types;
     {
         rounds = 2;
     }
@@ -19,17 +24,48 @@ public class EcsAnnotationProcessor extends BaseProcessor{
     @Override
     public void process(RoundEnvironment env, int round) throws Exception{
         if(round == 0){
-            Array<ExecutableElement> types = (Array<ExecutableElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof ExecutableElement);
+            types = (Array<TypeElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof TypeElement);
 
+            Array<ExecutableElement> methods = (Array<ExecutableElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof ExecutableElement);
+            for(ExecutableElement method : methods){
+                Array<VariableElement> params = (Array<VariableElement>)Array.with(method.getParameters());
+                Array<VariableElement> others = params.copy();
+
+                //remove first int parameter as it's not a component...
+                if(others.first().asType().toString().equals("int")){
+                    others.remove(0);
+                }
+
+                TypeSpec.Builder type = TypeSpec.classBuilder(Strings.capitalize(method.getSimpleName().toString()) + "System")
+                .addModifiers(Modifier.PUBLIC).addModifiers(Modifier.FINAL)
+                .superclass(IteratingSystem.class)
+                .addAnnotation(AutoSystem.class)
+                .addMethod(MethodSpec.methodBuilder("process")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(int.class, "entity")
+                    .addAnnotation(Override.class)
+                    .addStatement("$L.$L($L)", method.getEnclosingElement().asType().toString(), method.getSimpleName(),
+                        params.map(p -> p.asType().toString().equals("int") ? "entity" : "$m" + p.getSimpleName() + ".get(entity)").toString(", "))
+                    .build())
+                .addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).addStatement("super(arc.ecs.Aspect.all(" + others.toString(",", p -> p.asType().toString() + ".class") + "))").build());
+
+                for(VariableElement var : others){
+                    String pname = var.getSimpleName().toString();
+                    TypeMirror mirror = var.asType();
+                    type.addField(FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(Mapper.class), TypeName.get(mirror)), "$m" + pname).build());
+                }
+
+                write(type);
+            }
         }else{
-            Array<TypeElement> types = (Array<TypeElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof TypeElement);
+            types.addAll((Array<TypeElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof TypeElement));
             types.sort(e -> -e.getAnnotation(AutoSystem.class).priority());
 
             TypeSpec.Builder type = TypeSpec.classBuilder("AutoSystems").addModifiers(Modifier.PUBLIC);
             type.addField(FieldSpec.builder(Prov[].class, "systems", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
             .initializer("{" + types.map(t -> t.asType().toString() + "::new").toString(", ") + "}").build());
 
-            JavaFile.builder(packageName, type.build()).build().writeTo(filer);
+            write(type);
         }
     }
 }

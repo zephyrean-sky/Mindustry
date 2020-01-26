@@ -236,7 +236,7 @@ public class Vars implements Loadable{
         spawner = new WaveSpawner();
         indexer = new BlockIndexer();
         pathfinder = new Pathfinder();
-        base = new Base(new BaseConfigBuilder().with(new EntityLinkManager()).with((BaseSystem[])Array.with(Systems.systems).map(s -> (BaseSystem)s.get()).toArray(BaseSystem.class)).build());
+        base = new Base(new BaseConfigBuilder().with(new EntityLinkManager()).with((BaseSystem[])Array.with(AutoSystems.systems).map(s -> (BaseSystem)s.get()).toArray(BaseSystem.class)).build());
 
         entities = new Entities();
         playerGroup = entities.add(Player.class).enableMapping();

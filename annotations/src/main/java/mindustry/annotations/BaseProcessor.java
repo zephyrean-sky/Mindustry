@@ -1,9 +1,13 @@
 package mindustry.annotations;
 
+import com.squareup.javapoet.*;
+
 import javax.annotation.processing.*;
 import javax.lang.model.*;
 import javax.lang.model.element.*;
 import javax.lang.model.util.*;
+import javax.tools.Diagnostic.*;
+import java.io.*;
 import java.util.*;
 
 public abstract class BaseProcessor extends AbstractProcessor{
@@ -52,6 +56,18 @@ public abstract class BaseProcessor extends AbstractProcessor{
     @Override
     public SourceVersion getSupportedSourceVersion(){
         return SourceVersion.RELEASE_8;
+    }
+
+    public void write(TypeSpec.Builder type) throws IOException{
+        JavaFile.builder(packageName, type.build()).build().writeTo(filer);
+    }
+
+    public void err(String message){
+        messager.printMessage(Kind.ERROR, message);
+    }
+
+    public void err(String message, Element elem){
+        messager.printMessage(Kind.ERROR, message, elem);
     }
 
     public void process(RoundEnvironment env, int round) throws Exception{

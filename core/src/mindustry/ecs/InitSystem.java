@@ -10,6 +10,9 @@ public class InitSystem extends BaseSystem{
     @Override
     protected void initialize(){
         Vars.base = base;
+
+        //TODO remove
+        int unit = base.create(Archetypes.baseUnit);
     }
 
     @Override
