@@ -27,6 +27,11 @@ import static mindustry.Vars.*;
 public class Systems{
 
     @AutoSystem
+    public static void tile(Tilec tile){
+
+    }
+
+    @AutoSystem
     public static void sync(Posc pos, Syncc sync){
 
     }

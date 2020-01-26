@@ -146,6 +146,11 @@ public class Components{
         public int id;
     }
 
+    public static class Tilec extends Component{
+        public Tile tile;
+        public Block block;
+    }
+
     public static class Effectc extends Component{
         public Effect effect;
     }
