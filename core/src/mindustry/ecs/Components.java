@@ -204,8 +204,8 @@ public class Components{
         }
     }
 
-    public static class Shellc extends Component{
-        //insert unit type / mech here, for the mech-rework branch
+    public static class Unitc extends Component{
+        public UnitDef unit;
     }
 
     public static class Drawc extends Component{
