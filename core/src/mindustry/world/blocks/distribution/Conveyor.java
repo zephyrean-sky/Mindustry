@@ -180,7 +180,7 @@ public class Conveyor extends Block implements Autotiler{
             return;
         }
 
-        float nextMax = e.nextc != null && tile.rotation() == e.nextc.tile.rotation() /** TODO may not accept due to blockage or team */ ? 1f - Math.max(itemSpace - e.nextc.minitem, 0) : 1f;
+        float nextMax = e.nextc != null && tile.rotation() == e.nextc.tile.rotation() ? 1f - Math.max(itemSpace - e.nextc.minitem, 0) : 1f;
 
         for(int i = e.len - 1; i >= 0; i--){
             float nextpos = (i == e.len - 1 ? 100f : e.ys[i + 1]) - itemSpace;
@@ -194,12 +194,12 @@ public class Conveyor extends Block implements Autotiler{
 
             if(e.ys[i] >= 1f && offloadDir(tile, e.ids[i])){
                 //align X position if passing forwards
-                if(e.nextc != null && e.aligned){
+                if(e.aligned){
                     e.nextc.xs[e.nextc.lastInserted] = e.xs[i];
                 }
                 //remove last item
+                e.items.remove(e.ids[i], e.len - i);
                 e.len = Math.min(i, e.len);
-                e.items.remove(e.ids[i], 1);
             }else if(e.ys[i] < e.minitem){
                 e.minitem = e.ys[i];
             }
@@ -281,7 +281,7 @@ public class Conveyor extends Block implements Autotiler{
         ConveyorEntity e = tile.ent();
         if(e.len >= capacity) return false;
         int direction = source == null ? 0 : Math.abs(source.relativeTo(tile.x, tile.y) - tile.rotation());
-        return (((direction == 0) && e.minitem >= itemSpace) || ((direction % 2 == 1) && e.minitem > 0.5f + itemSpace)) && (source == null || !(source.block().rotate && (source.rotation() + 2) % 4 == tile.rotation()));
+        return (((direction == 0) && e.minitem >= itemSpace) || ((direction % 2 == 1) && e.minitem > 0.5f)) && (source == null || !(source.block().rotate && (source.rotation() + 2) % 4 == tile.rotation()));
     }
 
     @Override
