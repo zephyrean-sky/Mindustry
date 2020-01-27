@@ -27,7 +27,12 @@ import static mindustry.Vars.*;
 public class Systems{
 
     @AutoSystem
-    public static void tile(Tilec tile){
+    public static void player(Playerc player, Healthc health){
+
+    }
+
+    @AutoSystem
+    public static void tile(Tilec tile, Healthc health){
 
     }
 
