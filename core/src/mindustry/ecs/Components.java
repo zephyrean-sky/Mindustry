@@ -149,6 +149,11 @@ public class Components{
     public static class Tilec extends Component{
         public Tile tile;
         public Block block;
+        public Array<Tile> proximity = new Array<>(8);
+    }
+
+    public static class TimeScalec extends Component{
+        public float timeScale = 1f, timeScaleDuration;
     }
 
     public static class Effectc extends Component{
