@@ -602,6 +602,7 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
     }
 
     protected void updateTouch(){
+        /*
         if(Units.invalidateTarget(target, this) &&
             !(target instanceof TileEntity && ((TileEntity)target).damaged() && target.isValid() && target.getTeam() == team && mech.canHeal && dst(target) < mech.range && !(((TileEntity)target).block instanceof BuildBlock))){
             target = null;
@@ -709,7 +710,7 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
                 isShooting = true;
             }
 
-        }
+        }*/
     }
 
     //endregion

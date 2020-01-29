@@ -191,6 +191,7 @@ public class Components{
 
     public static class Statusesc extends Component{
         public Array<StatusEntry> list = new Array<>();
+        public Boolf<StatusEffect> immunitites = s -> false;
 
         public static class StatusEntry{
             public StatusEffect effect;

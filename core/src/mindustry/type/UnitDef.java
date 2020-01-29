@@ -2,29 +2,21 @@ package mindustry.type;
 
 import arc.*;
 import arc.audio.*;
-import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
-import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.ctype.*;
 import mindustry.entities.type.*;
-import mindustry.entities.type.base.*;
-import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 
 //TODO change to UnitType or Shell or something
 public class UnitDef extends UnlockableContent{
-    //TODO implement
-    public @NonNull Prov<? extends BaseUnit> constructor = () -> this.flying ? new FlyingUnit() : new GroundUnit();
-    public TypeID typeID;
-
     public boolean flying;
     public float speed = 1.1f, boostSpeed = 0.75f, rotateSpeed = 0.2f, baseRotateSpeed = 0.1f;
     public float drag = 0.3f, mass = 1f, accel = 0.1f;
@@ -53,15 +45,6 @@ public class UnitDef extends UnlockableContent{
 
     public UnitDef(String name){
         super(name);
-
-        //TODO replace with the sane constructor
-        typeID = new TypeID(name, constructor);
-    }
-
-    public BaseUnit create(Team team){
-        BaseUnit unit = constructor.get();
-        unit.init(this, team);
-        return unit;
     }
 
     @Override
