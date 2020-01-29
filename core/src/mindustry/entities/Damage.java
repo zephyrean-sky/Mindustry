@@ -9,7 +9,6 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.Effects.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;

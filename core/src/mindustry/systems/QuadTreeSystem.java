@@ -1,9 +1,10 @@
-package mindustry.ecs;
+package mindustry.systems;
 
 import arc.ecs.*;
 import arc.ecs.annotations.*;
 import arc.ecs.systems.*;
 import mindustry.annotations.Annotations.*;
+import mindustry.ecs.*;
 import mindustry.ecs.Components.*;
 
 @All({Posc.class, Hitboxc.class})

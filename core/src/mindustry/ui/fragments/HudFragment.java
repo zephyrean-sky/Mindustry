@@ -331,7 +331,7 @@ public class HudFragment extends Fragment{
 
         //paused table
         parent.fill(t -> {
-            t.top().visible(() -> state.isPaused()).touchable(Touchable.disabled);
+            t.top().visible(() -> state.paused()).touchable(Touchable.disabled);
             t.table(Tex.buttonTrans, top -> top.add("$paused").pad(5f));
         });
 

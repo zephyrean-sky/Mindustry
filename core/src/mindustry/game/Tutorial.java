@@ -135,14 +135,14 @@ public class Tutorial{
             }
         },
         drillturret(() -> event("ammo")),
-        pause(() -> state.isPaused()){
+        pause(() -> state.paused()){
             void draw(){
                 if(mobile){
                     outline("pause");
                 }
             }
         },
-        unpause(() -> !state.isPaused()){
+        unpause(() -> !state.paused()){
             void draw(){
                 if(mobile){
                     outline("pause");

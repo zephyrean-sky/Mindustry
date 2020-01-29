@@ -7,7 +7,7 @@ import arc.math.Mathf;
 import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.Effects.Effect;
+import mindustry.entities.type.Effect;
 import mindustry.entities.type.TileEntity;
 import mindustry.type.Item;
 import mindustry.type.Liquid;

@@ -39,9 +39,9 @@ import static mindustry.Vars.*;
  * This class is not created in the headless server.
  */
 public class Control implements ApplicationListener, Loadable{
-    public Saves saves;
-    public MusicControl music;
-    public Tutorial tutorial;
+    public Saves saves = new Saves();
+    public MusicControl music = new MusicControl();
+    public Tutorial tutorial = new Tutorial();
     public InputHandler input;
 
     private Interval timer = new Interval(2);
@@ -49,9 +49,6 @@ public class Control implements ApplicationListener, Loadable{
     private boolean wasPaused = false;
 
     public Control(){
-        saves = new Saves();
-        tutorial = new Tutorial();
-        music = new MusicControl();
 
         Events.on(StateChangeEvent.class, event -> {
             if((event.from == State.playing && event.to == State.menu) || (event.from == State.menu && event.to != State.menu)){
@@ -470,7 +467,7 @@ public class Control implements ApplicationListener, Loadable{
             }
 
         }else{
-            if(!state.isPaused()){
+            if(!state.paused()){
                 Time.update();
             }
 

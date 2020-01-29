@@ -741,7 +741,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     }
 
     public void tryDropItems(Tile tile, float x, float y){
-        if(!droppingItem || player.item().amount <= 0 || canTapPlayer(x, y) || state.isPaused() ){
+        if(!droppingItem || player.item().amount <= 0 || canTapPlayer(x, y) || state.paused() ){
             droppingItem = false;
             return;
         }

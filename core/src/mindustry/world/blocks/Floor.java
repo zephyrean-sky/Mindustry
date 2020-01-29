@@ -8,7 +8,7 @@ import arc.graphics.g2d.TextureAtlas.*;
 import arc.math.*;
 import arc.math.geom.*;
 import mindustry.content.*;
-import mindustry.entities.Effects.*;
+import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.graphics.MultiPacker.*;
 import mindustry.type.*;

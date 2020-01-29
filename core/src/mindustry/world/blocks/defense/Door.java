@@ -8,7 +8,6 @@ import arc.graphics.g2d.*;
 import arc.math.geom.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.Effects.*;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.world.*;

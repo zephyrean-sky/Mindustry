@@ -5,7 +5,6 @@ import arc.math.*;
 import mindustry.content.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.Effects.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;

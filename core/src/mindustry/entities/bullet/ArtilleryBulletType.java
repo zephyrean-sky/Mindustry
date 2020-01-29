@@ -3,8 +3,7 @@ package mindustry.entities.bullet;
 import arc.graphics.g2d.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.Effects.*;
-import mindustry.entities.type.Bullet;
+import mindustry.entities.type.*;
 import mindustry.gen.*;
 
 //TODO scale velocity depending on fslope()

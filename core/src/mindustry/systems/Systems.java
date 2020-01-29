@@ -1,4 +1,4 @@
-package mindustry.ecs;
+package mindustry.systems;
 
 import arc.*;
 import arc.math.*;
@@ -7,7 +7,6 @@ import arc.util.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.ecs.Components.*;
-import mindustry.entities.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.traits.*;
 import mindustry.entities.traits.BuilderTrait.*;
@@ -124,9 +123,7 @@ public class Systems{
             }
 
             if(Mathf.chance(0.06 * Time.delta())){
-                Effects.effect(Fx.pulverizeSmall,
-                tile.worldx() + Mathf.range(tilesize / 2f),
-                tile.worldy() + Mathf.range(tilesize / 2f), 0f, item.color);
+                Fx.pulverizeSmall.at(tile.worldx() + Mathf.range(tilesize / 2f), tile.worldy() + Mathf.range(tilesize / 2f), 0f, item.color);
             }
         }
     }

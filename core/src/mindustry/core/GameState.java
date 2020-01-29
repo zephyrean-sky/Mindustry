@@ -34,11 +34,15 @@ public class GameState{
         state = astate;
     }
 
+    public boolean playing(){
+        return state != State.menu;
+    }
+
     public boolean isEditor(){
         return rules.editor;
     }
 
-    public boolean isPaused(){
+    public boolean paused(){
         return (is(State.paused) && !net.active()) || (gameOver && !net.active());
     }
 

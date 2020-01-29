@@ -1,4 +1,4 @@
-package mindustry.ecs;
+package mindustry.systems;
 
 import arc.func.*;
 import arc.struct.*;

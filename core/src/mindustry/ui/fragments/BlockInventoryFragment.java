@@ -140,7 +140,7 @@ public class BlockInventoryFragment extends Fragment{
 
                 container.add(i);
 
-                Boolp canPick = () -> player.acceptsItem(item) && !state.isPaused();
+                Boolp canPick = () -> player.acceptsItem(item) && !state.paused();
 
                 HandCursorListener l = new HandCursorListener();
                 l.setEnabled(canPick);

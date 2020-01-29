@@ -33,10 +33,6 @@ public class Logic implements ApplicationListener{
 
     public Logic(){
         Events.on(WaveEvent.class, event -> {
-            for(Player p : playerGroup.all()){
-                p.respawns = state.rules.respawns;
-            }
-
             if(world.isZone()){
                 world.getZone().updateWave(state.wave);
             }
@@ -119,12 +115,7 @@ public class Logic implements ApplicationListener{
     }
 
     public void reset(){
-        state.wave = 1;
-        state.wavetime = state.rules.waveSpacing;
-        state.gameOver = state.launched = false;
-        state.teams = new Teams();
-        state.rules = new Rules();
-        state.stats = new Stats();
+        state = new GameState();
 
         entities.clear();
         Time.clear();
@@ -215,7 +206,7 @@ public class Logic implements ApplicationListener{
                 state.enemies = unitGroup.count(b -> b.getTeam() == state.rules.waveTeam && b.countsAsEnemy());
             }
 
-            if(!state.isPaused()){
+            if(!state.paused()){
                 Time.update();
 
                 base.process();

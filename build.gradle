@@ -217,18 +217,6 @@ project(":ios"){
 project(":core"){
     apply plugin: "java"
     apply plugin: arc.ecs.gradle.EcsGradlePlugin
-    /*
-    apply plugin: arc.ecs.fluid.gradle.FluidArtemisGradlePlugin
-
-    ext{
-        fluidOutputDir = file("$buildDir/generated/sources/fluid/")
-    }
-        /*
-    fluid{
-        generatedSourcesDirectory = fluidOutputDir
-        classpath = sourceSets.main.runtimeClasspath
-    }
-    compileJava.finalizedBy fluid*/
 
     weave{
         classesDirs = sourceSets.main.output.classesDirs
@@ -236,8 +224,6 @@ project(":core"){
         enablePooledWeaving = true
         generateLinkMutators = true
         optimizeEntitySystems = true
-        
-        //dependsOn build
     }
 
     compileJava.finalizedBy(weave)

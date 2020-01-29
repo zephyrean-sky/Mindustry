@@ -14,7 +14,7 @@ import arc.math.geom.Vec2;
 import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.*;
-import mindustry.entities.Effects.Effect;
+import mindustry.entities.type.Effect;
 import mindustry.entities.type.Bullet;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.traits.TargetTrait;

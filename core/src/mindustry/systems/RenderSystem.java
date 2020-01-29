@@ -1,6 +1,9 @@
-package mindustry.core;
+package mindustry.systems;
 
 import arc.*;
+import arc.ecs.*;
+import arc.ecs.annotations.*;
+import arc.ecs.utils.*;
 import arc.files.*;
 import arc.func.*;
 import arc.graphics.*;
@@ -10,12 +13,10 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
-import arc.util.pooling.*;
+import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
-import mindustry.entities.*;
-import mindustry.entities.effect.*;
-import mindustry.entities.effect.GroundEffectEntity.*;
+import mindustry.ecs.Components.*;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -27,7 +28,9 @@ import mindustry.world.blocks.defense.ForceProjector.*;
 import static arc.Core.*;
 import static mindustry.Vars.*;
 
-public class Renderer implements ApplicationListener{
+@All({Drawc.class})
+@AutoSystem(client = true)
+public class RenderSystem extends BaseEntitySystem{
     public final BlockRenderer blocks = new BlockRenderer();
     public final MinimapRenderer minimap = new MinimapRenderer();
     public final OverlayRenderer overlays = new OverlayRenderer();
@@ -41,67 +44,29 @@ public class Renderer implements ApplicationListener{
     private float camerascale = targetscale;
     private float landscale = 0f, landTime;
     private float minZoomScl = Scl.scl(0.01f);
-    private Rect rect = new Rect(), rect2 = new Rect();
     private float shakeIntensity, shaketime;
 
-    public Renderer(){
+    public RenderSystem(){
         camera = new Camera();
         Shaders.init();
-
-        Effects.setScreenShakeProvider((intensity, duration) -> {
-            shakeIntensity = Math.max(intensity, shakeIntensity);
-            shaketime = Math.max(shaketime, duration);
-        });
-
-        Effects.setEffectProvider((effect, color, x, y, rotation, data) -> {
-            if(effect == Fx.none) return;
-            if(Core.settings.getBool("effects")){
-                Rect view = camera.bounds(rect);
-                Rect pos = rect2.setSize(effect.size).setCenter(x, y);
-
-                if(view.overlaps(pos)){
-
-                    if(!(effect instanceof GroundEffect)){
-                        EffectEntity entity = Pools.obtain(EffectEntity.class, EffectEntity::new);
-                        entity.effect = effect;
-                        entity.color.set(color);
-                        entity.rotation = rotation;
-                        entity.data = data;
-                        entity.id++;
-                        entity.set(x, y);
-                        if(data instanceof Entity_){
-                            entity.setParent((Entity_)data);
-                        }
-                        effectGroup.add(entity);
-                    }else{
-                        GroundEffectEntity entity = Pools.obtain(GroundEffectEntity.class, GroundEffectEntity::new);
-                        entity.effect = effect;
-                        entity.color.set(color);
-                        entity.rotation = rotation;
-                        entity.id++;
-                        entity.data = data;
-                        entity.set(x, y);
-                        if(data instanceof Entity_){
-                            entity.setParent((Entity_)data);
-                        }
-                        groundEffectGroup.add(entity);
-                    }
-                }
-            }
-        });
 
         clearColor = new Color(0f, 0f, 0f, 1f);
     }
 
+    public void shake(float intensity, float duration){
+        shakeIntensity = Math.max(intensity, shakeIntensity);
+        shaketime = Math.max(duration, shaketime);
+    }
+
     @Override
-    public void init(){
+    public void initialize(){
         if(settings.getBool("bloom")){
             setupBloom();
         }
     }
 
     @Override
-    public void update(){
+    public void processSystem(){
         Color.white.set(1f, 1f, 1f, 1f);
 
         camerascale = Mathf.lerpDelta(camerascale, targetscale, 0.1f);
@@ -130,7 +95,7 @@ public class Renderer implements ApplicationListener{
                         camera.position.lerpDelta(position, 0.08f);
                     }
                 }
-            }else if(control.input instanceof DesktopInput && !state.isPaused()){
+            }else if(control.input instanceof DesktopInput && !state.paused()){
                 camera.position.lerpDelta(position, 0.08f);
             }
 
@@ -159,8 +124,8 @@ public class Renderer implements ApplicationListener{
         Events.fire(new DisposeEvent());
     }
 
-    @Override
-    public void resize(int width, int height){
+    @Subscribe
+    public void resize(ResizeEvent event){
         if(settings.getBool("bloom")){
             setupBloom();
         }
@@ -451,4 +416,17 @@ public class Renderer implements ApplicationListener{
         Core.settings.put("animatedshields", hadShields);
     }
 
+    //TODO
+    protected void processEntities(){
+        IntBag actives = subscription.getEntities();
+        int[] ids = subscription.getEntities().getData();
+        for(int i = 0, s = actives.size(); s > i; i++){
+            process(ids[i]);
+        }
+    }
+
+
+    protected void process(int entity){
+
+    }
 }

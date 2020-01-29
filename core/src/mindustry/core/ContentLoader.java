@@ -40,7 +40,6 @@ public class ContentLoader{
         new Loadouts(),
         new TechTree(),
         new Zones(),
-        new TypeIDs(),
 
         //these are not really content classes, but this makes initialization easier
         new LegacyColorMapper(),
@@ -262,7 +261,7 @@ public class ContentLoader{
         return getBy(ContentType.zone);
     }
 
-    public Array<UnitType> units(){
+    public Array<UnitDef> units(){
         return getBy(ContentType.unit);
     }
 }

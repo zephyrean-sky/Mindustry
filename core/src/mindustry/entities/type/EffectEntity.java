@@ -4,7 +4,6 @@ import arc.graphics.Color;
 import arc.util.pooling.Pool.Poolable;
 import arc.util.pooling.Pools;
 import mindustry.entities.Effects;
-import mindustry.entities.Effects.Effect;
 import mindustry.entities.EntityGroup;
 import mindustry.entities.traits.DrawTrait;
 import mindustry.entities.traits.Entity_;

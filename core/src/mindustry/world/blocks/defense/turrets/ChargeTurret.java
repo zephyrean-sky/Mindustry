@@ -4,8 +4,8 @@ import arc.math.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.Effects.*;
 import mindustry.entities.bullet.*;
+import mindustry.entities.type.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.tilesize;

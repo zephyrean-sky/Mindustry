@@ -18,7 +18,6 @@ import mindustry.*;
 import mindustry.content.*;
 import mindustry.content.TechTree.*;
 import mindustry.ctype.*;
-import mindustry.entities.Effects.*;
 import mindustry.entities.bullet.*;
 import mindustry.entities.type.*;
 import mindustry.game.*;

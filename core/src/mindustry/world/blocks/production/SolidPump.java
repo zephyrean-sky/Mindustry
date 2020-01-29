@@ -9,7 +9,7 @@ import arc.util.ArcAnnotate.*;
 import mindustry.content.Fx;
 import mindustry.content.Liquids;
 import mindustry.entities.Effects;
-import mindustry.entities.Effects.Effect;
+import mindustry.entities.type.Effect;
 import mindustry.entities.type.TileEntity;
 import mindustry.graphics.Pal;
 import mindustry.type.Liquid;

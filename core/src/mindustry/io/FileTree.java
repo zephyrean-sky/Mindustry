@@ -1,4 +1,4 @@
-package mindustry.core;
+package mindustry.io;
 
 import arc.*;
 import arc.assets.loaders.*;

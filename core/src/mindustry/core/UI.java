@@ -65,7 +65,6 @@ public class UI implements ApplicationListener, Loadable{
     public ContentInfoDialog content;
     public DeployDialog deploy;
     public TechTreeDialog tech;
-    //public MinimapDialog minimap;
     public SchematicsDialog schematics;
     public ModsDialog mods;
     public ColorPicker picker;
@@ -395,19 +394,17 @@ public class UI implements ApplicationListener, Loadable{
             cont.add(text).colspan(2).wrap().growX().center().get().setAlignment(Align.center);
             cont.row();
 
-            //cont.pane(p -> {
-                for(int i = 0; i < messages.length; i += 2){
-                    String btext = messages[i];
-                    String details = messages[i + 1];
-                    Collapser col = new Collapser(base -> base.pane(t -> t.margin(14f).add(details).color(Color.lightGray).left()), true);
+            for(int i = 0; i < messages.length; i += 2){
+                String btext = messages[i];
+                String details = messages[i + 1];
+                Collapser col = new Collapser(base -> base.pane(t -> t.margin(14f).add(details).color(Color.lightGray).left()), true);
 
-                    cont.add(btext).right();
-                    cont.addButton("$details", Styles.togglet, col::toggle).size(180f, 50f).checked(b -> !col.isCollapsed()).fillX().left();
-                    cont.row();
-                    cont.add(col).colspan(2).pad(2);
-                    cont.row();
-                }
-            //}).colspan(2);
+                cont.add(btext).right();
+                cont.addButton("$details", Styles.togglet, col::toggle).size(180f, 50f).checked(b -> !col.isCollapsed()).fillX().left();
+                cont.row();
+                cont.add(col).colspan(2).pad(2);
+                cont.row();
+            }
 
             cont.addButton("$ok", this::hide).size(300, 50).fillX().colspan(2);
         }}.show();

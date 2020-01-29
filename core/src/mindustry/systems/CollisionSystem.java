@@ -1,4 +1,4 @@
-package mindustry.ecs;
+package mindustry.systems;
 
 import arc.ecs.*;
 import arc.ecs.annotations.*;

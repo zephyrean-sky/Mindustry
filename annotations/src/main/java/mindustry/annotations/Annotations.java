@@ -4,10 +4,33 @@ import java.lang.annotation.*;
 
 public class Annotations{
 
+    //TODO
+    /** Registers this as a dialog in Dialogs.*/
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface UIDialog{
+    }
+
+
+    //TODO
+    /** Registers this as a fragment in Fragments.*/
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface UIFragment{
+    }
+
     /** Automatically registers a system to be used at startup. */
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AutoSystem{
+        int priority() default 0;
+        boolean client() default false;
+    }
+
+    /** Automatically registers a a method to recieve and event. */
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Subscribe{
         int priority() default 0;
     }
 

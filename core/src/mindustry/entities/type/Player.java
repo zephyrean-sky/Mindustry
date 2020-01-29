@@ -53,7 +53,6 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
     public Color color = new Color();
     public UnitDef mech = Mechs.starter;
     public SpawnerTrait spawner, lastSpawner;
-    public int respawns;
 
     public @Nullable NetConnection con;
     public boolean isLocal = false;
@@ -259,7 +258,7 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
     public void draw(){
         if(dead) return;
 
-        if(!movement.isZero() && moved && !state.isPaused()){
+        if(!movement.isZero() && moved && !state.paused()){
             walktime += movement.len() * getFloorOn().speedMultiplier * 2f;
             baseRotation = Mathf.slerpDelta(baseRotation, movement.angle(), 0.13f);
         }
@@ -323,7 +322,7 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
         if(dead) return;
 
         if(isBuilding() && isBuilding){
-            if(!state.isPaused()){
+            if(!state.paused()){
                 drawBuilding();
             }
         }else{

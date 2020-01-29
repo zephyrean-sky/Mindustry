@@ -65,7 +65,7 @@ public class Saves{
         SaveSlot current = this.current;
 
         if(current != null && !state.is(State.menu)
-        && !(state.isPaused() && Core.scene.hasDialog())){
+        && !(state.paused() && Core.scene.hasDialog())){
             if(lastTimestamp != 0){
                 totalPlaytime += Time.timeSinceMillis(lastTimestamp);
             }

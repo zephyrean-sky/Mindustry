@@ -7,7 +7,7 @@ import arc.math.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.Effects.*;
+import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.consumers.*;

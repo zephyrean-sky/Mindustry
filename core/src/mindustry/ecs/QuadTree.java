@@ -289,10 +289,8 @@ public class QuadTree implements Poolable{
         "depth=" + depth + "}";
     }
 
-    /**
-     * Simple container for entity ids and their bounds
-     */
-    public static class Container implements Poolable{
+    /** Simple container for entity ids and their bounds*/
+    static class Container implements Poolable{
         private int eid;
         private float x;
         private float y;
@@ -347,22 +345,6 @@ public class QuadTree implements Poolable{
             width = 0;
             height = 0;
             parent = null;
-        }
-
-        public float getX(){
-            return x;
-        }
-
-        public float getY(){
-            return y;
-        }
-
-        public float getWidth(){
-            return width;
-        }
-
-        public float getHeight(){
-            return height;
         }
     }
 }
