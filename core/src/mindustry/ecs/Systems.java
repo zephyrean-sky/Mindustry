@@ -32,8 +32,29 @@ public class Systems{
     }
 
     @AutoSystem
-    public static void tile(Tilec tile, Healthc health){
+    public static void timeScale(TimeScalec c){
+        c.timeScaleDuration -= Time.delta();
+        if(c.timeScaleDuration <= 0f){
+            c.timeScale = 1f;
+        }
+    }
 
+    @AutoSystem
+    public static void tile(Tilec tc){
+        if(tc.block.idleSound != Sounds.none && tc.block.shouldIdleSound(tc.tile)){
+            loops.play(tc.block.idleSound, tc.tile, tc.block.idleSoundVolume);
+        }
+
+        tc.block.update(tc.tile);
+    }
+
+    @AutoSystem
+    public static void health(int entity, Healthc hc){
+        if(hc.health <= 0 && !hc.dead){
+            hc.dead = true;
+            //TODO onDeath event.
+            base.delete(entity);
+        }
     }
 
     @AutoSystem
