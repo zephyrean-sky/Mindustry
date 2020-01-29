@@ -262,6 +262,7 @@ project(":core"){
         compile "org.lz4:lz4-java:1.4.1"
         compile arcModule("arc-core")
         compile arcModule("extensions:freetype")
+        compile arcModule("extensions:g3d")
         compile arcModule("extensions:arcnet")
         compile arcModule("extensions:ecs:ecs-core")
         compile "org.mozilla:rhino:1.7.11"

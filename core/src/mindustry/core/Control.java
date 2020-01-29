@@ -246,7 +246,9 @@ public class Control implements ApplicationListener, Loadable{
         });
     }
 
-    public void playZone(Zone zone){
+    //TODO remove, make it viable on a server
+    /*public void playZone(Zone zone){
+
         ui.loadAnd(() -> {
             logic.reset();
             net.reset();
@@ -264,6 +266,16 @@ public class Control implements ApplicationListener, Loadable{
             logic.play();
             Events.fire(Trigger.newGame);
         });
+    }*/
+
+    public void playSector(Sector sector){
+        ui.loadAnd(() -> {
+            logic.reset();
+            world.loadSector(sector);
+            state.set(State.playing);
+            logic.play();
+            ui.planet.hide();
+        });
     }
 
     public void playTutorial(){
@@ -274,8 +286,8 @@ public class Control implements ApplicationListener, Loadable{
 
             world.beginMapLoad();
 
-            world.createTiles(zone.generator.width, zone.generator.height);
-            zone.generator.generate(world.getTiles());
+            world.resize(zone.generator.width, zone.generator.height);
+            zone.generator.generate(world.tiles);
 
             Tile coreb = null;
 

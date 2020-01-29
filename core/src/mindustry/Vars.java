@@ -27,6 +27,7 @@ import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;
 import mindustry.net.*;
+import mindustry.type.Weather.*;
 import mindustry.world.blocks.defense.ForceProjector.*;
 
 import java.io.*;
@@ -191,6 +192,7 @@ public class Vars implements Loadable{
     public static EntityGroup<ShieldEntity> shieldGroup;
     public static EntityGroup<Puddle> puddleGroup;
     public static EntityGroup<Fire> fireGroup;
+    public static EntityGroup<WeatherEntity> weatherGroup;
     public static EntityGroup<BaseUnit> unitGroup;
 
     public static Player player;
@@ -249,6 +251,7 @@ public class Vars implements Loadable{
         shieldGroup = entities.add(ShieldEntity.class, false);
         fireGroup = entities.add(Fire.class).enableMapping();
         unitGroup = entities.add(BaseUnit.class).enableMapping();
+        weatherGroup = entities.add(WeatherEntity.class);
 
         for(EntityGroup<?> group : entities.all()){
             group.setRemoveListener(entity -> {

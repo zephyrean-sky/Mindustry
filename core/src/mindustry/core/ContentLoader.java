@@ -39,6 +39,8 @@ public class ContentLoader{
         new Blocks(),
         new Loadouts(),
         new TechTree(),
+        new Weathers(),
+        new Planets(),
         new Zones(),
 
         //these are not really content classes, but this makes initialization easier
