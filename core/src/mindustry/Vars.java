@@ -183,18 +183,6 @@ public class Vars implements Loadable{
     public static NetServer netServer;
     public static NetClient netClient;
 
-    public static Entities entities;
-    public static EntityGroup<Player> playerGroup;
-    public static EntityGroup<TileEntity> tileGroup;
-    public static EntityGroup<Bullet> bulletGroup;
-    public static EntityGroup<EffectEntity> effectGroup;
-    public static EntityGroup<DrawTrait> groundEffectGroup;
-    public static EntityGroup<ShieldEntity> shieldGroup;
-    public static EntityGroup<Puddle> puddleGroup;
-    public static EntityGroup<Fire> fireGroup;
-    public static EntityGroup<WeatherEntity> weatherGroup;
-    public static EntityGroup<BaseUnit> unitGroup;
-
     public static Player player;
 
     @Override
@@ -240,26 +228,6 @@ public class Vars implements Loadable{
         indexer = new BlockIndexer();
         pathfinder = new Pathfinder();
         base = new Base(new BaseConfigBuilder().with(new EntityLinkManager()).with((BaseSystem[])Array.with(AutoSystems.systems).map(s -> (BaseSystem)s.get()).toArray(BaseSystem.class)).build());
-
-        entities = new Entities();
-        playerGroup = entities.add(Player.class).enableMapping();
-        tileGroup = entities.add(TileEntity.class, false);
-        bulletGroup = entities.add(Bullet.class).enableMapping();
-        effectGroup = entities.add(EffectEntity.class, false);
-        groundEffectGroup = entities.add(DrawTrait.class, false);
-        puddleGroup = entities.add(Puddle.class).enableMapping();
-        shieldGroup = entities.add(ShieldEntity.class, false);
-        fireGroup = entities.add(Fire.class).enableMapping();
-        unitGroup = entities.add(BaseUnit.class).enableMapping();
-        weatherGroup = entities.add(WeatherEntity.class);
-
-        for(EntityGroup<?> group : entities.all()){
-            group.setRemoveListener(entity -> {
-                if(entity instanceof SyncTrait && net.client()){
-                    netClient.addRemovedEntity((entity).getID());
-                }
-            });
-        }
 
         state = new GameState();
         data = new GlobalData();

@@ -158,14 +158,12 @@ public class EntityGroup<T extends Entity_> implements Iterable<T>{
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void intersect(float x, float y, float width, float height, Cons<? super T> out){
         //don't waste time for empty groups
         if(isEmpty()) return;
         tree().getIntersect(out, x, y, width, height);
     }
 
-    @SuppressWarnings("unchecked")
     public Array<T> intersect(float x, float y, float width, float height){
         intersectArray.clear();
         //don't waste time for empty groups

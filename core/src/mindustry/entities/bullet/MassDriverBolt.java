@@ -24,7 +24,7 @@ public class MassDriverBolt extends BulletType{
     }
 
     @Override
-    public void draw(mindustry.entities.type.Bullet b){
+    public void draw(Bullet b){
         float w = 11f, h = 13f;
 
         Draw.color(Pal.bulletYellowBack);
@@ -37,7 +37,7 @@ public class MassDriverBolt extends BulletType{
     }
 
     @Override
-    public void update(mindustry.entities.type.Bullet b){
+    public void update(Bullet b){
         //data MUST be an instance of DriverBulletData
         if(!(b.getData() instanceof DriverBulletData)){
             hit(b);
@@ -83,7 +83,7 @@ public class MassDriverBolt extends BulletType{
     }
 
     @Override
-    public void despawned(mindustry.entities.type.Bullet b){
+    public void despawned(Bullet b){
         super.despawned(b);
 
         if(!(b.getData() instanceof DriverBulletData)) return;

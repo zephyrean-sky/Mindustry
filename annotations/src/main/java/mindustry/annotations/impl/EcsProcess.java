@@ -15,7 +15,7 @@ import javax.lang.model.type.*;
 
 @SuppressWarnings("unchecked")
 @SupportedAnnotationTypes({"mindustry.annotations.Annotations.AutoSystem"})
-public class EcsAnnotationProcessor extends BaseProcessor{
+public class EcsProcess extends BaseProcessor{
     Array<TypeElement> types;
     {
         rounds = 2;
