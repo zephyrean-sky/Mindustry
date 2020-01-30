@@ -9,6 +9,7 @@ import arc.scene.ui.layout.*;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.type.*;

@@ -8,7 +8,7 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;

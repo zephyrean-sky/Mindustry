@@ -6,7 +6,6 @@ import arc.graphics.Texture.TextureFilter;
 import arc.graphics.g2d.Draw;
 import arc.graphics.gl.FrameBuffer;
 import arc.util.Disposable;
-import mindustry.entities.type.Player;
 
 import static arc.Core.camera;
 import static arc.Core.graphics;

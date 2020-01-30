@@ -1,7 +1,7 @@
 package mindustry.world.blocks.storage;
 
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.type.Item;
 import mindustry.world.Block;
 import mindustry.world.Tile;

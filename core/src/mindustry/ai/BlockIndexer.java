@@ -7,8 +7,8 @@ import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.traits.*;
-import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.type.*;
@@ -213,7 +213,7 @@ public class BlockIndexer{
         return returnArray;
     }
 
-    public void notifyTileDamaged(TileEntity entity){
+    public void notifyTileDamaged(mindustry.entities.TileEntity entity){
         if(damagedTiles[(int)entity.getTeam().id] == null){
             damagedTiles[(int)entity.getTeam().id] = new ObjectSet<>();
         }
@@ -222,11 +222,11 @@ public class BlockIndexer{
         set.add(entity.tile);
     }
 
-    public TileEntity findEnemyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
+    public mindustry.entities.TileEntity findEnemyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
         for(Team enemy : activeTeams){
             if(!team.isEnemy(enemy)) continue;
 
-            TileEntity entity = indexer.findTile(enemy, x, y, range, pred, true);
+            mindustry.entities.TileEntity entity = indexer.findTile(enemy, x, y, range, pred, true);
             if(entity != null){
                 return entity;
             }
@@ -235,12 +235,12 @@ public class BlockIndexer{
         return null;
     }
 
-    public TileEntity findTile(Team team, float x, float y, float range, Boolf<Tile> pred){
+    public mindustry.entities.TileEntity findTile(Team team, float x, float y, float range, Boolf<Tile> pred){
         return findTile(team, x, y, range, pred, false);
     }
 
-    public TileEntity findTile(Team team, float x, float y, float range, Boolf<Tile> pred, boolean usePriority){
-        TileEntity closest = null;
+    public mindustry.entities.TileEntity findTile(Team team, float x, float y, float range, Boolf<Tile> pred, boolean usePriority){
+        mindustry.entities.TileEntity closest = null;
         float dst = 0;
         float range2 = range*range;
 

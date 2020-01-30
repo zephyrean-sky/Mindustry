@@ -5,7 +5,6 @@ import arc.util.serialization.Json.Serializable;
 import arc.util.serialization.JsonValue;
 import mindustry.content.*;
 import mindustry.ctype.ContentType;
-import mindustry.entities.type.BaseUnit;
 import mindustry.type.*;
 
 import static mindustry.Vars.content;
@@ -19,7 +18,7 @@ public class SpawnGroup implements Serializable{
     public static final int never = Integer.MAX_VALUE;
 
     /** The unit type spawned */
-    public UnitType type;
+    public UnitDef type;
     /** When this spawn should end */
     public int end = never;
     /** When this spawn should start */
@@ -37,7 +36,7 @@ public class SpawnGroup implements Serializable{
     /** Items this unit spawns with. Null to disable. */
     public ItemStack items;
 
-    public SpawnGroup(UnitType type){
+    public SpawnGroup(UnitDef type){
         this.type = type;
     }
 

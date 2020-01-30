@@ -2,7 +2,7 @@ package mindustry.world.consumers;
 
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.world.Tile;
 import mindustry.world.meta.*;
 

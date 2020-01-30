@@ -6,7 +6,6 @@ import arc.math.Angles;
 import arc.math.Mathf;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.type.Bullet;
 import mindustry.graphics.Pal;
 import mindustry.world.blocks.distribution.MassDriver.DriverBulletData;
 

@@ -3,7 +3,7 @@ package mindustry.world.consumers;
 import arc.struct.*;
 import arc.func.Boolf;
 import arc.scene.ui.layout.Table;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.type.Liquid;
 import mindustry.ui.Cicon;
 import mindustry.ui.MultiReqImage;

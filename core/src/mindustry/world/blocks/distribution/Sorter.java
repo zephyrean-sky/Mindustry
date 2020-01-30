@@ -6,6 +6,7 @@ import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;

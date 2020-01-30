@@ -1,13 +1,13 @@
 package mindustry.entities.bullet;
 
-import arc.graphics.Color;
-import arc.math.Mathf;
-import arc.util.Time;
-import mindustry.content.Fx;
-import mindustry.entities.Effects;
-import mindustry.entities.type.Bullet;
+import arc.graphics.*;
+import arc.math.*;
+import arc.util.*;
+import mindustry.content.*;
+import mindustry.entities.*;
+import mindustry.entities.type.*;
 import mindustry.gen.*;
-import mindustry.graphics.Pal;
+import mindustry.graphics.*;
 
 public class MissileBulletType extends BasicBulletType{
     protected Color trailColor = Pal.missileYellowBack;

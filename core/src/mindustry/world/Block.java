@@ -20,6 +20,7 @@ import arc.util.pooling.*;
 import mindustry.ctype.*;
 import mindustry.ctype.ContentType;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.effect.*;
 import mindustry.entities.type.*;
 import mindustry.gen.*;

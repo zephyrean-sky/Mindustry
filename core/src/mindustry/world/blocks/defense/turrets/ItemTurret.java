@@ -5,6 +5,7 @@ import arc.struct.*;
 import arc.scene.ui.layout.*;
 import mindustry.*;
 import mindustry.content.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.bullet.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;

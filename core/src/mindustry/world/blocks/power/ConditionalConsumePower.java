@@ -1,7 +1,7 @@
 package mindustry.world.blocks.power;
 
 import arc.func.Boolf;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.world.consumers.ConsumePower;
 
 /** A power consumer that only activates sometimes. */

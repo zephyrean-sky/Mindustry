@@ -1,11 +1,10 @@
-package mindustry.entities.type;
+package mindustry.entities;
 
 import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
-import mindustry.entities.*;
 
 public class Effect{
     private static final EffectContainer container = new EffectContainer();

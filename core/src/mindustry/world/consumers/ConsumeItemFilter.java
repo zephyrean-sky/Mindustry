@@ -4,7 +4,7 @@ import arc.struct.*;
 import arc.func.*;
 import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.ui.Cicon;
@@ -46,12 +46,12 @@ public class ConsumeItemFilter extends Consume{
     }
 
     @Override
-    public void update(TileEntity entity){
+    public void update(mindustry.entities.TileEntity entity){
 
     }
 
     @Override
-    public void trigger(TileEntity entity){
+    public void trigger(mindustry.entities.TileEntity entity){
         for(int i = 0; i < content.items().size; i++){
             Item item = content.item(i);
             if(entity.items != null && entity.items.has(item) && this.filter.get(item)){

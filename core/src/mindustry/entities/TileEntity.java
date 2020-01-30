@@ -1,17 +1,16 @@
-package mindustry.entities.type;
+package mindustry.entities;
 
+import arc.*;
 import arc.math.*;
-import mindustry.annotations.Annotations.*;
-import arc.Events;
-import arc.struct.Array;
-import arc.struct.ObjectSet;
-import arc.math.geom.Point2;
-import arc.math.geom.Vec2;
-import arc.util.*;
+import arc.math.geom.*;
+import arc.struct.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.EntityGroup;
+import arc.util.*;
+import mindustry.annotations.Annotations.*;
+import mindustry.entities.traits.*;
+import mindustry.entities.type.*;
+import mindustry.game.EventType.*;
 import mindustry.game.*;
-import mindustry.game.EventType.BlockDestroyEvent;
 import mindustry.gen.*;
 import mindustry.world.*;
 import mindustry.world.consumers.*;
@@ -21,7 +20,7 @@ import java.io.*;
 
 import static mindustry.Vars.*;
 
-public class TileEntity extends BaseEntity implements TargetTrait, HealthTrait{
+public class TileEntity{
     public static final float timeToSleep = 60f * 1; //1 second to fall asleep
     private static final ObjectSet<Tile> tmpTiles = new ObjectSet<>();
     /** This value is only used for debugging. */

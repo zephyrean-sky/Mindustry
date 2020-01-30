@@ -5,7 +5,7 @@ import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.world.blocks.storage.CoreBlock.*;
 
 import static mindustry.Vars.*;
@@ -54,7 +54,7 @@ public class Teams{
         return false;
     }
 
-    public void eachEnemyCore(Team team, Cons<TileEntity> ret){
+    public void eachEnemyCore(Team team, Cons<mindustry.entities.TileEntity> ret){
         for(TeamData data : active){
             if(areEnemies(team, data.team)){
                 for(TileEntity tile : data.cores){

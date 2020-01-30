@@ -9,7 +9,6 @@ import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.type.*;
 import mindustry.entities.type.base.*;
 import mindustry.game.*;
 import mindustry.io.*;

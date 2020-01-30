@@ -17,6 +17,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.ecs.Components.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -87,7 +88,7 @@ public class RenderSystem extends BaseEntitySystem{
             Vec2 position = Tmp.v3.set(player);
 
             if(player.isDead()){
-                TileEntity core = player.getClosestCore();
+                mindustry.entities.TileEntity core = player.getClosestCore();
                 if(core != null){
                     if(player.spawner == null){
                         camera.position.lerpDelta(core.x, core.y, 0.08f);

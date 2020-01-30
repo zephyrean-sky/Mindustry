@@ -13,7 +13,7 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;

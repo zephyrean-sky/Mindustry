@@ -2,7 +2,7 @@ package mindustry.world.meta;
 
 import arc.struct.OrderedMap;
 import arc.func.Func;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.ui.Bar;
 
 public class BlockBars{

@@ -12,6 +12,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.net.Administration;
 import mindustry.game.EventType.*;

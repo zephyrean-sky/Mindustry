@@ -4,6 +4,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;

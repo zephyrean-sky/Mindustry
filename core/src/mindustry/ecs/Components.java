@@ -10,7 +10,6 @@ import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.entities.*;
 import mindustry.entities.bullet.*;
-import mindustry.entities.type.*;
 import mindustry.game.*;
 import mindustry.net.*;
 import mindustry.type.*;
@@ -23,7 +22,7 @@ import static mindustry.Vars.*;
 public class Components{
 
     public static class Healthc extends Component{
-        public float health, maxHealth;
+        public float health, maxHealth, hitTime;
         public boolean dead;
 
         public void kill(){
@@ -196,11 +195,11 @@ public class Components{
     }
 
     public static class Legsc extends Component{
-        public float rotation;
+        public float rotation, drownTime;
     }
 
     public static class Spawningc extends Component{
-        public SpawnerTrait spawner, lastSpawner;
+        public @EntityId int spawner, lastSpawner;
     }
 
     public static class Itemc extends Component{

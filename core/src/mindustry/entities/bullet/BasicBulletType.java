@@ -1,11 +1,10 @@
 package mindustry.entities.bullet;
 
-import arc.Core;
-import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.TextureRegion;
-import mindustry.entities.type.Bullet;
-import mindustry.graphics.Pal;
+import arc.*;
+import arc.graphics.*;
+import arc.graphics.g2d.*;
+import mindustry.entities.type.*;
+import mindustry.graphics.*;
 
 /** An extended BulletType for most ammo-based bullets shot from turrets and units. */
 public class BasicBulletType extends BulletType{

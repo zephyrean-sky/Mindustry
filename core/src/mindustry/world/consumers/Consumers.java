@@ -4,7 +4,7 @@ import arc.struct.*;
 import arc.func.Boolf;
 import arc.util.Structs;
 import mindustry.Vars;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.type.*;
 import mindustry.world.blocks.power.ConditionalConsumePower;
 import mindustry.world.meta.BlockStats;

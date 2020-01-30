@@ -9,7 +9,7 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.content.*;
-import mindustry.entities.type.*;
+import mindustry.entities.*;
 import mindustry.graphics.*;
 import mindustry.graphics.MultiPacker.*;
 import mindustry.type.*;

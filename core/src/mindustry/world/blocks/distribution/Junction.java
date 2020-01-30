@@ -1,8 +1,7 @@
 package mindustry.world.blocks.distribution;
 
 import arc.util.Time;
-import mindustry.entities.type.TileEntity;
-import mindustry.entities.type.Unit;
+import mindustry.entities.TileEntity;
 import mindustry.gen.BufferItem;
 import mindustry.type.Item;
 import mindustry.world.Block;

@@ -10,6 +10,7 @@ import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;

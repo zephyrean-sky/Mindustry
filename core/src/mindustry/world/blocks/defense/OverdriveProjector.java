@@ -6,7 +6,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.math.Mathf;
 import arc.util.Time;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;

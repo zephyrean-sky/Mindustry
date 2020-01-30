@@ -3,7 +3,7 @@ package mindustry.world.blocks.distribution;
 import arc.struct.Array;
 import arc.util.Time;
 import mindustry.content.*;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.type.Item;
 import mindustry.world.*;
 import mindustry.world.meta.BlockGroup;

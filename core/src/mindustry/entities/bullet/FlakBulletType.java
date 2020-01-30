@@ -4,7 +4,6 @@ import arc.math.geom.Rect;
 import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.Units;
-import mindustry.entities.type.Bullet;
 
 public class FlakBulletType extends BasicBulletType{
     protected static Rect rect = new Rect();

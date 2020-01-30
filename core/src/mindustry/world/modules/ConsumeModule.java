@@ -1,6 +1,6 @@
 package mindustry.world.modules;
 
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.world.consumers.Consume;
 
 import java.io.*;

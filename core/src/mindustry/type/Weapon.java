@@ -5,8 +5,8 @@ import arc.audio.*;
 import arc.graphics.g2d.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.content.*;
+import mindustry.entities.*;
 import mindustry.entities.bullet.*;
-import mindustry.entities.type.*;
 import mindustry.gen.*;
 
 public class Weapon{

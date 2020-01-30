@@ -6,7 +6,7 @@ import arc.util.*;
 import com.codedisaster.steamworks.*;
 import mindustry.*;
 import mindustry.content.*;
-import mindustry.entities.type.*;
+import mindustry.entities.*;
 import mindustry.entities.units.*;
 import mindustry.game.EventType.*;
 import mindustry.game.Stats.*;

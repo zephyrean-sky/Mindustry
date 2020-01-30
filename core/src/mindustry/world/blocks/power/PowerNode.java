@@ -9,6 +9,7 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
@@ -39,7 +40,7 @@ public class PowerNode extends PowerBlock{
 
     @Override
     public void configured(Tile tile, Player player, int value){
-        TileEntity entity = tile.entity;
+        mindustry.entities.TileEntity entity = tile.entity;
         Tile other = world.tile(value);
         boolean contains = entity.power.links.contains(value), valid = other != null && other.entity != null && other.entity.power != null;
 
@@ -172,7 +173,7 @@ public class PowerNode extends PowerBlock{
 
     @Override
     public boolean onConfigureTileTapped(Tile tile, Tile other){
-        TileEntity entity = tile.ent();
+        mindustry.entities.TileEntity entity = tile.ent();
         other = other.link();
 
         if(linkValid(tile, other)){

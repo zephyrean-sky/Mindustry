@@ -9,6 +9,7 @@ import arc.math.geom.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.world.*;

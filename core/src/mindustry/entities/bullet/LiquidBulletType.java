@@ -7,7 +7,6 @@ import arc.util.ArcAnnotate.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.effect.*;
-import mindustry.entities.type.Bullet;
 import mindustry.type.*;
 import mindustry.world.*;
 

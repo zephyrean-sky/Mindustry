@@ -9,7 +9,7 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;

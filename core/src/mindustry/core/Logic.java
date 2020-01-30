@@ -7,7 +7,7 @@ import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;

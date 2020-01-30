@@ -1,22 +1,20 @@
 package mindustry.systems;
 
 import arc.*;
-import arc.graphics.*;
-import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
-import mindustry.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.ecs.Components.*;
 import mindustry.entities.*;
+import mindustry.entities.TileEntity;
 import mindustry.entities.effect.*;
+import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.gen.*;
-import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;

@@ -1,6 +1,6 @@
 package mindustry.world.consumers;
 
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 
 public abstract class ConsumeLiquidBase extends Consume{
     /** amount used per frame */

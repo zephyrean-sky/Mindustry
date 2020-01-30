@@ -1,9 +1,8 @@
 package mindustry.world.blocks.defense;
 
 import arc.math.Mathf;
-import mindustry.entities.type.Bullet;
 import mindustry.entities.effect.Lightning;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.graphics.Pal;
 
 public class SurgeWall extends Wall{

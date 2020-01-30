@@ -8,7 +8,7 @@ import arc.math.Mathf;
 import arc.util.*;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;

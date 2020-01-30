@@ -4,7 +4,6 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
 import mindustry.entities.effect.Lightning;
-import mindustry.entities.type.Unit;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.world.Block;

@@ -9,6 +9,7 @@ import arc.math.Mathf;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.Call;

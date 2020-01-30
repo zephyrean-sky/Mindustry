@@ -1,6 +1,6 @@
 package mindustry.world;
 
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.game.Team;
 import mindustry.world.modules.*;
 

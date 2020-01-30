@@ -10,7 +10,7 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -240,7 +240,7 @@ public class Tutorial{
         //utility
 
         static void placeBlocks(){
-            TileEntity core = state.teams.playerCores().first();
+            mindustry.entities.TileEntity core = state.teams.playerCores().first();
             for(int i = 0; i < blocksToBreak; i++){
                 world.ltile(core.tile.x + blockOffset, core.tile.y + i).remove();
                 world.tile(core.tile.x + blockOffset, core.tile.y + i).setBlock(Blocks.scrapWall, state.rules.defaultTeam);

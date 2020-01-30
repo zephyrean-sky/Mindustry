@@ -3,7 +3,7 @@ package mindustry.world.blocks.power;
 import arc.Core;
 import arc.struct.EnumSet;
 import arc.util.Strings;
-import mindustry.entities.type.TileEntity;
+import mindustry.entities.TileEntity;
 import mindustry.graphics.Pal;
 import mindustry.ui.Bar;
 import mindustry.world.Tile;

@@ -11,6 +11,7 @@ import mindustry.content.Blocks;
 import mindustry.content.Fx;
 import mindustry.entities.Damage;
 import mindustry.entities.Effects;
+import mindustry.entities.TileEntity;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.WorldLoadEvent;
 import mindustry.game.SpawnGroup;
@@ -91,8 +92,8 @@ public class WaveSpawner{
         }
 
         if(state.rules.attackMode && state.teams.isActive(state.rules.waveTeam) && !state.teams.playerCores().isEmpty()){
-            TileEntity firstCore = state.teams.playerCores().first();
-            for(TileEntity core : state.rules.waveTeam.cores()){
+            mindustry.entities.TileEntity firstCore = state.teams.playerCores().first();
+            for(mindustry.entities.TileEntity core : state.rules.waveTeam.cores()){
                 Tmp.v1.set(firstCore).sub(core.x, core.y).limit(coreMargin + core.block.size*tilesize);
                 cons.accept(core.x + Tmp.v1.x, core.y + Tmp.v1.y, false);
             }

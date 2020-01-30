@@ -5,7 +5,7 @@ import arc.ecs.*;
 import arc.util.*;
 import mindustry.core.*;
 import mindustry.core.GameState.*;
-import mindustry.entities.type.*;
+import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;

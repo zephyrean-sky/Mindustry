@@ -4,13 +4,11 @@ import arc.*;
 import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
-import arc.struct.*;
 import arc.util.*;
 import arc.util.pooling.*;
 import mindustry.content.*;
 import mindustry.entities.effect.*;
 import mindustry.entities.effect.GroundEffectEntity.*;
-import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 
 import static arc.Core.camera;
