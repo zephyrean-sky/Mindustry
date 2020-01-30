@@ -18,6 +18,7 @@ import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class OverlayRenderer{
     private static final float indicatorLength = 14f;

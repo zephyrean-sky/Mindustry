@@ -20,6 +20,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class NuclearReactor extends PowerGenerator{
     public final int timerFuel = timers++;

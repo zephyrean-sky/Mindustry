@@ -13,6 +13,7 @@ import mindustry.type.*;
 import mindustry.ui.Cicon;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 //TODO remove
 public class ZoneInfoDialog extends FloatingDialog{

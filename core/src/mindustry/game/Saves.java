@@ -20,6 +20,7 @@ import java.text.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Saves{
     private Array<SaveSlot> saves = new Array<>();

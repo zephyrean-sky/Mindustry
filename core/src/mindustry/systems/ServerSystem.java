@@ -14,7 +14,7 @@ import mindustry.content.*;
 import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.net.Administration;
 import mindustry.game.EventType.*;
@@ -34,6 +34,7 @@ import java.util.zip.*;
 
 import static arc.util.Log.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @AutoSystem
 public class ServerSystem extends BaseSystem{
@@ -161,7 +162,7 @@ public class ServerSystem extends BaseSystem{
                 return;
             }
 
-            boolean preventDuplicates = headless && netServer.admins.getStrict();
+            boolean preventDuplicates = headless && server.admins.getStrict();
 
             if(preventDuplicates){
                 for(Player player : playerGroup.all()){
@@ -227,7 +228,7 @@ public class ServerSystem extends BaseSystem{
 
             platform.updateRPC();
 
-            Events.fire(new PlayerConnect(player));
+            Event.firePlayerConnect(player);
         });
 
         net.handleServer(InvokePacket.class, (con, packet) -> {
@@ -436,7 +437,7 @@ public class ServerSystem extends BaseSystem{
 
                 player.getInfo().lastSyncTime = Time.millis();
                 Call.onWorldDataBegin(player.con);
-                netServer.sendWorldData(player);
+                server.sendWorldData(player);
             }
         });
     }
@@ -497,7 +498,7 @@ public class ServerSystem extends BaseSystem{
         NetConnection connection = player.con;
         if(connection == null || snapshotID < connection.lastRecievedClientSnapshot) return;
 
-        boolean verifyPosition = !player.isDead() && netServer.admins.getStrict() && headless;
+        boolean verifyPosition = !player.isDead() && server.admins.getStrict() && headless;
 
         if(connection.lastRecievedClientTime == 0) connection.lastRecievedClientTime = Time.millis() - 16;
 
@@ -531,7 +532,7 @@ public class ServerSystem extends BaseSystem{
                 continue;
             }else if(connection.rejectedRequests.contains(r -> r.breaking == req.breaking && r.x == req.x && r.y == req.y)){ //check if request was recently rejected, and skip it if so
                 continue;
-            }else if(!netServer.admins.allowAction(player, req.breaking ? ActionType.breakBlock : ActionType.placeBlock, tile, action -> { //make sure request is allowed by the server
+            }else if(!server.admins.allowAction(player, req.breaking ? ActionType.breakBlock : ActionType.placeBlock, tile, action -> { //make sure request is allowed by the server
                 action.block = req.block;
                 action.rotation = req.rotation;
                 action.config = req.config;
@@ -599,7 +600,7 @@ public class ServerSystem extends BaseSystem{
             //not a real issue, because server owners may want to do just that
             state.wavetime = 0f;
         }else if(action == AdminAction.ban){
-            netServer.admins.banPlayerIP(other.con.address);
+            server.admins.banPlayerIP(other.con.address);
             other.con.kick(KickReason.banned);
             Log.info("&lc{0} has banned {1}.", player.name, other.name);
         }else if(action == AdminAction.kick){
@@ -631,7 +632,7 @@ public class ServerSystem extends BaseSystem{
             player.sendMessage(Config.motd.string());
         }
 
-        Events.fire(new PlayerJoin(player));
+        Event.firePlayerJoin(player);
     }
 
     public boolean isWaitingForPlayers(){
@@ -690,7 +691,7 @@ public class ServerSystem extends BaseSystem{
         syncStream.reset();
 
         short sent = 0;
-        for(TileEntity entity : tileGroup.all()){
+        for(TileData entity : tileGroup.all()){
             if(!entity.block.sync) continue;
             sent ++;
 

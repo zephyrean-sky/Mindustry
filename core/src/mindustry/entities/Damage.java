@@ -18,6 +18,7 @@ import mindustry.graphics.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Utility class for damaging in an area. */
 public class Damage{

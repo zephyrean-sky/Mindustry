@@ -10,7 +10,7 @@ import arc.util.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -24,6 +24,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MechPad extends Block{
     public @NonNull Mech mech;
@@ -77,7 +78,7 @@ public class MechPad extends Block{
         if(resetSpawner) entity.player.lastSpawner = null;
         entity.player = null;
 
-        Events.fire(new MechChangeEvent(player, player.mech));
+        Event.fireMechChange(player, player.mech);
     }
 
     protected static boolean checkValidTap(Tile tile, Player player){
@@ -136,7 +137,7 @@ public class MechPad extends Block{
         }
     }
 
-    public class MechFactoryEntity extends TileEntity implements SpawnerTrait{
+    public class MechFactoryEntity extends TileData implements SpawnerTrait{
         Player player;
         boolean sameMech;
         float progress;

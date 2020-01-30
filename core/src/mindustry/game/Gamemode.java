@@ -5,6 +5,7 @@ import arc.func.*;
 import mindustry.maps.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Defines preset rule sets. */
 public enum Gamemode{

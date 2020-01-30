@@ -8,7 +8,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.ecs.Components.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.effect.*;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
@@ -23,6 +23,7 @@ import mindustry.world.blocks.BuildBlock.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Systems{
 
@@ -85,7 +86,7 @@ public class Systems{
         final float mineDistance = 70f;
 
         Tile tile = mine.tile;
-        TileEntity core = team.core();
+        TileData core = team.core();
 
         //TODO
         Unit fakeUnitForBlockAcceptanceRemoveLater = null;
@@ -145,7 +146,7 @@ public class Systems{
             }
         }
 
-        TileEntity core = team.core();
+        TileData core = team.core();
 
         //nothing to build.
         if(build.curr() == null) return;
@@ -182,7 +183,7 @@ public class Systems{
         Unit removeThisLaterWhenECSIsImplementedProperly = null;
 
         if(tile.entity instanceof BuildEntity && !current.initialized){
-            Core.app.post(() -> Events.fire(new BuildSelectEvent(tile, team, (BuilderTrait)removeThisLaterWhenECSIsImplementedProperly, current.breaking)));
+            Core.app.post(() -> Event.fireBuildSelect(tile, team, (BuilderTrait)removeThisLaterWhenECSIsImplementedProperly, current.breaking));
             current.initialized = true;
         }
 
@@ -218,7 +219,7 @@ public class Systems{
     }
 
     /** @return whether this request should be skipped, in favor of the next one. */
-    private static boolean shouldSkip(BuildRequest request, @Nullable TileEntity core){
+    private static boolean shouldSkip(BuildRequest request, @Nullable TileData core){
         //requests that you have at least *started* are considered
         if(state.rules.infiniteResources || request.breaking || !request.initialized || core == null) return false;
         return request.stuck && !core.items.has(request.block.requirements);

@@ -10,6 +10,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class FloatingDialog extends Dialog{
     private boolean wasPaused;

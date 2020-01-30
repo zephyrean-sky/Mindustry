@@ -6,6 +6,7 @@ import arc.assets.*;
 import arc.ecs.*;
 import arc.ecs.link.*;
 import arc.files.*;
+import arc.func.*;
 import arc.graphics.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
@@ -15,9 +16,6 @@ import arc.util.io.*;
 import mindustry.ai.*;
 import mindustry.core.*;
 import mindustry.entities.*;
-import mindustry.entities.effect.*;
-import mindustry.entities.traits.*;
-import mindustry.entities.type.*;
 import mindustry.game.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;
@@ -27,13 +25,13 @@ import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;
 import mindustry.net.*;
-import mindustry.systems.*;
 
 import java.io.*;
 import java.nio.charset.*;
 import java.util.*;
 
 import static arc.Core.settings;
+import static mindustry.gen.Sys.ui;
 
 public class Vars implements Loadable{
     /** Whether to load locales.*/
@@ -175,14 +173,7 @@ public class Vars implements Loadable{
     public static BlockIndexer indexer;
     public static Pathfinder pathfinder;
 
-    public static InputSystem control;
-    public static Logic logic;
-    public static Renderer renderer;
-    public static UISystem ui;
-    public static ServerSystem netServer;
-    public static ClientSystem netClient;
-
-    public static Player player;
+    public static int player;
 
     @Override
     public void loadAsync(){
@@ -226,7 +217,7 @@ public class Vars implements Loadable{
         spawner = new WaveSpawner();
         indexer = new BlockIndexer();
         pathfinder = new Pathfinder();
-        base = new Base(new BaseConfigBuilder().with(new EntityLinkManager()).with((BaseSystem[])Array.with(AutoSystems.systems).map(s -> (BaseSystem)s.get()).toArray(BaseSystem.class)).build());
+        base = new Base(new BaseConfigBuilder().with(new EntityLinkManager()).with(Sys.initializers.map(Prov::get).as(BaseSystem.class)).build());
 
         state = new GameState();
         data = new GlobalData();

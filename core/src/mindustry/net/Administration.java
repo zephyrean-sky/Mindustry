@@ -160,7 +160,7 @@ public class Administration{
 
         bannedIPs.add(ip);
         save();
-        Events.fire(new PlayerIpBanEvent(ip));
+        Event.firePlayerIpBan(ip);
         return true;
     }
 
@@ -172,7 +172,7 @@ public class Administration{
         getCreateInfo(id).banned = true;
 
         save();
-        Events.fire(new PlayerBanEvent(Vars.playerGroup.find(p -> id.equals(p.uuid))));
+        Event.firePlayerBan(Vars.playerGroup.find(p -> id.equals(p.uuid)));
         return true;
     }
 
@@ -194,7 +194,7 @@ public class Administration{
 
         if(found){
             save();
-            Events.fire(new PlayerIpUnbanEvent(ip));
+            Event.firePlayerIpUnban(ip);
         }
         return found;
     }
@@ -212,7 +212,7 @@ public class Administration{
         info.banned = false;
         bannedIPs.removeAll(info.ips, false);
         save();
-        Events.fire(new PlayerUnbanEvent(Vars.playerGroup.find(p -> id.equals(p.uuid))));
+        Event.firePlayerUnban(Vars.playerGroup.find(p -> id.equals(p.uuid)));
         return true;
     }
 

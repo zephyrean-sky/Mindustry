@@ -14,6 +14,7 @@ import mindustry.type.*;
 import mindustry.ui.Cicon;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Fx implements ContentList{
     public static Effect

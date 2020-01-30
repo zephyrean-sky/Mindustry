@@ -27,6 +27,7 @@ import mindustry.ui.layout.*;
 import mindustry.ui.layout.TreeLayout.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 //TODO remove (legacy, no longer needed)
 public class DeployDialog extends FloatingDialog{

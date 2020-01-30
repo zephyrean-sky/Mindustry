@@ -6,7 +6,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.math.Mathf;
 import arc.util.Time;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
@@ -14,6 +14,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class OverdriveProjector extends Block{
     private static final IntSet healed = new IntSet();
@@ -118,7 +119,7 @@ public class OverdriveProjector extends Block{
         Draw.reset();
     }
 
-    class OverdriveEntity extends TileEntity{
+    class OverdriveEntity extends TileData{
         float heat;
         float charge = Mathf.random(reload);
         float phaseHeat;

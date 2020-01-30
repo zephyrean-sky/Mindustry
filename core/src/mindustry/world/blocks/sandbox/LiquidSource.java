@@ -9,7 +9,7 @@ import arc.scene.ui.layout.*;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.type.*;
@@ -20,6 +20,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LiquidSource extends Block{
     public static Liquid lastLiquid;
@@ -113,7 +114,7 @@ public class LiquidSource extends Block{
         tile.<LiquidSourceEntity>ent().source = value == -1 ? null : content.liquid(value);
     }
 
-    class LiquidSourceEntity extends TileEntity{
+    class LiquidSourceEntity extends TileData{
         public @Nullable Liquid source = null;
 
         @Override

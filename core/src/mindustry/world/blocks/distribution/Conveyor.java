@@ -10,7 +10,7 @@ import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
@@ -23,6 +23,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Conveyor extends Block implements Autotiler{
     private static final float itemSpace = 0.4f;
@@ -310,7 +311,7 @@ public class Conveyor extends Block implements Autotiler{
         }
     }
 
-    public static class ConveyorEntity extends TileEntity{
+    public static class ConveyorEntity extends TileData{
         //parallel array data
         Item[] ids = new Item[capacity];
         float[] xs = new float[capacity];
@@ -318,7 +319,7 @@ public class Conveyor extends Block implements Autotiler{
         //amount of items, always < capacity
         int len = 0;
         //next entity
-        @Nullable TileEntity next;
+        @Nullable TileData next;
         @Nullable ConveyorEntity nextc;
         //whether the next conveyor's rotation == tile rotation
         boolean aligned;

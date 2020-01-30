@@ -2,7 +2,7 @@ package mindustry.world.blocks.distribution;
 
 import arc.math.Mathf;
 import arc.util.Time;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.Item;
 import mindustry.world.*;
 import mindustry.world.meta.BlockGroup;
@@ -113,7 +113,7 @@ public class OverflowGate extends Block{
         return to;
     }
 
-    public class OverflowGateEntity extends TileEntity{
+    public class OverflowGateEntity extends TileData{
         Item lastItem;
         Tile lastInput;
         float time;

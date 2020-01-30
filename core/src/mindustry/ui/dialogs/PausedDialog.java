@@ -6,6 +6,7 @@ import mindustry.core.GameState.*;
 import mindustry.gen.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PausedDialog extends FloatingDialog{
     private SaveDialog save = new SaveDialog();
@@ -105,7 +106,7 @@ public class PausedDialog extends FloatingDialog{
                 Core.settings.save();
             }
             wasClient = net.client();
-            if(net.client()) netClient.disconnectQuietly();
+            if(net.client()) client.disconnectQuietly();
             runExitSave();
             hide();
         });

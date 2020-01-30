@@ -7,6 +7,7 @@ import mindustry.ctype.ContentList;
 import mindustry.game.EventType.*;
 import mindustry.type.StatusEffect;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class StatusEffects implements ContentList{
     public static StatusEffect none, burning, freezing, wet, melting, tarred, overdrive, shielded, shocked, corroded, boss;

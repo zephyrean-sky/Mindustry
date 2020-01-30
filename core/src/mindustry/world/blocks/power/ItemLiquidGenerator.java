@@ -13,6 +13,7 @@ import mindustry.world.consumers.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /**
  * Power generation block which can use items, liquids or both as input sources for power production.

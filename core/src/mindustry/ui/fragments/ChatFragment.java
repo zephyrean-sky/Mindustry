@@ -19,6 +19,7 @@ import mindustry.ui.*;
 import static arc.Core.*;
 import static mindustry.Vars.net;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ChatFragment extends Table{
     private final static int messagesShown = 10;

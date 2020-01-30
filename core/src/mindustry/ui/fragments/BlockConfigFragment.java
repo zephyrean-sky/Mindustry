@@ -11,6 +11,7 @@ import mindustry.core.GameState.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class BlockConfigFragment extends Fragment{
     private Table table = new Table();

@@ -10,6 +10,7 @@ import mindustry.graphics.*;
 import mindustry.world.blocks.storage.CoreBlock.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Team implements Comparable<Team>{
     public final byte id;

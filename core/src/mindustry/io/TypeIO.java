@@ -16,6 +16,7 @@ import java.io.*;
 import java.nio.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Class for specifying read/write methods for code generation. */
 @SuppressWarnings("unused")

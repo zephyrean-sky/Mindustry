@@ -8,7 +8,6 @@ import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
 import mindustry.entities.effect.Puddle;
-import mindustry.entities.TileEntity;
 import mindustry.ctype.UnlockableContent;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
@@ -221,7 +220,7 @@ public abstract class BlockStorage extends UnlockableContent{
      * @param todump Item to dump. Can be null to dump anything.
      */
     public boolean tryDump(Tile tile, Item todump){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
         if(entity == null || !hasItems || tile.entity.items.total() == 0 || (todump != null && !entity.items.has(todump)))
             return false;
 

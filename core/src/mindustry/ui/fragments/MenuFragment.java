@@ -18,6 +18,7 @@ import mindustry.graphics.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MenuFragment extends Fragment{
     private Table container, submenu;

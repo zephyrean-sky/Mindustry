@@ -9,7 +9,7 @@ import arc.math.*;
 import arc.math.geom.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -23,6 +23,7 @@ import mindustry.world.meta.*;
 import mindustry.world.modules.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class CoreBlock extends StorageBlock{
     public Mech mech = Mechs.starter;
@@ -85,7 +86,7 @@ public class CoreBlock extends StorageBlock{
     public void onProximityUpdate(Tile tile){
         CoreEntity entity = tile.ent();
 
-        for(TileEntity other : state.teams.cores(tile.getTeam())){
+        for(TileData other : state.teams.cores(tile.getTeam())){
             if(other.tile != tile){
                 entity.items = other.items;
             }
@@ -98,7 +99,7 @@ public class CoreBlock extends StorageBlock{
             t.<StorageBlockEntity>ent().linkedCore = tile;
         });
 
-        for(TileEntity other : state.teams.cores(tile.getTeam())){
+        for(TileData other : state.teams.cores(tile.getTeam())){
             if(other.tile == tile) continue;
             entity.storageCapacity += other.block.itemCapacity + other.proximity().sum(e -> isContainer(e) ? e.block().itemCapacity : 0);
         }
@@ -197,7 +198,7 @@ public class CoreBlock extends StorageBlock{
         if(net.server() || !net.active()){
             super.handleItem(item, tile, source);
             if(state.rules.tutorial){
-                Events.fire(new CoreItemDeliverEvent());
+                Event.fireCoreItemDeliver();
             }
         }
     }
@@ -232,7 +233,7 @@ public class CoreBlock extends StorageBlock{
         return entity.spawnPlayer != null;
     }
 
-    public class CoreEntity extends TileEntity implements SpawnerTrait{
+    public class CoreEntity extends TileData implements SpawnerTrait{
         protected Player spawnPlayer;
         protected float progress;
         protected float time;
@@ -246,7 +247,7 @@ public class CoreBlock extends StorageBlock{
 
         @Override
         public void updateSpawning(Player player){
-            if(!netServer.isWaitingForPlayers() && spawnPlayer == null){
+            if(!server.isWaitingForPlayers() && spawnPlayer == null){
                 spawnPlayer = player;
                 progress = 0f;
                 player.mech = mech;

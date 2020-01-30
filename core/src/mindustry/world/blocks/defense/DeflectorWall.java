@@ -5,7 +5,7 @@ import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.world.*;
 
@@ -42,7 +42,7 @@ public class DeflectorWall extends Wall{
     }
 
     @Override
-    public void handleBulletHit(mindustry.entities.TileEntity entity, Bullet bullet){
+    public void handleBulletHit(TileData entity, Bullet bullet){
         super.handleBulletHit(entity, bullet);
 
         //doesn't reflect powerful bullets
@@ -73,7 +73,7 @@ public class DeflectorWall extends Wall{
         ((DeflectorEntity)entity).hit = 1f;
     }
 
-    public static class DeflectorEntity extends TileEntity{
+    public static class DeflectorEntity extends TileData{
         public float hit;
     }
 }

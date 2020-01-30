@@ -6,7 +6,7 @@ import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;
@@ -140,7 +140,7 @@ public class Sorter extends Block{
         });
     }
 
-    public class SorterEntity extends TileEntity{
+    public class SorterEntity extends TileData{
         @Nullable Item sortItem;
 
         @Override

@@ -13,6 +13,7 @@ import mindustry.input.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MinimapFragment extends Fragment{
     private boolean shown;

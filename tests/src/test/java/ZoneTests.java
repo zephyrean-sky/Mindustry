@@ -10,6 +10,7 @@ import mindustry.world.blocks.storage.*;
 import org.junit.jupiter.api.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 

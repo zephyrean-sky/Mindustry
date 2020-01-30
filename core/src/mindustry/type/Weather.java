@@ -11,6 +11,7 @@ import mindustry.type.Weather.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public abstract class Weather<T extends WeatherEntity> extends MappableContent{
     protected float duration = 100f;

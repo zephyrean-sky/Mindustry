@@ -19,6 +19,7 @@ import java.io.*;
 import java.net.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Handles control of bleeding edge builds. */
 public class BeControl{
@@ -127,7 +128,7 @@ public class BeControl{
                     progress -> {},
                     () -> false,
                     () -> Core.app.post(() -> {
-                        netServer.kickAll(KickReason.serverRestarting);
+                        server.kickAll(KickReason.serverRestarting);
                         Threads.sleep(32);
 
                         Log.info("&lcVersion downloaded, exiting. Note that if you are not using a auto-restart script, the server will not restart automatically.");

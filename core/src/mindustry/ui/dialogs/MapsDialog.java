@@ -16,6 +16,7 @@ import mindustry.maps.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MapsDialog extends FloatingDialog{
     private FloatingDialog dialog;
@@ -56,7 +57,7 @@ public class MapsDialog extends FloatingDialog{
                     hide();
                     ui.editor.show();
                     ui.editor.editor.getTags().put("name", text);
-                    Events.fire(new MapMakeEvent());
+                    Event.fireMapMake();
                 });
 
                 if(maps.byName(text) != null){

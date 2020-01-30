@@ -9,7 +9,7 @@ import arc.util.pooling.Pool.*;
 import arc.util.pooling.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -18,6 +18,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MassDriver extends Block{
     public float range;
@@ -312,7 +313,7 @@ public class MassDriver extends Block{
         }
     }
 
-    public class MassDriverEntity extends TileEntity{
+    public class MassDriverEntity extends TileData{
         int link = -1;
         float rotation = 90;
         float reload = 0f;

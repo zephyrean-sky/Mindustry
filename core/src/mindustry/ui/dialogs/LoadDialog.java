@@ -20,6 +20,7 @@ import mindustry.ui.Styles;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LoadDialog extends FloatingDialog{
     ScrollPane pane;

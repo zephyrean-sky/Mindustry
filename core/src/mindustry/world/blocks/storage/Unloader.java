@@ -5,7 +5,7 @@ import arc.graphics.g2d.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;
@@ -83,7 +83,7 @@ public class Unloader extends Block{
      * Returns null if no items are there.
      */
     private Item removeItem(Tile tile, Item item){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
 
         if(item == null){
             return entity.items.take();
@@ -102,7 +102,7 @@ public class Unloader extends Block{
      * If the item is null, it should return whether it has ANY items.
      */
     private boolean hasItem(Tile tile, Item item){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
         if(item == null){
             return entity.items.total() > 0;
         }else{
@@ -130,7 +130,7 @@ public class Unloader extends Block{
         });
     }
 
-    public static class UnloaderEntity extends TileEntity{
+    public static class UnloaderEntity extends TileData{
         public Item sortItem = null;
 
         @Override

@@ -36,6 +36,7 @@ import java.util.*;
 
 import static arc.util.Log.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ServerControl implements ApplicationListener{
     private static final int roundExtraTime = 12;
@@ -152,7 +153,7 @@ public class ServerControl implements ApplicationListener{
 
                 play(true, () -> world.loadMap(map, map.applyRules(lastMode)));
             }else{
-                netServer.kickAll(KickReason.gameover);
+                server.kickAll(KickReason.gameover);
                 state.set(State.menu);
                 net.closeServer();
             }
@@ -251,7 +252,7 @@ public class ServerControl implements ApplicationListener{
 
                 info("Map loaded.");
 
-                netServer.openServer();
+                server.openServer();
             }catch(MapException e){
                 Log.err(e.map.name() + ": " + e.getMessage());
             }
@@ -428,18 +429,18 @@ public class ServerControl implements ApplicationListener{
 
         handler.register("playerlimit", "[off/somenumber]", "Set the server player limit.", arg -> {
             if(arg.length == 0){
-                info("Player limit is currently &lc{0}.", netServer.admins.getPlayerLimit() == 0 ? "off" : netServer.admins.getPlayerLimit());
+                info("Player limit is currently &lc{0}.", server.admins.getPlayerLimit() == 0 ? "off" : server.admins.getPlayerLimit());
                 return;
             }
             if(arg[0].equals("off")){
-                netServer.admins.setPlayerLimit(0);
+                server.admins.setPlayerLimit(0);
                 info("Player limit disabled.");
                 return;
             }
 
             if(Strings.canParsePostiveInt(arg[0]) && Strings.parseInt(arg[0]) > 0){
                 int lim = Strings.parseInt(arg[0]);
-                netServer.admins.setPlayerLimit(lim);
+                server.admins.setPlayerLimit(lim);
                 info("Player limit is now &lc{0}.", lim);
             }else{
                 err("Limit must be a number above 0.");
@@ -484,28 +485,28 @@ public class ServerControl implements ApplicationListener{
 
         handler.register("subnet-ban", "[add/remove] [address]", "Ban a subnet. This simply rejects all connections with IPs starting with some string.", arg -> {
             if(arg.length == 0){
-                Log.info("Subnets banned: &lc{0}", netServer.admins.getSubnetBans().isEmpty() ? "<none>" : "");
-                for(String subnet : netServer.admins.getSubnetBans()){
+                Log.info("Subnets banned: &lc{0}", server.admins.getSubnetBans().isEmpty() ? "<none>" : "");
+                for(String subnet : server.admins.getSubnetBans()){
                     Log.info("&ly  " + subnet + "");
                 }
             }else if(arg.length == 1){
                 err("You must provide a subnet to add or remove.");
             }else{
                 if(arg[0].equals("add")){
-                    if(netServer.admins.getSubnetBans().contains(arg[1])){
+                    if(server.admins.getSubnetBans().contains(arg[1])){
                         err("That subnet is already banned.");
                         return;
                     }
 
-                    netServer.admins.addSubnetBan(arg[1]);
+                    server.admins.addSubnetBan(arg[1]);
                     Log.info("Banned &ly{0}&lc**", arg[1]);
                 }else if(arg[0].equals("remove")){
-                    if(!netServer.admins.getSubnetBans().contains(arg[1])){
+                    if(!server.admins.getSubnetBans().contains(arg[1])){
                         err("That subnet isn't banned.");
                         return;
                     }
 
-                    netServer.admins.removeSubnetBan(arg[1]);
+                    server.admins.removeSubnetBan(arg[1]);
                     Log.info("Unbanned &ly{0}&lc**", arg[1]);
                 }else{
                     err("Incorrect usage. You must provide add/remove as the second argument.");
@@ -514,34 +515,34 @@ public class ServerControl implements ApplicationListener{
         });
 
         handler.register("whitelisted", "List the entire whitelist.", arg -> {
-            if(netServer.admins.getWhitelisted().isEmpty()){
+            if(server.admins.getWhitelisted().isEmpty()){
                 info("&lyNo whitelisted players found.");
                 return;
             }
 
             info("&lyWhitelist:");
-            netServer.admins.getWhitelisted().each(p -> Log.info("- &ly{0}", p.lastName));
+            server.admins.getWhitelisted().each(p -> Log.info("- &ly{0}", p.lastName));
         });
 
         handler.register("whitelist-add", "<ID>", "Add a player to the whitelist by ID.", arg -> {
-            PlayerInfo info = netServer.admins.getInfoOptional(arg[0]);
+            PlayerInfo info = server.admins.getInfoOptional(arg[0]);
             if(info == null){
                 err("Player ID not found. You must use the ID displayed when a player joins a server.");
                 return;
             }
 
-            netServer.admins.whitelist(arg[0]);
+            server.admins.whitelist(arg[0]);
             info("Player &ly'{0}'&lg has been whitelisted.", info.lastName);
         });
 
         handler.register("whitelist-remove", "<ID>", "Remove a player to the whitelist by ID.", arg -> {
-            PlayerInfo info = netServer.admins.getInfoOptional(arg[0]);
+            PlayerInfo info = server.admins.getInfoOptional(arg[0]);
             if(info == null){
                 err("Player ID not found. You must use the ID displayed when a player joins a server.");
                 return;
             }
 
-            netServer.admins.unwhitelist(arg[0]);
+            server.admins.unwhitelist(arg[0]);
             info("Player &ly'{0}'&lg has been un-whitelisted.", info.lastName);
         });
 
@@ -589,25 +590,25 @@ public class ServerControl implements ApplicationListener{
 
         handler.register("ban", "<type-id/name/ip> <username/IP/ID...>", "Ban a person.", arg -> {
             if(arg[0].equals("id")){
-                netServer.admins.banPlayerID(arg[1]);
+                server.admins.banPlayerID(arg[1]);
                 info("Banned.");
             }else if(arg[0].equals("name")){
                 Player target = playerGroup.find(p -> p.name.equalsIgnoreCase(arg[1]));
                 if(target != null){
-                    netServer.admins.banPlayer(target.uuid);
+                    server.admins.banPlayer(target.uuid);
                     info("Banned.");
                 }else{
                     err("No matches found.");
                 }
             }else if(arg[0].equals("ip")){
-                netServer.admins.banPlayerIP(arg[1]);
+                server.admins.banPlayerIP(arg[1]);
                 info("Banned.");
             }else{
                 err("Invalid type.");
             }
 
             for(Player player : playerGroup.all()){
-                if(netServer.admins.isIDBanned(player.uuid)){
+                if(server.admins.isIDBanned(player.uuid)){
                     Call.sendMessage("[scarlet] " + player.name + " has been banned.");
                     player.con.kick(KickReason.banned);
                 }
@@ -615,7 +616,7 @@ public class ServerControl implements ApplicationListener{
         });
 
         handler.register("bans", "List all banned IPs and IDs.", arg -> {
-            Array<PlayerInfo> bans = netServer.admins.getBanned();
+            Array<PlayerInfo> bans = server.admins.getBanned();
 
             if(bans.size == 0){
                 info("No ID-banned players have been found.");
@@ -626,14 +627,14 @@ public class ServerControl implements ApplicationListener{
                 }
             }
 
-            Array<String> ipbans = netServer.admins.getBannedIPs();
+            Array<String> ipbans = server.admins.getBannedIPs();
 
             if(ipbans.size == 0){
                 info("No IP-banned players have been found.");
             }else{
                 info("&lmBanned players [IP]:");
                 for(String string : ipbans){
-                    PlayerInfo info = netServer.admins.findByIP(string);
+                    PlayerInfo info = server.admins.findByIP(string);
                     if(info != null){
                         info(" &lm '{0}' / Last known name: '{1}' / ID: '{2}'", string, info.lastName, info.id);
                     }else{
@@ -645,13 +646,13 @@ public class ServerControl implements ApplicationListener{
 
         handler.register("unban", "<ip/ID>", "Completely unban a person by IP or ID.", arg -> {
             if(arg[0].contains(".")){
-                if(netServer.admins.unbanPlayerIP(arg[0])){
+                if(server.admins.unbanPlayerIP(arg[0])){
                     info("Unbanned player by IP: {0}.", arg[0]);
                 }else{
                     err("That IP is not banned!");
                 }
             }else{
-                if(netServer.admins.unbanPlayerID(arg[0])){
+                if(server.admins.unbanPlayerID(arg[0])){
                     info("Unbanned player by ID: {0}.", arg[0]);
                 }else{
                     err("That ID is not banned!");
@@ -668,7 +669,7 @@ public class ServerControl implements ApplicationListener{
             Player target = playerGroup.find(p -> p.name.equals(arg[0]));
 
             if(target != null){
-                netServer.admins.adminPlayer(target.uuid, target.usid);
+                server.admins.adminPlayer(target.uuid, target.usid);
                 target.isAdmin = true;
                 info("Admin-ed player: {0}", arg[0]);
             }else{
@@ -685,7 +686,7 @@ public class ServerControl implements ApplicationListener{
             Player target = playerGroup.find(p -> p.name.equals(arg[0]));
 
             if(target != null){
-                netServer.admins.unAdminPlayer(target.uuid);
+                server.admins.unAdminPlayer(target.uuid);
                 target.isAdmin = false;
                 info("Un-admin-ed player: {0}", arg[0]);
             }else{
@@ -694,7 +695,7 @@ public class ServerControl implements ApplicationListener{
         });
 
         handler.register("admins", "List all admins.", arg -> {
-            Array<PlayerInfo> admins = netServer.admins.getAdmins();
+            Array<PlayerInfo> admins = server.admins.getAdmins();
 
             if(admins.size == 0){
                 info("No admins have been found.");
@@ -734,7 +735,7 @@ public class ServerControl implements ApplicationListener{
                     state.rules.zone = null;
                     info("Save loaded.");
                     state.set(State.playing);
-                    netServer.openServer();
+                    server.openServer();
                 }catch(Throwable t){
                     err("Failed to load save. Outdated or corrupt file.");
                 }
@@ -772,12 +773,12 @@ public class ServerControl implements ApplicationListener{
 
             info("&lyCore destroyed.");
             inExtraRound = false;
-            Events.fire(new GameOverEvent(Team.crux));
+            Event.fireGameOver(Team.crux);
         });
 
         handler.register("info", "<IP/UUID/name...>", "Find player info(s). Can optionally check for all names or IPs a player has had.", arg -> {
 
-            ObjectSet<PlayerInfo> infos = netServer.admins.findByName(arg[0]);
+            ObjectSet<PlayerInfo> infos = server.admins.findByName(arg[0]);
 
             if(infos.size > 0){
                 info("&lgPlayers found: {0}", infos.size);
@@ -798,7 +799,7 @@ public class ServerControl implements ApplicationListener{
 
         handler.register("search", "<name...>", "Search players who have used part of a name.", arg -> {
 
-            ObjectSet<PlayerInfo> infos = netServer.admins.searchNames(arg[0]);
+            ObjectSet<PlayerInfo> infos = server.admins.searchNames(arg[0]);
 
             if(infos.size > 0){
                 info("&lgPlayers found: {0}", infos.size);
@@ -880,9 +881,9 @@ public class ServerControl implements ApplicationListener{
 
                 p.reset();
                 if(state.rules.pvp){
-                    p.setTeam(netServer.assignTeam(p, new ArrayIterable<>(players)));
+                    p.setTeam(server.assignTeam(p, new ArrayIterable<>(players)));
                 }
-                netServer.sendWorldData(p);
+                server.sendWorldData(p);
             }
             inExtraRound = false;
         };

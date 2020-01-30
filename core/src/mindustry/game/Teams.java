@@ -5,10 +5,11 @@ import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.world.blocks.storage.CoreBlock.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Class for various team-based utilities. */
 public class Teams{
@@ -54,10 +55,10 @@ public class Teams{
         return false;
     }
 
-    public void eachEnemyCore(Team team, Cons<mindustry.entities.TileEntity> ret){
+    public void eachEnemyCore(Team team, Cons<TileData> ret){
         for(TeamData data : active){
             if(areEnemies(team, data.team)){
-                for(TileEntity tile : data.cores){
+                for(TileData tile : data.cores){
                     ret.get(tile);
                 }
             }

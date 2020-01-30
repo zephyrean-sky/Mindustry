@@ -27,6 +27,7 @@ import mindustry.world.blocks.storage.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Maps{
     /** List of all built-in maps. Filenames only. */

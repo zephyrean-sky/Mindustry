@@ -19,6 +19,7 @@ import mindustry.ui.Cicon;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class CustomRulesDialog extends FloatingDialog{
     private Table main;

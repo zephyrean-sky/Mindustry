@@ -29,6 +29,7 @@ import mindustry.ui.layout.TreeLayout.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class TechTreeDialog extends FloatingDialog{
     private final float nodeSize = Scl.scl(60f);
@@ -314,7 +315,7 @@ public class TechTreeDialog extends FloatingDialog{
             rebuild();
             Core.scene.act();
             Sounds.unlock.play();
-            Events.fire(new ResearchEvent(node.block));
+            Event.fireResearch(node.block);
         }
 
         void rebuild(){

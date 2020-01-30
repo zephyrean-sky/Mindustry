@@ -5,7 +5,7 @@ import arc.graphics.g2d.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;
@@ -93,7 +93,7 @@ public class ItemSource extends Block{
         return false;
     }
 
-    public class ItemSourceEntity extends TileEntity{
+    public class ItemSourceEntity extends TileData{
         Item outputItem;
 
         @Override

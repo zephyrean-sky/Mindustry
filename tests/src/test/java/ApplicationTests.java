@@ -20,6 +20,7 @@ import mindustry.world.blocks.*;
 import org.junit.jupiter.api.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ApplicationTests{
@@ -219,7 +220,7 @@ public class ApplicationTests{
         world.tile(0, 0).setBlock(Blocks.itemSource);
         world.tile(0, 0).configureAny(Items.copper.id);
 
-        Array<TileEntity> entities = Array.with(world.tile(0, 0).entity);
+        Array<TileData> entities = Array.with(world.tile(0, 0).entity);
 
         for(int i = 0; i < length; i++){
             world.tile(i + 1, 0).setBlock(Blocks.conveyor);
@@ -241,12 +242,12 @@ public class ApplicationTests{
 
         //warmup
         for(int i = 0; i < 100000; i++){
-            entities.each(TileEntity::update);
+            entities.each(TileData::update);
         }
 
         Time.mark();
         for(int i = 0; i < 200000; i++){
-            entities.each(TileEntity::update);
+            entities.each(TileData::update);
         }
         Log.info(Time.elapsed() + "ms to process " + items[0] + " items");
         assertTrue(items[0] > 0);

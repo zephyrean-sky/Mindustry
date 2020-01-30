@@ -18,6 +18,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public abstract class SaveVersion extends SaveFileReader{
     public int version;

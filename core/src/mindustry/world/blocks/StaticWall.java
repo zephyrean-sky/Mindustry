@@ -7,6 +7,7 @@ import mindustry.graphics.CacheLayer;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class StaticWall extends Rock{
     TextureRegion large;

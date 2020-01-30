@@ -17,7 +17,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.ecs.Components.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -28,6 +28,7 @@ import mindustry.world.blocks.defense.ForceProjector.*;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @All({Drawc.class})
 @AutoSystem(client = true)
@@ -88,7 +89,7 @@ public class RenderSystem extends BaseEntitySystem{
             Vec2 position = Tmp.v3.set(player);
 
             if(player.isDead()){
-                mindustry.entities.TileEntity core = player.getClosestCore();
+                TileData core = player.getClosestCore();
                 if(core != null){
                     if(player.spawner == null){
                         camera.position.lerpDelta(core.x, core.y, 0.08f);
@@ -122,7 +123,7 @@ public class RenderSystem extends BaseEntitySystem{
             bloom.dispose();
             bloom = null;
         }
-        Events.fire(new DisposeEvent());
+        Event.fireDispose();
     }
 
     @Subscribe
@@ -280,7 +281,7 @@ public class RenderSystem extends BaseEntitySystem{
     private void drawLanding(){
         if(landTime > 0 && player.getClosestCore() != null){
             float fract = landTime / Fx.coreLand.lifetime;
-            TileEntity entity = player.getClosestCore();
+            TileData entity = player.getClosestCore();
 
             TextureRegion reg = entity.block.icon(Cicon.full);
             float scl = Scl.scl(4f) / camerascale;

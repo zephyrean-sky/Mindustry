@@ -7,8 +7,10 @@ import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.*;
 import mindustry.world.*;
+import mindustry.world.TileData;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Utility class for unit and team interactions.*/
 public class Units{
@@ -69,18 +71,18 @@ public class Units{
     }
 
     /** Returns the neareset damaged tile. */
-    public static TileEntity findDamagedTile(Team team, float x, float y){
+    public static TileData findDamagedTile(Team team, float x, float y){
         Tile tile = Geometry.findClosest(x, y, indexer.getDamaged(team));
         return tile == null ? null : tile.entity;
     }
 
     /** Returns the neareset ally tile in a range. */
-    public static TileEntity findAllyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
+    public static TileData findAllyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
         return indexer.findTile(team, x, y, range, pred);
     }
 
     /** Returns the neareset enemy tile in a range. */
-    public static TileEntity findEnemyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
+    public static TileData findEnemyTile(Team team, float x, float y, float range, Boolf<Tile> pred){
         if(team == Team.derelict) return null;
 
         return indexer.findEnemyTile(team, x, y, range, pred);

@@ -16,6 +16,7 @@ import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.io.*;
+import mindustry.io.FileTree;
 import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;
@@ -24,6 +25,7 @@ import mindustry.ui.*;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public abstract class ClientLauncher extends ApplicationCore implements Platform{
     private static final int loadingFPS = 20;
@@ -127,7 +129,7 @@ public abstract class ClientLauncher extends ApplicationCore implements Platform
                 }
                 mods.eachClass(Mod::init);
                 finished = true;
-                Events.fire(new ClientLoadEvent());
+                Event.fireClientLoad();
                 super.resize(graphics.getWidth(), graphics.getHeight());
                 app.post(() -> app.post(() -> app.post(() -> app.post(() -> super.resize(graphics.getWidth(), graphics.getHeight())))));
             }

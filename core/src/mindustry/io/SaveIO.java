@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.zip.InflaterInputStream;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SaveIO{
     /** Format header. This is the string 'MSAV' in ASCII. */

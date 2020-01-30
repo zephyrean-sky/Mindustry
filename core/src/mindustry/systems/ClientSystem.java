@@ -31,6 +31,7 @@ import java.io.*;
 import java.util.zip.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @AutoSystem
 public class ClientSystem extends BaseSystem{
@@ -161,12 +162,12 @@ public class ClientSystem extends BaseSystem{
             throw new ValidateException(player, "Player has sent a message above the text limit.");
         }
 
-        Events.fire(new PlayerChatEvent(player, message));
+        Event.firePlayerChat(player, message);
 
         //check if it's a command
-        CommandResponse response = netServer.clientCommands.handleMessage(message, player);
+        CommandResponse response = server.clientCommands.handleMessage(message, player);
         if(response.type == ResponseType.noCommand){ //no command to handle
-            message = netServer.admins.filterMessage(player, message);
+            message = server.admins.filterMessage(player, message);
             //supress chat message if it's filtered out
             if(message == null){
                 return;
@@ -213,7 +214,7 @@ public class ClientSystem extends BaseSystem{
 
     @Remote(called = Loc.client, variants = Variant.one)
     public static void onConnect(String ip, int port){
-        netClient.disconnectQuietly();
+        client.disconnectQuietly();
         state.set(State.menu);
         logic.reset();
 
@@ -227,7 +228,7 @@ public class ClientSystem extends BaseSystem{
 
     @Remote(variants = Variant.one)
     public static void onPingResponse(long time){
-        netClient.ping = Time.timeSinceMillis(time);
+        client.ping = Time.timeSinceMillis(time);
     }
 
     @Remote(variants = Variant.one)
@@ -239,7 +240,7 @@ public class ClientSystem extends BaseSystem{
 
     @Remote(variants = Variant.one, priority = PacketPriority.high)
     public static void onKick(KickReason reason){
-        netClient.disconnectQuietly();
+        client.disconnectQuietly();
         state.set(State.menu);
         logic.reset();
 
@@ -255,7 +256,7 @@ public class ClientSystem extends BaseSystem{
 
     @Remote(variants = Variant.one, priority = PacketPriority.high)
     public static void onKick(String reason){
-        netClient.disconnectQuietly();
+        client.disconnectQuietly();
         state.set(State.menu);
         logic.reset();
         ui.showText("$disconnect", reason, Align.left);
@@ -300,7 +301,7 @@ public class ClientSystem extends BaseSystem{
     @Remote(variants = Variant.both)
     public static void onWorldDataBegin(){
         entities.clear();
-        netClient.removed.clear();
+        client.removed.clear();
         logic.reset();
 
         net.setClientLoaded(false);
@@ -309,8 +310,8 @@ public class ClientSystem extends BaseSystem{
 
         ui.loadfrag.setButton(() -> {
             ui.loadfrag.hide();
-            netClient.connecting = false;
-            netClient.quiet = true;
+            client.connecting = false;
+            client.quiet = true;
             net.disconnect();
         });
     }
@@ -329,8 +330,8 @@ public class ClientSystem extends BaseSystem{
     @Remote(variants = Variant.one, priority = PacketPriority.low, unreliable = true)
     public static void onEntitySnapshot(byte groupID, short amount, short dataLen, byte[] data){
         try{
-            netClient.byteStream.setBytes(net.decompressSnapshot(data, dataLen));
-            DataInputStream input = netClient.dataStream;
+            client.byteStream.setBytes(net.decompressSnapshot(data, dataLen));
+            DataInputStream input = client.dataStream;
 
             EntityGroup group = entities.get(groupID);
 
@@ -351,7 +352,7 @@ public class ClientSystem extends BaseSystem{
                 if(entity == null){
                     entity = (SyncTrait)content.<TypeID>getByID(ContentType.typeid, typeID).constructor.get();
                     entity.resetID(id);
-                    if(!netClient.isEntityUsed(entity.getID())){
+                    if(!client.isEntityUsed(entity.getID())){
                         add = true;
                     }
                     created = true;
@@ -370,7 +371,7 @@ public class ClientSystem extends BaseSystem{
 
                 if(add){
                     entity.add();
-                    netClient.addRemovedEntity(entity.getID());
+                    client.addRemovedEntity(entity.getID());
                 }
             }
         }catch(IOException e){
@@ -381,8 +382,8 @@ public class ClientSystem extends BaseSystem{
     @Remote(variants = Variant.both, priority = PacketPriority.low, unreliable = true)
     public static void onBlockSnapshot(short amount, short dataLen, byte[] data){
         try{
-            netClient.byteStream.setBytes(net.decompressSnapshot(data, dataLen));
-            DataInputStream input = netClient.dataStream;
+            client.byteStream.setBytes(net.decompressSnapshot(data, dataLen));
+            DataInputStream input = client.dataStream;
 
             for(int i = 0; i < amount; i++){
                 int pos = input.readInt();
@@ -403,15 +404,15 @@ public class ClientSystem extends BaseSystem{
         try{
             if(wave > state.wave){
                 state.wave = wave;
-                Events.fire(new WaveEvent());
+                Event.fireWave();
             }
 
             state.wavetime = waveTime;
             state.wave = wave;
             state.enemies = enemies;
 
-            netClient.byteStream.setBytes(net.decompressSnapshot(coreData, coreDataLen));
-            DataInputStream input = netClient.dataStream;
+            client.byteStream.setBytes(net.decompressSnapshot(coreData, coreDataLen));
+            DataInputStream input = client.dataStream;
 
             byte cores = input.readByte();
             for(int i = 0; i < cores; i++){

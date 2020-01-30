@@ -24,6 +24,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @SuppressWarnings("unchecked")
 public class MapGenerateDialog extends FloatingDialog{

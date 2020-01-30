@@ -11,6 +11,7 @@ import mindustry.type.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LiquidBulletType extends BulletType{
     public @NonNull Liquid liquid;

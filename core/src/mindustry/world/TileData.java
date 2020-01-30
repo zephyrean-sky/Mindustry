@@ -1,4 +1,4 @@
-package mindustry.entities;
+package mindustry.world;
 
 import arc.*;
 import arc.math.*;
@@ -7,20 +7,20 @@ import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.annotations.Annotations.*;
-import mindustry.entities.traits.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.gen.*;
-import mindustry.world.*;
 import mindustry.world.consumers.*;
 import mindustry.world.modules.*;
 
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
-public class TileEntity{
+public class TileData implements Position{
     public static final float timeToSleep = 60f * 1; //1 second to fall asleep
     private static final ObjectSet<Tile> tmpTiles = new ObjectSet<>();
     /** This value is only used for debugging. */
@@ -29,8 +29,6 @@ public class TileEntity{
     public Tile tile;
     public Block block;
     public Interval timer;
-    public float health;
-    public float timeScale = 1f, timeScaleDuration;
 
     public PowerModule power;
     public ItemModule items;
@@ -39,7 +37,6 @@ public class TileEntity{
 
     /** List of (cached) tiles with entities in proximity, used for outputting to */
     private Array<Tile> proximity = new Array<>(8);
-    private boolean dead = false;
     private boolean sleeping;
     private float sleepTime;
     private @Nullable SoundLoop sound;
@@ -62,7 +59,7 @@ public class TileEntity{
     }
 
     /** Sets this tile entity data to this tile, and adds it if necessary. */
-    public TileEntity init(Tile tile, boolean shouldAdd){
+    public TileData init(Tile tile, boolean shouldAdd){
         this.tile = tile;
         x = tile.drawx();
         y = tile.drawy();
@@ -163,7 +160,6 @@ public class TileEntity{
         Call.onTileDestroyed(tile);
     }
 
-    @Override
     public void damage(float damage){
         if(dead) return;
 
@@ -248,106 +244,42 @@ public class TileEntity{
         return 0;
     }
 
-    @Override
     public void removed(){
         if(sound != null){
             sound.stop();
         }
     }
 
-    @Override
-    public void health(float health){
-        this.health = health;
-    }
-
-    @Override
-    public float health(){
-        return health;
-    }
-
-    @Override
-    public float maxHealth(){
-        return block.health;
-    }
-
-    @Override
-    public void setDead(boolean dead){
-        this.dead = dead;
-    }
-
-    @Override
     public void onDeath(){
-        if(!dead){
-            dead = true;
-
-            Events.fire(new BlockDestroyEvent(tile));
-            block.breakSound.at(tile);
-            block.onDestroyed(tile);
-            tile.remove();
-            remove();
-        }
+        Event.fireBlockDestroy(tile);
+        block.breakSound.at(tile);
+        block.onDestroyed(tile);
+        tile.remove();
+        //remove()
     }
 
-    @Override
     public Team getTeam(){
         return tile.getTeam();
     }
 
-    @Override
-    public Vec2 velocity(){
-        return Vec2.ZERO;
-    }
-
-    @Override
-    public void update(){
-        timeScaleDuration -= Time.delta();
-        if(timeScaleDuration <= 0f || !block.canOverdrive){
-            timeScale = 1f;
-        }
-
-        if(health <= 0){
-            onDeath();
-            return; //no need to update anymore
-        }
-
-        if(sound != null){
-            sound.update(x, y, block.shouldActiveSound(tile));
-        }
-
-        if(block.idleSound != Sounds.none && block.shouldIdleSound(tile)){
-            loops.play(block.idleSound, this, block.idleSoundVolume);
-        }
-
-        block.update(tile);
-
-        if(liquids != null){
-            liquids.update();
-        }
-
-        if(cons != null){
-            cons.update();
-        }
-
-        if(power != null){
-            power.graph.update();
-        }
-    }
-
-    @Override
     public boolean isValid(){
         return !isDead() && tile.entity == this;
     }
 
     @Override
-    public EntityGroup targetGroup(){
-        return tileGroup;
+    public float getX(){
+        return tile.drawx();
+    }
+
+    @Override
+    public float getY(){
+        return tile.drawy();
     }
 
     @Override
     public String toString(){
         return "TileEntity{" +
         "tile=" + tile +
-        ", health=" + health +
         '}';
     }
 }

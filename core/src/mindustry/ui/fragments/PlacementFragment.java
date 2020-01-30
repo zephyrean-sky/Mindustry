@@ -13,7 +13,7 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
@@ -23,6 +23,7 @@ import mindustry.ui.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PlacementFragment extends Fragment{
     final int rowWidth = 4;
@@ -220,7 +221,7 @@ public class PlacementFragment extends Fragment{
                         button.resizeImage(Cicon.medium.size);
 
                         button.update(() -> { //color unplacable things gray
-                            TileEntity core = player.getClosestCore();
+                            TileData core = player.getClosestCore();
                             Color color = state.rules.infiniteResources || (core != null && (core.items.has(block.requirements, state.rules.buildCostMultiplier) || state.rules.infiniteResources)) ? Color.white : Color.gray;
                             button.forEach(elem -> elem.setColor(color));
                             button.setChecked(control.input.block == block);
@@ -293,7 +294,7 @@ public class PlacementFragment extends Fragment{
                                 if(unlocked(lastDisplay)){
                                     header.addButton("?", Styles.clearPartialt, () -> {
                                         ui.content.show(lastDisplay);
-                                        Events.fire(new BlockInfoEvent());
+                                        Event.fireBlockInfo();
                                     }).size(8 * 5).padTop(-5).padRight(-5).right().grow().name("blockinfo");
                                 }
                             }).growX().left();
@@ -308,7 +309,7 @@ public class PlacementFragment extends Fragment{
                                         line.addImage(stack.item.icon(Cicon.small)).size(8 * 2);
                                         line.add(stack.item.localizedName).maxWidth(140f).fillX().color(Color.lightGray).padLeft(2).left().get().setEllipsis(true);
                                         line.labelWrap(() -> {
-                                            TileEntity core = player.getClosestCore();
+                                            TileData core = player.getClosestCore();
                                             if(core == null || state.rules.infiniteResources) return "*/*";
 
                                             int amount = core.items.get(stack.item);

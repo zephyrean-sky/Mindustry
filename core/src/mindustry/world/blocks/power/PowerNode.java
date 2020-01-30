@@ -9,7 +9,7 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
@@ -18,6 +18,7 @@ import mindustry.world.blocks.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PowerNode extends PowerBlock{
     protected static boolean returnValue = false;
@@ -40,7 +41,7 @@ public class PowerNode extends PowerBlock{
 
     @Override
     public void configured(Tile tile, Player player, int value){
-        mindustry.entities.TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
         Tile other = world.tile(value);
         boolean contains = entity.power.links.contains(value), valid = other != null && other.entity != null && other.entity.power != null;
 
@@ -173,7 +174,7 @@ public class PowerNode extends PowerBlock{
 
     @Override
     public boolean onConfigureTileTapped(Tile tile, Tile other){
-        mindustry.entities.TileEntity entity = tile.ent();
+        TileData entity = tile.ent();
         other = other.link();
 
         if(linkValid(tile, other)){
@@ -266,7 +267,7 @@ public class PowerNode extends PowerBlock{
     public void drawLayer(Tile tile){
         if(Core.settings.getInt("lasersopacity") == 0) return;
 
-        TileEntity entity = tile.ent();
+        TileData entity = tile.ent();
 
         for(int i = 0; i < entity.power.links.size; i++){
             Tile link = world.tile(entity.power.links.get(i));

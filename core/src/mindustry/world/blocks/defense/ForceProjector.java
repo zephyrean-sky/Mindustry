@@ -9,7 +9,7 @@ import arc.math.geom.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
@@ -19,6 +19,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ForceProjector extends Block{
     public final int timerUse = timers++;
@@ -162,7 +163,7 @@ public class ForceProjector extends Block{
         Draw.reset();
     }
 
-    class ForceEntity extends TileEntity{
+    class ForceEntity extends TileData{
         ShieldEntity shield;
         boolean broken = true;
         float buildup = 0f;

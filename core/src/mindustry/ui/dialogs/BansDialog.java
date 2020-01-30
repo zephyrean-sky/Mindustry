@@ -6,6 +6,7 @@ import mindustry.gen.*;
 import mindustry.net.Administration.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class BansDialog extends FloatingDialog{
 
@@ -29,11 +30,11 @@ public class BansDialog extends FloatingDialog{
         ScrollPane pane = new ScrollPane(table);
         pane.setFadeScrollBars(false);
 
-        if(netServer.admins.getBanned().size == 0){
+        if(server.admins.getBanned().size == 0){
             table.add("$server.bans.none");
         }
 
-        for(PlayerInfo info : netServer.admins.getBanned()){
+        for(PlayerInfo info : server.admins.getBanned()){
             Table res = new Table(Tex.button);
             res.margin(14f);
 
@@ -41,7 +42,7 @@ public class BansDialog extends FloatingDialog{
             res.add().growX();
             res.addImageButton(Icon.cancel, () -> {
                 ui.showConfirm("$confirm", "$confirmunban", () -> {
-                    netServer.admins.unbanPlayerID(info.id);
+                    server.admins.unbanPlayerID(info.id);
                     setup();
                 });
             }).size(h).pad(-14f);

@@ -11,6 +11,7 @@ import mindustry.maps.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MapPlayDialog extends FloatingDialog{
     CustomRulesDialog dialog = new CustomRulesDialog();

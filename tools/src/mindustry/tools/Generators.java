@@ -15,6 +15,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Generators{
 

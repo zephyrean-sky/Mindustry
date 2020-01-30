@@ -9,7 +9,7 @@ import arc.math.Mathf;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.Call;
@@ -26,6 +26,7 @@ import mindustry.world.meta.*;
 
 import java.io.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class UnitFactory extends Block{
     public UnitType unitType;
@@ -64,7 +65,7 @@ public class UnitFactory extends Block{
             unit.set(tile.drawx() + Mathf.range(4), tile.drawy() + Mathf.range(4));
             unit.add();
             unit.velocity().y = factory.launchVelocity;
-            Events.fire(new UnitCreateEvent(unit));
+            Event.fireUnitCreate(unit);
         }
     }
 
@@ -189,7 +190,7 @@ public class UnitFactory extends Block{
         return entity.spawned < maxSpawn;
     }
 
-    public static class UnitFactoryEntity extends TileEntity{
+    public static class UnitFactoryEntity extends TileData{
         float buildTime;
         float time;
         float speedScl;

@@ -5,6 +5,7 @@ import com.squareup.javapoet.*;
 import javax.annotation.processing.*;
 import javax.lang.model.*;
 import javax.lang.model.element.*;
+import javax.lang.model.type.*;
 import javax.lang.model.util.*;
 import javax.tools.Diagnostic.*;
 import java.io.*;
@@ -56,6 +57,11 @@ public abstract class BaseProcessor extends AbstractProcessor{
     @Override
     public SourceVersion getSupportedSourceVersion(){
         return SourceVersion.RELEASE_8;
+    }
+
+    public String className(TypeMirror mirror){
+        String str = mirror.toString();
+        return str.substring(str.lastIndexOf('.') + 1);
     }
 
     public void write(TypeSpec.Builder type) throws IOException{

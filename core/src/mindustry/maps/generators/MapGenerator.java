@@ -11,6 +11,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.storage.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 //TODO:
 //- limited # of enemy spawns as filter

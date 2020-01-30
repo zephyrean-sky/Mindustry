@@ -32,7 +32,9 @@ import mindustry.ui.fragments.*;
 
 import static arc.scene.actions.Actions.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
+@AutoSystem
 public class UISystem extends BaseSystem{
     public static PixmapPacker packer;
 
@@ -197,7 +199,7 @@ public class UISystem extends BaseSystem{
     public void resize(ResizeEvent event){
         if(Core.scene == null) return;
         Core.scene.resize(Core.graphics.getWidth(), Core.graphics.getHeight());
-        Events.fire(new ResizeEvent());
+        Event.fireResize();
     }
 
     @Override

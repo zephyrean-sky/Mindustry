@@ -26,6 +26,7 @@ import mindustry.ui.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class BlockInventoryFragment extends Fragment{
     private final static float holdWithdraw = 20f;
@@ -43,7 +44,7 @@ public class BlockInventoryFragment extends Fragment{
         int fa = amount;
 
         if(net.server() && (!Units.canInteract(player, tile) ||
-            !netServer.admins.allowAction(player, ActionType.withdrawItem, tile, action -> {
+            !server.admins.allowAction(player, ActionType.withdrawItem, tile, action -> {
                 action.item = item;
                 action.itemAmount = fa;
             }))) throw new ValidateException(player, "Player cannot request items.");
@@ -51,7 +52,7 @@ public class BlockInventoryFragment extends Fragment{
         int removed = tile.block().removeStack(tile, item, amount);
 
         player.addItem(item, removed);
-        Events.fire(new WithdrawEvent(tile, player, item, amount));
+        Event.fireWithdraw(tile, player, item, amount);
         for(int j = 0; j < Mathf.clamp(removed / 3, 1, 8); j++){
             Time.run(j * 3f, () -> Call.transferItemEffect(item, tile.drawx(), tile.drawy(), player));
         }
@@ -110,7 +111,7 @@ public class BlockInventoryFragment extends Fragment{
                         holding = false;
                         holdTime = 0f;
 
-                        if(net.client()) Events.fire(new WithdrawEvent(tile, player, lastItem, amount));
+                        if(net.client()) Event.fireWithdraw(tile, player, lastItem, amount);
                     }
                 }
 
@@ -163,7 +164,7 @@ public class BlockInventoryFragment extends Fragment{
                             lastItem = item;
                             holding = true;
                             holdTime = 0f;
-                            if(net.client()) Events.fire(new WithdrawEvent(tile, player, item, amount));
+                            if(net.client()) Event.fireWithdraw(tile, player, item, amount);
                         }
                         return true;
                     }

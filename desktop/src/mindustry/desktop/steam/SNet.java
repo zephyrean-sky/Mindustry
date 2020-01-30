@@ -23,6 +23,7 @@ import java.nio.*;
 import java.util.concurrent.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SNet implements SteamNetworkingCallback, SteamMatchmakingCallback, SteamFriendsCallback, NetProvider{
     public final SteamNetworking snet = new SteamNetworking(this);

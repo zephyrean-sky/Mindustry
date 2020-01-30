@@ -3,7 +3,7 @@ package mindustry.world.blocks.distribution;
 import arc.struct.Array;
 import arc.util.Time;
 import mindustry.content.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.Item;
 import mindustry.world.*;
 import mindustry.world.meta.BlockGroup;
@@ -83,7 +83,7 @@ public class Router extends Block{
         return result;
     }
 
-    public class RouterEntity extends TileEntity{
+    public class RouterEntity extends TileData{
         Item lastItem;
         Tile lastInput;
         float time;

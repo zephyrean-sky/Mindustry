@@ -8,7 +8,7 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.game.EventType.*;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
@@ -71,7 +71,7 @@ public class LaunchPad extends StorageBlock{
 
     @Override
     public void update(Tile tile){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
 
         if(world.isZone() && entity.cons.valid() && entity.items.total() >= itemCapacity && entity.timer.get(timerLaunch, launchTime / entity.timeScale)){
             for(Item item : Vars.content.items()){
@@ -80,7 +80,7 @@ public class LaunchPad extends StorageBlock{
                 int used = Math.min(entity.items.get(item), itemCapacity);
                 data.addItem(item, used);
                 entity.items.remove(item, used);
-                Events.fire(new LaunchItemEvent(item, used));
+                Event.fireLaunchItem(item, used);
             }
         }
     }

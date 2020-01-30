@@ -61,11 +61,22 @@ public class EcsProcess extends BaseProcessor{
             types.addAll((Array<TypeElement>)Array.with(env.getElementsAnnotatedWith(AutoSystem.class)).select(e -> e instanceof TypeElement));
             types.sort(e -> -e.getAnnotation(AutoSystem.class).priority());
 
-            TypeSpec.Builder type = TypeSpec.classBuilder("AutoSystems").addModifiers(Modifier.PUBLIC);
-            type.addField(FieldSpec.builder(Prov[].class, "systems", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-            .initializer("{" + types.map(t -> t.asType().toString() + "::new").toString(", ") + "}").build());
+            TypeSpec.Builder type = TypeSpec.classBuilder("Sys").addModifiers(Modifier.PUBLIC);
+
+            for(TypeElement te : types){
+                type.addField(TypeName.get(te.asType()), varName(te), Modifier.STATIC, Modifier.PUBLIC);
+            }
+
+            type.addField(FieldSpec.builder(ParameterizedTypeName.get(Array.class, Prov.class),
+                "initializers", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+            .initializer("Array.with(" + types
+            .map(t -> "() -> { " + varName(t) + " = new " + t.asType().toString() + "(); return " + varName(t) + ";}").toString(", ") + ")").build());
 
             write(type);
         }
+    }
+
+    String varName(TypeElement elem){
+        return Strings.camelize(className(elem.asType()).replace("System", "").replace("Sys", "")).toLowerCase();
     }
 }

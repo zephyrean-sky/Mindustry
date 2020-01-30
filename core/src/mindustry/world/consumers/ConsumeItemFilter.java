@@ -4,7 +4,7 @@ import arc.struct.*;
 import arc.func.*;
 import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.ui.Cicon;
@@ -13,6 +13,7 @@ import mindustry.world.meta.*;
 import mindustry.world.meta.values.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ConsumeItemFilter extends Consume{
     public final @NonNull
@@ -46,12 +47,12 @@ public class ConsumeItemFilter extends Consume{
     }
 
     @Override
-    public void update(mindustry.entities.TileEntity entity){
+    public void update(TileData entity){
 
     }
 
     @Override
-    public void trigger(mindustry.entities.TileEntity entity){
+    public void trigger(TileData entity){
         for(int i = 0; i < content.items().size; i++){
             Item item = content.item(i);
             if(entity.items != null && entity.items.has(item) && this.filter.get(item)){
@@ -62,7 +63,7 @@ public class ConsumeItemFilter extends Consume{
     }
 
     @Override
-    public boolean valid(TileEntity entity){
+    public boolean valid(TileData entity){
         for(int i = 0; i < content.items().size; i++){
             Item item = content.item(i);
             if(entity.items != null && entity.items.has(item) && this.filter.get(item)){

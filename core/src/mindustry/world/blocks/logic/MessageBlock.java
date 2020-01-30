@@ -11,7 +11,7 @@ import arc.scene.ui.layout.*;
 import arc.util.*;
 import arc.util.pooling.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.net.*;
@@ -22,6 +22,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MessageBlock extends Block{
     protected static int maxTextLength = 220;
@@ -147,7 +148,7 @@ public class MessageBlock extends Block{
         table.setPosition(pos.x, pos.y, Align.bottom);
     }
 
-    public class MessageBlockEntity extends TileEntity{
+    public class MessageBlockEntity extends TileData{
         public String message = "";
         public String[] lines = {""};
 

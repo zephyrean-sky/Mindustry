@@ -22,6 +22,7 @@ import mindustry.ui.Cicon;
 import mindustry.ui.dialogs.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static mindustry.game.SpawnGroup.never;
 
 public class WaveInfoDialog extends FloatingDialog{

@@ -10,7 +10,7 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.entities.units.*;
 import mindustry.game.EventType.*;
@@ -22,6 +22,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class CommandCenter extends Block{
     protected TextureRegionDrawable[] commandRegions = new TextureRegionDrawable[UnitCommand.all.length];
@@ -115,10 +116,10 @@ public class CommandCenter extends Block{
         }
 
         Units.each(tile.getTeam(), u -> u.onCommand(command));
-        Events.fire(new CommandIssueEvent(tile, command));
+        Event.fireCommandIssue(tile, command);
     }
 
-    public class CommandCenterEntity extends TileEntity{
+    public class CommandCenterEntity extends TileData{
         public UnitCommand command = UnitCommand.attack;
 
         @Override

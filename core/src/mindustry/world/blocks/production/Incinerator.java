@@ -8,7 +8,7 @@ import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
 import mindustry.entities.Effect;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
@@ -85,7 +85,7 @@ public class Incinerator extends Block{
         return entity.heat > 0.5f;
     }
 
-    public static class IncineratorEntity extends TileEntity{
+    public static class IncineratorEntity extends TileData{
         public float heat;
     }
 }

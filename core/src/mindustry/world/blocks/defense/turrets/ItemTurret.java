@@ -5,7 +5,7 @@ import arc.struct.*;
 import arc.scene.ui.layout.*;
 import mindustry.*;
 import mindustry.content.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.bullet.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -21,6 +21,7 @@ import mindustry.world.meta.values.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ItemTurret extends CooledTurret{
     public int maxAmmo = 30;
@@ -54,7 +55,7 @@ public class ItemTurret extends CooledTurret{
             }
 
             @Override
-            public boolean valid(TileEntity entity){
+            public boolean valid(TileData entity){
                 //valid when there's any ammo in the turret
                 return !((ItemTurretEntity)entity).ammo.isEmpty();
             }
@@ -139,7 +140,7 @@ public class ItemTurret extends CooledTurret{
 
         //fire events for the tutorial
         if(state.rules.tutorial){
-            Events.fire(new TurretAmmoDeliverEvent());
+            Event.fireTurretAmmoDeliver();
         }
     }
 

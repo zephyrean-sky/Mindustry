@@ -6,7 +6,7 @@ import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 import mindustry.world.*;
@@ -110,7 +110,7 @@ public class Cultivator extends GenericCrafter{
     }
 
     @Override
-    protected float getProgressIncrease(TileEntity entity, float baseTime){
+    protected float getProgressIncrease(TileData entity, float baseTime){
         CultivatorEntity c = (CultivatorEntity)entity;
         return super.getProgressIncrease(entity, baseTime) * (1f + c.boost);
     }

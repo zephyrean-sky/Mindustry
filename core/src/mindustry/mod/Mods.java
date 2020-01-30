@@ -28,6 +28,7 @@ import java.io.*;
 import java.net.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Mods implements Loadable{
     private Json json = new Json();
@@ -448,7 +449,7 @@ public class Mods implements Loadable{
         Core.atlas.getTextures().each(t -> t.setFilter(Core.settings.getBool("linear") ? TextureFilter.Linear : TextureFilter.Nearest));
         requiresReload = false;
 
-        Events.fire(new ContentReloadEvent());
+        Event.fireContentReload();
     }
 
     /** This must be run on the main thread! */

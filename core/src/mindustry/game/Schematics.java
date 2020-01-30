@@ -28,6 +28,7 @@ import java.io.*;
 import java.util.zip.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Handles schematics.*/
 public class Schematics implements Loadable{

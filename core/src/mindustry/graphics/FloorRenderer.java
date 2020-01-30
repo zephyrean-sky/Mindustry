@@ -14,6 +14,7 @@ import mindustry.world.blocks.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class FloorRenderer implements Disposable{
     private final static int chunksize = 64;

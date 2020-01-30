@@ -11,6 +11,7 @@ import mindustry.ui.*;
 import mindustry.ui.Cicon;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LoadoutDialog extends FloatingDialog{
     private Runnable hider;

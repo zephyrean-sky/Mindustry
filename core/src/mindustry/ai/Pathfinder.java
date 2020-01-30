@@ -15,6 +15,7 @@ import mindustry.world.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Pathfinder implements Runnable{
     private static final long maxUpdate = Time.millisToNanos(4);

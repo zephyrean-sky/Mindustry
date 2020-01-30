@@ -32,6 +32,7 @@ import mindustry.world.blocks.*;
 import mindustry.world.blocks.storage.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MapEditorDialog extends Dialog implements Disposable{
     public final MapEditor editor;

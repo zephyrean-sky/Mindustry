@@ -16,6 +16,7 @@ import mindustry.net.Packets.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PlayerListFragment extends Fragment{
     private boolean visible = false;
@@ -116,10 +117,10 @@ public class PlayerListFragment extends Fragment{
 
                         String id = user.uuid;
 
-                        if(netServer.admins.isAdmin(id, connection.address)){
-                            ui.showConfirm("$confirm", "$confirmunadmin", () -> netServer.admins.unAdminPlayer(id));
+                        if(server.admins.isAdmin(id, connection.address)){
+                            ui.showConfirm("$confirm", "$confirmunadmin", () -> server.admins.unAdminPlayer(id));
                         }else{
-                            ui.showConfirm("$confirm", "$confirmadmin", () -> netServer.admins.adminPlayer(id, user.usid));
+                            ui.showConfirm("$confirm", "$confirmadmin", () -> server.admins.adminPlayer(id, user.usid));
                         }
                     })
                     .update(b -> b.setChecked(user.isAdmin))

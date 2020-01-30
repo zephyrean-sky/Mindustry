@@ -15,6 +15,7 @@ import mindustry.mod.Mods.*;
 import mindustry.type.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Map implements Comparable<Map>, Publishable{
     /** Whether this is a custom map. */
@@ -153,7 +154,7 @@ public class Map implements Comparable<Map>, Publishable{
         }catch(Exception e){
             Log.err(e);
         }
-        Events.fire(new MapPublishEvent());
+        Event.fireMapPublish();
     }
 
     @Override

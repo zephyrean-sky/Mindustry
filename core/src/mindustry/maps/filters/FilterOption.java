@@ -15,6 +15,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public abstract class FilterOption{
     public static final Boolf<Block> floorsOnly = b -> (b instanceof Floor && !(b instanceof OverlayFloor)) && !headless && Core.atlas.isFound(b.icon(mindustry.ui.Cicon.full));

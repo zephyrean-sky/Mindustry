@@ -23,6 +23,7 @@ import mindustry.ui.*;
 
 import static arc.Core.bundle;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SettingsMenuDialog extends SettingsDialog{
     private SettingsTable graphics;

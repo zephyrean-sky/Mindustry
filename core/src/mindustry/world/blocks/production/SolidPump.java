@@ -10,7 +10,7 @@ import mindustry.content.Fx;
 import mindustry.content.Liquids;
 import mindustry.entities.Effects;
 import mindustry.entities.Effect;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.graphics.Pal;
 import mindustry.type.Liquid;
 import mindustry.ui.Bar;
@@ -156,7 +156,7 @@ public class SolidPump extends Pump{
         return tile.entity.liquids.total();
     }
 
-    public static class SolidPumpEntity extends TileEntity{
+    public static class SolidPumpEntity extends TileData{
         public float warmup;
         public float pumpTime;
         public float boost;

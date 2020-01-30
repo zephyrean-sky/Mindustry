@@ -19,6 +19,7 @@ import mindustry.ui.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MinimapRenderer implements Disposable{
     private static final float baseSize = 16f;

@@ -17,6 +17,7 @@ import mindustry.ui.*;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ScriptConsoleFragment extends Table{
     private final static int messagesShown = 30;

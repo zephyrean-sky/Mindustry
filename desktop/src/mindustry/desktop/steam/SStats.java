@@ -6,13 +6,14 @@ import arc.util.*;
 import com.codedisaster.steamworks.*;
 import mindustry.*;
 import mindustry.content.*;
-import mindustry.entities.*;
 import mindustry.entities.units.*;
 import mindustry.game.EventType.*;
 import mindustry.game.Stats.*;
 import mindustry.type.*;
+import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static mindustry.desktop.steam.SAchievement.*;
 
 @SuppressWarnings("unchecked")
@@ -64,7 +65,7 @@ public class SStats implements SteamUserStatsCallback{
                 active50Crawlers.complete();
             }
 
-            for(TileEntity entity : player.getTeam().cores()){
+            for(TileData entity : player.getTeam().cores()){
                 if(!content.items().contains(i -> i.type == ItemType.material && entity.items.get(i) < entity.block.itemCapacity)){
                     fillCoreAllCampaign.complete();
                     break;
@@ -215,7 +216,7 @@ public class SStats implements SteamUserStatsCallback{
             }
         });
 
-        Events.on(PlayerJoin.class, e -> {
+        Events.on(PlayerJoinEvent.class, e -> {
             if(Vars.net.server()){
                 SStat.maxPlayersServer.max(Vars.playerGroup.size());
             }

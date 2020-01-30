@@ -27,6 +27,7 @@ import java.lang.System;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 
 public class AndroidLauncher extends AndroidApplication{

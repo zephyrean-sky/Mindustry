@@ -1,7 +1,7 @@
 package mindustry.world.blocks.storage;
 
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.Item;
 import mindustry.world.Block;
 import mindustry.world.Tile;
@@ -43,7 +43,7 @@ public abstract class StorageBlock extends Block{
      * Returns null if no items are there.
      */
     public Item removeItem(Tile tile, Item item){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
 
         if(item == null){
             return entity.items.take();
@@ -62,7 +62,7 @@ public abstract class StorageBlock extends Block{
      * If the item is null, it should return whether it has ANY items.
      */
     public boolean hasItem(Tile tile, Item item){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
         if(item == null){
             return entity.items.total() > 0;
         }else{
@@ -70,7 +70,7 @@ public abstract class StorageBlock extends Block{
         }
     }
 
-    public class StorageBlockEntity extends TileEntity{
+    public class StorageBlockEntity extends TileData{
         protected @Nullable
         Tile linkedCore;
     }

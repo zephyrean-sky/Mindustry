@@ -6,6 +6,7 @@ import mindustry.game.EventType.*;
 import mindustry.game.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class GameState{
     /** Current wave number, can be anything in non-wave modes. */
@@ -30,7 +31,7 @@ public class GameState{
     }
 
     public void set(State astate){
-        Events.fire(new StateChangeEvent(state, astate));
+        Event.fireStateChange(state, astate);
         state = astate;
     }
 

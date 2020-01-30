@@ -11,6 +11,7 @@ import mindustry.game.EventType.*;
 import mindustry.gen.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Controls playback of multiple music tracks.*/
 public class MusicControl{

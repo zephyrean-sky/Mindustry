@@ -38,7 +38,7 @@ public abstract class NetConnection{
         Log.info("Kicking connection {0}; Reason: {1}", address, reason.name());
 
         if(player != null && (reason == KickReason.kick || reason == KickReason.banned || reason == KickReason.vote) && player.uuid != null){
-            PlayerInfo info = netServer.admins.getInfo(player.uuid);
+            PlayerInfo info = server.admins.getInfo(player.uuid);
             info.timesKicked++;
             info.lastKicked = Math.max(Time.millis() + 30 * 1000, info.lastKicked);
         }
@@ -47,7 +47,7 @@ public abstract class NetConnection{
 
         Time.runTask(2f, this::close);
 
-        netServer.admins.save();
+        server.admins.save();
     }
 
     /** Kick with an arbitrary reason. */
@@ -60,7 +60,7 @@ public abstract class NetConnection{
         Log.info("Kicking connection {0}; Reason: {1}", address, reason.replace("\n", " "));
 
         if(player != null  && player.uuid != null){
-            PlayerInfo info = netServer.admins.getInfo(player.uuid);
+            PlayerInfo info = server.admins.getInfo(player.uuid);
             info.timesKicked++;
             info.lastKicked = Math.max(Time.millis() + kickDuration, info.lastKicked);
         }
@@ -69,7 +69,7 @@ public abstract class NetConnection{
 
         Time.runTask(2f, this::close);
 
-        netServer.admins.save();
+        server.admins.save();
     }
 
     public boolean isConnected(){

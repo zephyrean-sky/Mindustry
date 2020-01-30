@@ -17,6 +17,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.BuildBlock.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 //TODO sprinkle @PooledWeaver everywhere and test performance
 public class Components{

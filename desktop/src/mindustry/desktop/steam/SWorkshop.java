@@ -17,6 +17,7 @@ import mindustry.type.*;
 import mindustry.ui.dialogs.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SWorkshop implements SteamUGCCallback{
     public final SteamUGC ugc = new SteamUGC(this);

@@ -17,6 +17,7 @@ import mindustry.world.blocks.*;
 
 import static arc.Core.camera;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class BlockRenderer implements Disposable{
     private final static int initialRequests = 32 * 32;

@@ -13,6 +13,7 @@ import mindustry.game.Objectives.*;
 import mindustry.maps.generators.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Zone extends UnlockableContent{
     public @NonNull Generator generator;
@@ -111,12 +112,12 @@ public class Zone extends UnlockableContent{
         closure.run();
         for(ZoneObjective objective : incomplete){
             if(objective.complete()){
-                Events.fire(new ZoneRequireCompleteEvent(objective.zone, content.zones().find(z -> z.requirements.contains(objective)), objective));
+                Event.fireZoneRequireComplete(objective.zone, content.zones().find(z -> z.requirements.contains(objective)), objective);
             }
         }
 
         if(!wasConfig && configureObjective.complete()){
-            Events.fire(new ZoneConfigureCompleteEvent(this));
+            Event.fireZoneConfigureComplete(this);
         }
     }
 

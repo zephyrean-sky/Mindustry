@@ -21,6 +21,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class World{
     public final Context context = new Context();
@@ -162,7 +163,7 @@ public class World{
         entities.all().each(group -> group.resize(-finalWorldBounds, -finalWorldBounds, tiles.width() * tilesize + finalWorldBounds * 2, tiles.height() * tilesize + finalWorldBounds * 2));
 
         generating = false;
-        Events.fire(new WorldLoadEvent());
+        Event.fireWorldLoad();
     }
 
     public void setGenerating(boolean gen){
@@ -257,7 +258,7 @@ public class World{
 
     public void notifyChanged(Tile tile){
         if(!generating){
-            Core.app.post(() -> Events.fire(new TileChangeEvent(tile)));
+            Core.app.post(() -> Event.fireTileChange(tile));
         }
     }
 

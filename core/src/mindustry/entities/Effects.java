@@ -13,6 +13,7 @@ import mindustry.entities.type.*;
 
 import static arc.Core.camera;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Effects{
     private static final float shakeFalloff = 10000f;

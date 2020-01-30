@@ -14,6 +14,7 @@ import java.io.*;
 import java.util.zip.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Stores player unlocks. Clientside only. */
 public class GlobalData{
@@ -149,7 +150,7 @@ public class GlobalData{
         if(unlocked.getOr(content.getContentType(), ObjectSet::new).add(content.name)){
             modified = true;
             content.onUnlock();
-            Events.fire(new UnlockEvent(content));
+            Event.fireUnlock(content);
         }
     }
 

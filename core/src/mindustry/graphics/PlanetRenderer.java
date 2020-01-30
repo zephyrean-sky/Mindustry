@@ -14,6 +14,7 @@ import mindustry.type.Sector.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PlanetRenderer implements PlanetGenerator{
     private final Color outlineColor = Pal.accent.cpy().a(0.7f);

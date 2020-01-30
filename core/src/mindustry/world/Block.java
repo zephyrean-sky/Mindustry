@@ -20,7 +20,6 @@ import arc.util.pooling.*;
 import mindustry.ctype.*;
 import mindustry.ctype.ContentType;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
 import mindustry.entities.effect.*;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
@@ -37,6 +36,7 @@ import mindustry.world.meta.values.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Block extends BlockStorage{
     public static final int crackRegions = 8, maxCrackSize = 5;
@@ -145,7 +145,7 @@ public class Block extends BlockStorage{
 
     protected TextureRegion[] cacheRegions = {};
     protected Array<String> cacheRegionStrings = new Array<>();
-    protected Prov<TileEntity> entityType = TileEntity::new;
+    protected Prov<TileData> entityType = TileData::new;
 
     protected Array<Tile> tempTiles = new Array<>();
     protected TextureRegion[] generatedIcons;
@@ -187,7 +187,7 @@ public class Block extends BlockStorage{
     }
 
     protected void updatePowerGraph(Tile tile){
-        TileEntity entity = tile.ent();
+        TileData entity = tile.ent();
 
         for(Tile other : getPowerConnections(tile, tempTiles)){
             if(other.entity.power != null){
@@ -229,7 +229,7 @@ public class Block extends BlockStorage{
         return out;
     }
 
-    protected float getProgressIncrease(TileEntity entity, float baseTime){
+    protected float getProgressIncrease(TileData entity, float baseTime){
         return 1f / baseTime * entity.delta() * entity.efficiency();
     }
 
@@ -543,7 +543,7 @@ public class Block extends BlockStorage{
         bars.add("health", entity -> new Bar("blocks.health", Pal.health, entity::healthf).blink(Color.white));
 
         if(hasLiquids){
-            Func<TileEntity, Liquid> current;
+            Func<TileData, Liquid> current;
             if(consumes.has(ConsumeType.liquid) && consumes.get(ConsumeType.liquid) instanceof ConsumeLiquid){
                 Liquid liquid = consumes.<ConsumeLiquid>get(ConsumeType.liquid).liquid;
                 current = entity -> liquid;
@@ -589,7 +589,7 @@ public class Block extends BlockStorage{
         return amount;
     }
 
-    public void handleBulletHit(TileEntity entity, Bullet bullet){
+    public void handleBulletHit(TileData entity, Bullet bullet){
         entity.damage(bullet.damage());
     }
 
@@ -676,7 +676,7 @@ public class Block extends BlockStorage{
     }
 
     public void display(Tile tile, Table table){
-        TileEntity entity = tile.entity;
+        TileData entity = tile.entity;
 
         if(entity != null){
             table.table(bars -> {
@@ -702,7 +702,7 @@ public class Block extends BlockStorage{
     }
 
     public void displayBars(Tile tile, Table table){
-        for(Func<TileEntity, Bar> bar : bars.list()){
+        for(Func<TileData, Bar> bar : bars.list()){
             table.add(bar.get(tile.entity)).growX();
             table.row();
         }
@@ -857,7 +857,7 @@ public class Block extends BlockStorage{
         return destructible || update;
     }
 
-    public final TileEntity newEntity(){
+    public final TileData newEntity(){
         return entityType.get();
     }
 

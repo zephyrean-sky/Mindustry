@@ -8,7 +8,6 @@ import mindustry.content.*;
 import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
-import mindustry.entities.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;
@@ -21,6 +20,7 @@ import mindustry.world.blocks.BuildBlock.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @AutoSystem
 public class LogicSystem extends BaseSystem{
@@ -93,13 +93,13 @@ public class LogicSystem extends BaseSystem{
     public void play(){
         state.set(State.playing);
         state.wavetime = state.rules.waveSpacing * 2; //grace period of 2x wave time before game starts
-        Events.fire(new PlayEvent());
+        Event.firePlay();
 
         //add starting items
         if(!world.isZone()){
             for(TeamData team : state.teams.getActive()){
                 if(team.hasCore()){
-                    TileEntity entity = team.core();
+                    TileData entity = team.core();
                     entity.items.clear();
                     for(ItemStack stack : state.rules.loadout){
                         entity.items.add(stack.item, stack.amount);
@@ -114,7 +114,7 @@ public class LogicSystem extends BaseSystem{
 
         base.deleteAll();
         Time.clear();
-        Events.fire(new ResetEvent());
+        Event.fireReset();
     }
 
     public void runWave(){
@@ -122,13 +122,13 @@ public class LogicSystem extends BaseSystem{
         state.wave++;
         state.wavetime = world.isZone() && world.getZone().isLaunchWave(state.wave) ? state.rules.waveSpacing * state.rules.launchWaveMultiplier : state.rules.waveSpacing;
 
-        Events.fire(new WaveEvent());
+        Event.fireWave();
     }
 
     private void checkGameOver(){
         if(!state.rules.attackMode && state.teams.playerCores().size == 0 && !state.gameOver){
             state.gameOver = true;
-            Events.fire(new GameOverEvent(state.rules.waveTeam));
+            Event.fireGameOver(state.rules.waveTeam);
         }else if(state.rules.attackMode){
             Team alive = null;
 
@@ -146,7 +146,7 @@ public class LogicSystem extends BaseSystem{
                     //in attack maps, a victorious game over is equivalent to a launch
                     Call.launchZone();
                 }else{
-                    Events.fire(new GameOverEvent(alive));
+                    Event.fireGameOver(alive);
                 }
                 state.gameOver = true;
             }
@@ -159,7 +159,7 @@ public class LogicSystem extends BaseSystem{
             ui.hudfrag.showLaunch();
         }
 
-        for(TileEntity tile : state.teams.playerCores()){
+        for(TileData tile : state.teams.playerCores()){
             Fx.launch.at(tile);
         }
 
@@ -168,18 +168,18 @@ public class LogicSystem extends BaseSystem{
         }
 
         Time.runTask(30f, () -> {
-            for(TileEntity entity : state.teams.playerCores()){
+            for(TileData entity : state.teams.playerCores()){
                 for(Item item : content.items()){
                     data.addItem(item, entity.items.get(item));
-                    Events.fire(new LaunchItemEvent(item, entity.items.get(item)));
+                    Event.fireLaunchItem(item, entity.items.get(item));
                 }
                 entity.tile.remove();
             }
             state.launched = true;
             state.gameOver = true;
-            Events.fire(new LaunchEvent());
+            Event.fireLaunch();
             //manually fire game over event now
-            Events.fire(new GameOverEvent(state.rules.defaultTeam));
+            Event.fireGameOver(state.rules.defaultTeam);
         });
     }
 
@@ -187,7 +187,7 @@ public class LogicSystem extends BaseSystem{
     public static void onGameOver(Team winner){
         state.stats.wavesLasted = state.wave;
         ui.restart.show(winner);
-        netClient.setQuiet();
+        client.setQuiet();
     }
 
     @Override

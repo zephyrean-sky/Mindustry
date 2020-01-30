@@ -5,6 +5,7 @@ import arc.util.ArcAnnotate.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Class for storing build requests. Can be either a place or remove request. */
 public class BuildRequest{

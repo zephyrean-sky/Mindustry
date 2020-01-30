@@ -2,7 +2,7 @@ package mindustry.world.consumers;
 
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.world.Tile;
 import mindustry.world.meta.*;
 
@@ -41,12 +41,12 @@ public class ConsumePower extends Consume{
     }
 
     @Override
-    public void update(TileEntity entity){
+    public void update(TileData entity){
         // Nothing to do since PowerGraph directly updates entity.power.status
     }
 
     @Override
-    public boolean valid(TileEntity entity){
+    public boolean valid(TileData entity){
         if(buffered){
             return true;
         }else{
@@ -68,7 +68,7 @@ public class ConsumePower extends Consume{
      * @param entity The entity which contains the power module.
      * @return The amount of power which is requested per tick.
      */
-    public float requestedPower(TileEntity entity){
+    public float requestedPower(TileData entity){
         if(entity.tile.entity == null) return 0f;
         if(buffered){
             return (1f-entity.power.status)*capacity;

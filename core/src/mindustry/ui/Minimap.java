@@ -9,6 +9,7 @@ import arc.scene.ui.layout.*;
 import mindustry.gen.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Minimap extends Table{
 

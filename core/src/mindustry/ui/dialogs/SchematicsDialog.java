@@ -19,6 +19,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SchematicsDialog extends FloatingDialog{
     private SchematicInfoDialog info = new SchematicInfoDialog();

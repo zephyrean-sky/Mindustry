@@ -17,6 +17,7 @@ import java.io.*;
 import java.util.zip.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Reads and writes map files. */
 //TODO does this class even need to exist??? move to Maps?

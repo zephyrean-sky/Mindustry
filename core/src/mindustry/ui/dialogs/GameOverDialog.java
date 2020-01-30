@@ -9,6 +9,7 @@ import mindustry.type.*;
 import mindustry.ui.Cicon;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class GameOverDialog extends FloatingDialog{
     private Team winner;
@@ -23,9 +24,9 @@ public class GameOverDialog extends FloatingDialog{
         this.winner = winner;
         show();
         if(winner == player.getTeam()){
-            Events.fire(new WinEvent());
+            Event.fireWin();
         }else{
-            Events.fire(new LoseEvent());
+            Event.fireLose();
         }
     }
 

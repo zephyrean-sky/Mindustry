@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.zip.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static org.robovm.apple.foundation.NSPathUtilities.getDocumentsDirectory;
 
 public class IOSLauncher extends IOSApplication.Delegate{

@@ -33,6 +33,7 @@ import mindustry.ui.Cicon;
 import mindustry.ui.dialogs.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class HudFragment extends Fragment{
     public final PlacementFragment blockfrag = new PlacementFragment();
@@ -246,7 +247,7 @@ public class HudFragment extends Fragment{
 
                 info.label(() -> fps.get(Core.graphics.getFramesPerSecond())).left().style(Styles.outlineLabel);
                 info.row();
-                info.label(() -> ping.get(netClient.getPing())).visible(net::client).left().style(Styles.outlineLabel);
+                info.label(() -> ping.get(client.getPing())).visible(net::client).left().style(Styles.outlineLabel);
             }).top().left();
         });
         
@@ -271,7 +272,7 @@ public class HudFragment extends Fragment{
         });
 
         parent.fill(t -> {
-            t.visible(() -> netServer.isWaitingForPlayers());
+            t.visible(() -> server.isWaitingForPlayers());
             t.table(Tex.button, c -> c.add("$waiting.players"));
         });
 

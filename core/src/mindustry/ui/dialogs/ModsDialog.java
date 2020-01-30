@@ -13,6 +13,7 @@ import mindustry.ui.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ModsDialog extends FloatingDialog{
 

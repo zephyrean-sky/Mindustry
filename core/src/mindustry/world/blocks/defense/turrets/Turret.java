@@ -16,7 +16,7 @@ import mindustry.content.Fx;
 import mindustry.entities.*;
 import mindustry.entities.Effect;
 import mindustry.entities.bullet.BulletType;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.Block;
@@ -311,7 +311,7 @@ public abstract class Turret extends Block{
         public abstract BulletType type();
     }
 
-    public static class TurretEntity extends TileEntity{
+    public static class TurretEntity extends TileData{
         public Array<AmmoEntry> ammo = new Array<>();
         public int totalAmmo;
         public float reload;

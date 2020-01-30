@@ -7,6 +7,7 @@ import mindustry.gen.*;
 import mindustry.graphics.Pal;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class DiscordDialog extends Dialog{
 

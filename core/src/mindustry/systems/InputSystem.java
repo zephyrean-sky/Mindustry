@@ -1,7 +1,6 @@
 package mindustry.systems;
 
 import arc.*;
-import arc.assets.*;
 import arc.audio.*;
 import arc.ecs.*;
 import arc.struct.*;
@@ -11,10 +10,11 @@ import arc.input.*;
 import arc.math.geom.*;
 import arc.scene.ui.*;
 import arc.util.*;
+import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
@@ -33,6 +33,7 @@ import java.util.*;
 import static arc.Core.*;
 import static mindustry.Vars.net;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /**
  * Control module.
@@ -40,6 +41,7 @@ import static mindustry.Vars.*;
  * Should <i>not</i> handle any logic-critical state.
  * This class is not created in the headless server.
  */
+@AutoSystem
 public class InputSystem extends BaseSystem{
     public Saves saves = new Saves();
     public MusicControl music = new MusicControl();
@@ -62,7 +64,7 @@ public class InputSystem extends BaseSystem{
         });
 
         Events.on(PlayEvent.class, event -> {
-            player.setTeam(netServer.assignTeam(player, playerGroup.all()));
+            player.setTeam(server.assignTeam(player, playerGroup.all()));
             player.setDead(true);
             player.add();
 
@@ -162,7 +164,7 @@ public class InputSystem extends BaseSystem{
         });
 
         Events.on(Trigger.newGame, () -> {
-            TileEntity core = player.getClosestCore();
+            TileData core = player.getClosestCore();
 
             if(core == null) return;
 
@@ -182,7 +184,7 @@ public class InputSystem extends BaseSystem{
         });
     }
 
-    @Override
+    @Autoload
     public void loadAsync(){
         Draw.scl = 1f / Core.atlas.find("scale_marker").getWidth();
 
@@ -316,12 +318,12 @@ public class InputSystem extends BaseSystem{
 
             zone.rules.get(state.rules);
             state.rules.zone = zone;
-            for(TileEntity core : state.teams.playerCores()){
+            for(TileData core : state.teams.playerCores()){
                 for(ItemStack stack : zone.getStartingItems()){
                     core.items.add(stack.item, stack.amount);
                 }
             }
-            TileEntity core = state.teams.playerCores().first();
+            TileData core = state.teams.playerCores().first();
             core.items.clear();
 
             logic.play();
@@ -409,7 +411,7 @@ public class InputSystem extends BaseSystem{
     }
 
     @Override
-    public void update(){
+    public void processSystem(){
         //TODO find out why this happens on Android
         if(assets == null) return;
 
@@ -445,7 +447,7 @@ public class InputSystem extends BaseSystem{
             input.update();
 
             if(world.isZone()){
-                for(TileEntity tile : state.teams.cores(player.getTeam())){
+                for(TileData tile : state.teams.cores(player.getTeam())){
                     for(Item item : content.items()){
                         if(tile.items.has(item)){
                             data.unlockContent(item);

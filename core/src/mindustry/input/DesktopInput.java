@@ -23,6 +23,7 @@ import mindustry.world.*;
 
 import static arc.Core.scene;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static mindustry.input.PlaceMode.*;
 
 public class DesktopInput extends InputHandler{
@@ -418,7 +419,7 @@ public class DesktopInput extends InputHandler{
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 flushRequests(lineRequests);
                 lineRequests.clear();
-                Events.fire(new LineConfirmEvent());
+                Event.fireLineConfirm();
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
                 removeSelection(selectX, selectY, cursorX, cursorY);
             }

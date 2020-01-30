@@ -16,12 +16,13 @@ import mindustry.world.blocks.*;
 import mindustry.world.modules.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Tile implements Position, TargetTrait{
     /** Tile traversal cost. */
     public byte cost = 1;
     /** Tile entity, usually null. */
-    public int ent;
+    public TileData entity;
     public short x, y;
     protected Block block;
     protected Floor floor;

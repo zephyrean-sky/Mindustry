@@ -17,6 +17,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ImpactReactor extends PowerGenerator{
     public final int timerUse = timers++;

@@ -13,6 +13,7 @@ import mindustry.ui.*;
 import mindustry.ui.Links.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class AboutDialog extends FloatingDialog{
     private Array<String> contributors = new Array<>();

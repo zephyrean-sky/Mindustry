@@ -1,6 +1,5 @@
 package mindustry.world;
 
-import mindustry.entities.TileEntity;
 import mindustry.game.Team;
 import mindustry.world.modules.*;
 
@@ -32,7 +31,7 @@ public class CachedTile extends Tile{
         Block block = block();
 
         if(block.hasEntity()){
-            TileEntity n = block.newEntity();
+            TileData n = block.newEntity();
             n.cons = new ConsumeModule(entity);
             n.tile = this;
             n.block = block;

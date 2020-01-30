@@ -37,6 +37,7 @@ import mindustry.world.blocks.power.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public abstract class InputHandler implements InputProcessor, GestureListener{
     /** Used for dropping items. */
@@ -84,7 +85,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     @Remote(targets = Loc.both, called = Loc.server, forward = true, unreliable = true)
     public static void rotateBlock(Player player, Tile tile, boolean direction){
         if(net.server() && (!Units.canInteract(player, tile) ||
-            !netServer.admins.allowAction(player, ActionType.rotate, tile, action -> action.rotation = Mathf.mod(tile.rotation() + Mathf.sign(direction), 4)))){
+            !server.admins.allowAction(player, ActionType.rotate, tile, action -> action.rotation = Mathf.mod(tile.rotation() + Mathf.sign(direction), 4)))){
             throw new ValidateException(player, "Player cannot rotate a block.");
         }
 
@@ -100,7 +101,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     public static void transferInventory(Player player, Tile tile){
         if(player == null || player.timer == null) return;
         if(net.server() && (player.item().amount <= 0 || player.isTransferring|| !Units.canInteract(player, tile) ||
-            !netServer.admins.allowAction(player, ActionType.depositItem, tile, action -> {
+            !server.admins.allowAction(player, ActionType.depositItem, tile, action -> {
                 action.itemAmount = player.item().amount;
                 action.item = player.item().item;
             }))){
@@ -121,7 +122,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         int[] remaining = {accepted, accepted};
         Block block = tile.block();
 
-        Core.app.post(() -> Events.fire(new DepositEvent(tile, player, item, accepted)));
+        Core.app.post(() -> Event.fireDeposit(tile, player, item, accepted));
 
         for(int i = 0; i < sent; i++){
             boolean end = i == sent - 1;
@@ -154,9 +155,9 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     public static void onTileTapped(Player player, Tile tile){
         if(tile == null || player == null) return;
         if(net.server() && (!Units.canInteract(player, tile) ||
-            !netServer.admins.allowAction(player, ActionType.tapTile, tile, action -> {}))) throw new ValidateException(player, "Player cannot tap a tile.");
+            !server.admins.allowAction(player, ActionType.tapTile, tile, action -> {}))) throw new ValidateException(player, "Player cannot tap a tile.");
         tile.block().tapped(tile, player);
-        Core.app.post(() -> Events.fire(new TapEvent(tile, player)));
+        Core.app.post(() -> Event.fireTap(tile, player));
     }
 
     @Remote(targets = Loc.both, called = Loc.both, forward = true)
@@ -164,9 +165,9 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         if(tile == null) return;
 
         if(net.server() && (!Units.canInteract(player, tile) ||
-            !netServer.admins.allowAction(player, ActionType.configure, tile, action -> action.config = value))) throw new ValidateException(player, "Player cannot configure a tile.");
+            !server.admins.allowAction(player, ActionType.configure, tile, action -> action.config = value))) throw new ValidateException(player, "Player cannot configure a tile.");
         tile.block().configured(tile, player, value);
-        Core.app.post(() -> Events.fire(new TapConfigEvent(tile, player, value)));
+        Core.app.post(() -> Event.fireTapConfig(tile, player, value));
     }
 
     public Eachable<BuildRequest> allRequests(){

@@ -7,6 +7,7 @@ import arc.math.geom.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ExtendingItemBridge extends ItemBridge{
 

@@ -9,6 +9,7 @@ import mindustry.gen.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class PaletteDialog extends Dialog{
     private Cons<Color> cons;

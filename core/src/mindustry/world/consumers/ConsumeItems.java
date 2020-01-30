@@ -3,7 +3,7 @@ package mindustry.world.consumers;
 import arc.struct.*;
 import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.ui.Cicon;
@@ -48,19 +48,19 @@ public class ConsumeItems extends Consume{
     }
 
     @Override
-    public void update(mindustry.entities.TileEntity entity){
+    public void update(TileData entity){
 
     }
 
     @Override
-    public void trigger(mindustry.entities.TileEntity entity){
+    public void trigger(TileData entity){
         for(ItemStack stack : items){
             entity.items.remove(stack);
         }
     }
 
     @Override
-    public boolean valid(TileEntity entity){
+    public boolean valid(TileData entity){
         return entity.items != null && entity.items.has(items);
     }
 

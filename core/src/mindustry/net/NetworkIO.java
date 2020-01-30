@@ -13,6 +13,7 @@ import java.nio.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class NetworkIO{
 
@@ -77,7 +78,7 @@ public class NetworkIO{
         writeString(buffer, Version.type);
 
         buffer.put((byte)Gamemode.bestFit(state.rules).ordinal());
-        buffer.putInt(netServer.admins.getPlayerLimit());
+        buffer.putInt(server.admins.getPlayerLimit());
 
         writeString(buffer, description, 100);
         return buffer;

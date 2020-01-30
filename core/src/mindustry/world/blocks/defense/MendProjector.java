@@ -8,7 +8,7 @@ import arc.math.Mathf;
 import arc.util.*;
 import mindustry.content.Fx;
 import mindustry.entities.Effects;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
@@ -16,6 +16,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MendProjector extends Block{
     private static final IntSet healed = new IntSet();
@@ -121,7 +122,7 @@ public class MendProjector extends Block{
         renderer.lights.add(tile.drawx(), tile.drawy(), 50f * tile.entity.efficiency(), baseColor, 0.7f * tile.entity.efficiency());
     }
 
-    class MendEntity extends TileEntity{
+    class MendEntity extends TileData{
         float heat;
         float charge = Mathf.random(reload);
         float phaseHeat;

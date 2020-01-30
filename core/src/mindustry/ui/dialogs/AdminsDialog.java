@@ -6,6 +6,7 @@ import mindustry.gen.*;
 import mindustry.net.Administration.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class AdminsDialog extends FloatingDialog{
 
@@ -28,11 +29,11 @@ public class AdminsDialog extends FloatingDialog{
         ScrollPane pane = new ScrollPane(table);
         pane.setFadeScrollBars(false);
 
-        if(netServer.admins.getAdmins().size == 0){
+        if(server.admins.getAdmins().size == 0){
             table.add("$server.admins.none");
         }
 
-        for(PlayerInfo info : netServer.admins.getAdmins()){
+        for(PlayerInfo info : server.admins.getAdmins()){
             Table res = new Table(Tex.button);
             res.margin(14f);
 
@@ -40,7 +41,7 @@ public class AdminsDialog extends FloatingDialog{
             res.add().growX();
             res.addImageButton(Icon.cancel, () -> {
                 ui.showConfirm("$confirm", "$confirmunadmin", () -> {
-                    netServer.admins.unAdminPlayer(info.id);
+                    server.admins.unAdminPlayer(info.id);
                     playerGroup.all().each(player -> {
                         if(player != null && player.uuid != null && player.uuid.equals(info.id)){
                             player.isAdmin = false;

@@ -10,6 +10,7 @@ import mindustry.world.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Placement{
     private static final NormalizeResult result = new NormalizeResult();

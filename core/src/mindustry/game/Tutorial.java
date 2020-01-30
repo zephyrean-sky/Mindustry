@@ -10,13 +10,14 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.game.EventType.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 /** Handles tutorial state. */
 public class Tutorial{
@@ -240,7 +241,7 @@ public class Tutorial{
         //utility
 
         static void placeBlocks(){
-            mindustry.entities.TileEntity core = state.teams.playerCores().first();
+            TileData core = state.teams.playerCores().first();
             for(int i = 0; i < blocksToBreak; i++){
                 world.ltile(core.tile.x + blockOffset, core.tile.y + i).remove();
                 world.tile(core.tile.x + blockOffset, core.tile.y + i).setBlock(Blocks.scrapWall, state.rules.defaultTeam);
@@ -248,7 +249,7 @@ public class Tutorial{
         }
 
         static boolean blocksBroken(){
-            TileEntity core = state.teams.playerCores().first();
+            TileData core = state.teams.playerCores().first();
 
             for(int i = 0; i < blocksToBreak; i++){
                 if(world.tile(core.tile.x + blockOffset, core.tile.y + i).block() == Blocks.scrapWall){

@@ -18,6 +18,7 @@ import mindustry.net.Packets.*;
 import mindustry.ui.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class JoinDialog extends FloatingDialog{
     Array<Server> servers = new Array<>();
@@ -344,13 +345,13 @@ public class JoinDialog extends FloatingDialog{
 
         ui.loadfrag.setButton(() -> {
             ui.loadfrag.hide();
-            netClient.disconnectQuietly();
+            client.disconnectQuietly();
         });
 
         Time.runTask(2f, () -> {
             logic.reset();
             net.reset();
-            Vars.netClient.beginConnecting();
+            Vars.client.beginConnecting();
             net.connect(ip, port, () -> {
                 hide();
                 add.hide();

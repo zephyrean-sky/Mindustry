@@ -4,7 +4,7 @@ import arc.*;
 import arc.graphics.g2d.*;
 import arc.struct.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
 import mindustry.gen.*;
@@ -15,6 +15,7 @@ import mindustry.world.meta.*;
 import mindustry.world.meta.values.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LiquidTurret extends Turret{
     public ObjectMap<Liquid, BulletType> ammo = new ObjectMap<>();
@@ -52,7 +53,7 @@ public class LiquidTurret extends Turret{
         stats.add(BlockStat.ammo, new AmmoListValue<>(ammo));
         consumes.add(new ConsumeLiquidFilter(i -> ammo.containsKey(i), 1f){
             @Override
-            public boolean valid(TileEntity entity){
+            public boolean valid(TileData entity){
                 return !((TurretEntity)entity).ammo.isEmpty();
             }
 

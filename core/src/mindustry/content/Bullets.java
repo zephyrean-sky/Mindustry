@@ -13,6 +13,7 @@ import mindustry.graphics.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Bullets implements ContentList{
     public static BulletType

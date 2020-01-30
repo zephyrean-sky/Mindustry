@@ -3,7 +3,7 @@ package mindustry.world.consumers;
 import arc.struct.*;
 import arc.scene.ui.layout.*;
 import arc.util.ArcAnnotate.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.ui.Cicon;
@@ -38,12 +38,12 @@ public class ConsumeLiquid extends ConsumeLiquidBase{
     }
 
     @Override
-    public void update(mindustry.entities.TileEntity entity){
+    public void update(TileData entity){
         entity.liquids.remove(liquid, Math.min(use(entity), entity.liquids.get(liquid)));
     }
 
     @Override
-    public boolean valid(TileEntity entity){
+    public boolean valid(TileData entity){
         return entity != null && entity.liquids != null && entity.liquids.get(liquid) >= use(entity);
     }
 

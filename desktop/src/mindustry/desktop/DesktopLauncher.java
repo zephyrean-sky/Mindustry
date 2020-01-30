@@ -27,6 +27,7 @@ import java.nio.charset.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class DesktopLauncher extends ClientLauncher{
     public final static String discordID = "610508934456934412";

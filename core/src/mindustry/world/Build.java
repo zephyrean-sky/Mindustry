@@ -12,6 +12,7 @@ import mindustry.world.blocks.*;
 import mindustry.world.blocks.BuildBlock.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Build{
 
@@ -40,7 +41,7 @@ public class Build{
         tile.<BuildEntity>ent().setDeconstruct(previous);
         tile.entity.health = tile.entity.maxHealth() * prevPercent;
 
-        Core.app.post(() -> Events.fire(new BlockBuildBeginEvent(tile, team, true)));
+        Core.app.post(() -> Event.fireBlockBuildBegin(tile, team, true));
     }
 
     /** Places a BuildBlock at this location. */
@@ -61,7 +62,7 @@ public class Build{
         tile.set(sub, team, rotation);
         tile.<BuildEntity>ent().setConstruct(previous, result);
 
-        Core.app.post(() -> Events.fire(new BlockBuildBeginEvent(tile, team, false)));
+        Core.app.post(() -> Event.fireBlockBuildBegin(tile, team, false));
     }
 
     /** Returns whether a tile can be placed at this location by this team. */

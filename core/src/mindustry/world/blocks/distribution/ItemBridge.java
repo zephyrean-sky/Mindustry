@@ -9,7 +9,7 @@ import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -19,6 +19,7 @@ import mindustry.world.meta.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ItemBridge extends Block{
     public final int timerTransport = timers++;
@@ -362,7 +363,7 @@ public class ItemBridge extends Block{
         return other.block() == this && (!checkDouble || other.<ItemBridgeEntity>ent().link != tile.pos());
     }
 
-    public static class ItemBridgeEntity extends TileEntity{
+    public static class ItemBridgeEntity extends TileData{
         public int link = Pos.invalid;
         public IntSet incoming = new IntSet();
         public float uptime;

@@ -12,6 +12,7 @@ import mindustry.ui.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class HostDialog extends FloatingDialog{
     float w = 300;

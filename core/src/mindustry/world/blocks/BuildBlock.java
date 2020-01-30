@@ -10,7 +10,7 @@ import arc.util.ArcAnnotate.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.effect.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
@@ -25,6 +25,7 @@ import mindustry.world.modules.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class BuildBlock extends Block{
     public static final int maxSize = 9;
@@ -57,7 +58,7 @@ public class BuildBlock extends Block{
     public static void onDeconstructFinish(Tile tile, Block block, int builderID){
         Team team = tile.getTeam();
         Effects.effect(Fx.breakBlock, tile.drawx(), tile.drawy(), block.size);
-        Events.fire(new BlockBuildEndEvent(tile, playerGroup.getByID(builderID), team, true));
+        Event.fireBlockBuildEnd(tile, playerGroup.getByID(builderID), team, true);
         tile.remove();
         if(shouldPlay()) Sounds.breaks.at(tile, calcPitch(false));
     }
@@ -107,7 +108,7 @@ public class BuildBlock extends Block{
         Call.onConstructFinish(tile, block, builderID, rotation, team, skipConfig);
         tile.block().placed(tile);
 
-        Events.fire(new BlockBuildEndEvent(tile, playerGroup.getByID(builderID), team, false));
+        Event.fireBlockBuildEnd(tile, playerGroup.getByID(builderID), team, false);
         if(shouldPlay()) Sounds.place.at(tile, calcPitch(true));
     }
 
@@ -198,7 +199,7 @@ public class BuildBlock extends Block{
         }
     }
 
-    public class BuildEntity extends TileEntity{
+    public class BuildEntity extends TileData{
         /**
          * The recipe of the block that is being constructed.
          * If there is no recipe for this block, as is the case with rocks, 'previous' is used.
@@ -218,7 +219,7 @@ public class BuildBlock extends Block{
         private float[] accumulator;
         private float[] totalAccumulator;
 
-        public boolean construct(Unit builder, @Nullable TileEntity core, float amount, boolean configured){
+        public boolean construct(Unit builder, @Nullable TileData core, float amount, boolean configured){
             if(cblock == null){
                 kill();
                 return false;
@@ -251,7 +252,7 @@ public class BuildBlock extends Block{
             return false;
         }
 
-        public void deconstruct(Unit builder, @Nullable TileEntity core, float amount){
+        public void deconstruct(Unit builder, @Nullable TileData core, float amount){
             float deconstructMultiplier = 0.5f;
 
             if(cblock != null){

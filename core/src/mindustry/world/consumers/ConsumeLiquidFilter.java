@@ -3,7 +3,7 @@ package mindustry.world.consumers;
 import arc.struct.*;
 import arc.func.Boolf;
 import arc.scene.ui.layout.Table;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.type.Liquid;
 import mindustry.ui.Cicon;
 import mindustry.ui.MultiReqImage;
@@ -43,12 +43,12 @@ public class ConsumeLiquidFilter extends ConsumeLiquidBase{
     }
 
     @Override
-    public void update(TileEntity entity){
+    public void update(TileData entity){
         entity.liquids.remove(entity.liquids.current(), use(entity));
     }
 
     @Override
-    public boolean valid(TileEntity entity){
+    public boolean valid(TileData entity){
         return entity != null && entity.liquids != null && filter.get(entity.liquids.current()) && entity.liquids.currentAmount() >= use(entity);
     }
 

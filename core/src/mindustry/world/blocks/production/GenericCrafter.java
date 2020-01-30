@@ -6,7 +6,7 @@ import arc.math.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.gen.*;
 import mindustry.type.*;
 import mindustry.world.*;
@@ -146,7 +146,7 @@ public class GenericCrafter extends Block{
         return itemCapacity;
     }
 
-    public static class GenericCrafterEntity extends TileEntity{
+    public static class GenericCrafterEntity extends TileData{
         public float progress;
         public float totalProgress;
         public float warmup;

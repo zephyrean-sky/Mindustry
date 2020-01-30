@@ -2,7 +2,7 @@ package mindustry.world.consumers;
 
 import arc.struct.*;
 import arc.scene.ui.layout.Table;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.world.Tile;
 import mindustry.world.meta.BlockStats;
 
@@ -62,15 +62,15 @@ public abstract class Consume{
     public abstract void build(Tile tile, Table table);
 
     /** Called when a consumption is triggered manually. */
-    public void trigger(TileEntity entity){
+    public void trigger(TileData entity){
 
     }
 
     public abstract String getIcon();
 
-    public abstract void update(TileEntity entity);
+    public abstract void update(TileData entity);
 
-    public abstract boolean valid(TileEntity entity);
+    public abstract boolean valid(TileData entity);
 
     public abstract void display(BlockStats stats);
 }

@@ -20,6 +20,7 @@ import mindustry.world.blocks.Floor;
 import mindustry.world.blocks.OreBlock;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class MenuRenderer implements Disposable{
     private static final float darkness = 0.3f;

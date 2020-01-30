@@ -19,6 +19,7 @@ import java.time.*;
 
 import static arc.util.Log.format;
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static mindustry.server.ServerControl.*;
 
 public class ServerLauncher implements ApplicationListener{
@@ -81,6 +82,6 @@ public class ServerLauncher implements ApplicationListener{
 
         mods.eachClass(Mod::init);
 
-        Events.fire(new ServerLoadEvent());
+        Event.fireServerLoad();
     }
 }

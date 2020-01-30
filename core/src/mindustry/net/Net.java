@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 @SuppressWarnings("unchecked")
 public class Net{
@@ -78,7 +79,7 @@ public class Net{
             ui.loadfrag.hide();
 
             if(client()){
-                netClient.disconnectQuietly();
+                client.disconnectQuietly();
             }
         }
 
@@ -149,7 +150,7 @@ public class Net{
 
     public void reset(){
         closeServer();
-        netClient.disconnectNoReset();
+        client.disconnectNoReset();
     }
 
     public void disconnect(){

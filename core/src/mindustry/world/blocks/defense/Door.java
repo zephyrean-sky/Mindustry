@@ -8,7 +8,7 @@ import arc.graphics.g2d.*;
 import arc.math.geom.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.world.*;
@@ -16,6 +16,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Door extends Wall{
     protected final static Rect rect = new Rect();
@@ -90,7 +91,7 @@ public class Door extends Wall{
         Call.onDoorToggle(null, tile, !entity.open);
     }
 
-    public class DoorEntity extends TileEntity{
+    public class DoorEntity extends TileData{
         public boolean open = false;
 
         @Override

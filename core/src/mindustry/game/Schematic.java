@@ -1,8 +1,8 @@
 package mindustry.game;
 
+import arc.files.*;
 import arc.struct.*;
 import arc.struct.IntIntMap.*;
-import arc.files.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.*;
 import mindustry.mod.Mods.*;

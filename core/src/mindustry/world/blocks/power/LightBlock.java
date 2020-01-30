@@ -4,7 +4,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
@@ -13,6 +13,7 @@ import mindustry.world.*;
 import java.io.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class LightBlock extends Block{
     private static int lastColor = 0;
@@ -73,7 +74,7 @@ public class LightBlock extends Block{
         renderer.lights.add(tile.drawx(), tile.drawy(), radius, Tmp.c1.set(entity.color), brightness * tile.entity.efficiency());
     }
 
-    public class LightEntity extends TileEntity{
+    public class LightEntity extends TileData{
         public int color = Pal.accent.rgba();
 
         @Override

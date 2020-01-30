@@ -18,6 +18,7 @@ import java.nio.channels.*;
 import java.util.concurrent.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class ArcNetProvider implements NetProvider{
     final Client client;
@@ -43,7 +44,7 @@ public class ArcNetProvider implements NetProvider{
             @Override
             public void disconnected(Connection connection, DcReason reason){
                 if(connection.getLastProtocolError() != null){
-                    netClient.setQuiet();
+                    client.setQuiet();
                 }
 
                 Disconnect c = new Disconnect();

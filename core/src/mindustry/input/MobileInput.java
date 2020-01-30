@@ -16,7 +16,7 @@ import mindustry.*;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
@@ -26,6 +26,7 @@ import mindustry.ui.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 import static mindustry.input.PlaceMode.*;
 
 public class MobileInput extends InputHandler implements GestureListener{
@@ -77,7 +78,7 @@ public class MobileInput extends InputHandler implements GestureListener{
             Tile tile = world.ltileWorld(x, y);
 
             if(tile != null && tile.synthetic() && player.getTeam().isEnemy(tile.getTeam())){
-                TileEntity entity = tile.entity;
+                TileData entity = tile.entity;
                 player.setMineTile(null);
                 player.target = entity;
             }else if(tile != null && player.mech.canHeal && tile.entity != null && tile.getTeam() == player.getTeam() && tile.entity.damaged()){
@@ -492,7 +493,7 @@ public class MobileInput extends InputHandler implements GestureListener{
 
             if(mode == placing && isPlacing()){
                 flushSelectRequests(lineRequests);
-                Events.fire(new LineConfirmEvent());
+                Event.fireLineConfirm();
             }else if(mode == breaking){
                 removeSelection(lineStartX, lineStartY, tileX, tileY, true);
             }

@@ -9,6 +9,7 @@ public class Annotations{
     @Retention(RetentionPolicy.SOURCE)
     public @interface Autoload{
         String[] value() default {};
+        boolean async() default true;
     }
 
     //TODO
@@ -31,6 +32,12 @@ public class Annotations{
     public @interface AutoSystem{
         int priority() default 0;
         boolean client() default false;
+    }
+
+    /** Registers this as a type that holds event classes. */
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface EventClasses{
     }
 
     /** Automatically registers a a method to recieve and event. */

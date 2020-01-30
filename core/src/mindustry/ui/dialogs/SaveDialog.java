@@ -8,6 +8,7 @@ import mindustry.game.Saves.SaveSlot;
 import mindustry.gen.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class SaveDialog extends LoadDialog{
 

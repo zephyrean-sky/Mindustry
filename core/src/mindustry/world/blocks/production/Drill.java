@@ -8,7 +8,7 @@ import arc.math.*;
 import arc.util.*;
 import mindustry.content.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
+import mindustry.world.TileData;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -17,6 +17,7 @@ import mindustry.world.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
+import static mindustry.gen.Sys.*;
 
 public class Drill extends Block{
     public float hardnessDrillMultiplier = 50f;
@@ -317,7 +318,7 @@ public class Drill extends Block{
         return drops != null && drops.hardness <= tier;
     }
 
-    public static class DrillEntity extends TileEntity{
+    public static class DrillEntity extends TileData{
         float progress;
         int index;
         float warmup;
