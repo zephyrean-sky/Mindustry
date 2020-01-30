@@ -21,7 +21,6 @@ import mindustry.ctype.*;
 import mindustry.ctype.ContentType;
 import mindustry.entities.*;
 import mindustry.entities.effect.*;
-import mindustry.entities.traits.BuilderTrait.*;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;

@@ -17,7 +17,6 @@ import mindustry.entities.*;
 import mindustry.entities.type.Effect;
 import mindustry.entities.type.Bullet;
 import mindustry.entities.bullet.BulletType;
-import mindustry.entities.traits.TargetTrait;
 import mindustry.entities.type.TileEntity;
 import mindustry.gen.*;
 import mindustry.graphics.*;

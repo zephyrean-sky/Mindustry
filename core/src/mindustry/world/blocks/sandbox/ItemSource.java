@@ -4,7 +4,7 @@ import arc.*;
 import arc.graphics.g2d.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
-import mindustry.entities.traits.BuilderTrait.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;

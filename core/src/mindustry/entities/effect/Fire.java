@@ -20,7 +20,7 @@ import java.io.*;
 
 import static mindustry.Vars.*;
 
-public class Fire extends TimedEntity implements SaveTrait, SyncTrait{
+public class Fire{
     private static final IntMap<Fire> map = new IntMap<>();
     private static final float baseLifetime = 1000f, spreadChance = 0.05f, fireballChance = 0.07f;
 
@@ -29,15 +29,6 @@ public class Fire extends TimedEntity implements SaveTrait, SyncTrait{
     private Block block;
     private float baseFlammability = -1, puddleFlammability;
     private float lifetime;
-
-    /** Deserialization use only! */
-    public Fire(){
-    }
-
-    @Remote
-    public static void onRemoveFire(int fid){
-        fireGroup.removeByID(fid);
-    }
 
     /** Start a fire on the tile. If there already is a file there, refreshes its lifetime. */
     public static void create(Tile tile){
@@ -77,21 +68,6 @@ public class Fire extends TimedEntity implements SaveTrait, SyncTrait{
                 Events.fire(Trigger.fireExtinguish);
             }
         }
-    }
-
-    @Override
-    public TypeID getTypeID(){
-        return TypeIDs.fire;
-    }
-
-    @Override
-    public byte version(){
-        return 0;
-    }
-
-    @Override
-    public float lifetime(){
-        return lifetime;
     }
 
     @Override
@@ -222,8 +198,4 @@ public class Fire extends TimedEntity implements SaveTrait, SyncTrait{
         }
     }
 
-    @Override
-    public EntityGroup targetGroup(){
-        return fireGroup;
-    }
 }

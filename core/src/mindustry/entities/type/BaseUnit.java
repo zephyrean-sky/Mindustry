@@ -137,7 +137,7 @@ public abstract class BaseUnit extends Unit implements ShooterTrait{
         (target instanceof Tile && ((Tile)target).block().flags.contains(flag));
     }
 
-    public void setState(UnitState state){
+    public void setState(StateMachine.UnitState state){
         this.state.set(state);
     }
 
@@ -186,7 +186,7 @@ public abstract class BaseUnit extends Unit implements ShooterTrait{
         return Vars.state.teams.closestEnemyCore(x, y, team);
     }
 
-    public UnitState getStartState(){
+    public StateMachine.UnitState getStartState(){
         return null;
     }
 

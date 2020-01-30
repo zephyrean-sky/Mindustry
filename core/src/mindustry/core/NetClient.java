@@ -13,8 +13,6 @@ import mindustry.annotations.Annotations.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.traits.BuilderTrait.*;
-import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;

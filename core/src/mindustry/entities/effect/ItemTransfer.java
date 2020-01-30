@@ -10,16 +10,12 @@ import arc.math.geom.Vec2;
 import arc.util.Time;
 import arc.util.pooling.Pools;
 import mindustry.entities.*;
-import mindustry.entities.type.TimedEntity;
-import mindustry.entities.traits.DrawTrait;
 import mindustry.entities.type.Unit;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
 import mindustry.world.Tile;
 
-import static mindustry.Vars.*;
-
-public class ItemTransfer extends TimedEntity implements DrawTrait{
+public class ItemTransfer{
     private Vec2 from = new Vec2();
     private Vec2 current = new Vec2();
     private Vec2 tovec = new Vec2();

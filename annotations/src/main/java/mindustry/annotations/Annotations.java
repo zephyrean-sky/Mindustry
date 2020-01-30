@@ -11,7 +11,6 @@ public class Annotations{
     public @interface UIDialog{
     }
 
-
     //TODO
     /** Registers this as a fragment in Fragments.*/
     @Target(ElementType.TYPE)

@@ -4,12 +4,12 @@ import arc.ecs.*;
 import arc.ecs.annotations.*;
 import arc.func.*;
 import arc.graphics.*;
+import arc.math.*;
 import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.ArcAnnotate.*;
+import mindustry.entities.*;
 import mindustry.entities.bullet.*;
-import mindustry.entities.traits.BuilderTrait.*;
-import mindustry.entities.traits.*;
 import mindustry.entities.type.*;
 import mindustry.game.*;
 import mindustry.net.*;
@@ -23,8 +23,34 @@ import static mindustry.Vars.*;
 public class Components{
 
     public static class Healthc extends Component{
-        public float health;
+        public float health, maxHealth;
         public boolean dead;
+
+        public void kill(){
+            health = 0;
+        }
+
+        public void damage(float amount){
+            health -= amount;
+        }
+
+        public void clamp(){
+            health = Mathf.clamp(health, 0, maxHealth);
+        }
+
+        public float healthf(){
+            return health / maxHealth;
+        }
+
+        public void heal(float amount){
+            health += amount;
+            clamp();
+        }
+
+        public void heal(){
+            health = maxHealth;
+            dead = false;
+        }
     }
 
     public static class Hitboxc extends Component{
@@ -58,7 +84,7 @@ public class Components{
 
     public static class Velocityc extends Component{
         public Vec2 vec = new Vec2();
-        public float drag = 0f;
+        public float drag = 0f, mass = 0f;
     }
 
     public static class Teamc extends Component{

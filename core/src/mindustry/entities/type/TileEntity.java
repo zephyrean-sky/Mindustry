@@ -10,8 +10,6 @@ import arc.math.geom.Vec2;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
 import mindustry.entities.EntityGroup;
-import mindustry.entities.traits.HealthTrait;
-import mindustry.entities.traits.TargetTrait;
 import mindustry.game.*;
 import mindustry.game.EventType.BlockDestroyEvent;
 import mindustry.gen.*;
@@ -38,7 +36,7 @@ public class TileEntity extends BaseEntity implements TargetTrait, HealthTrait{
     public PowerModule power;
     public ItemModule items;
     public LiquidModule liquids;
-    public @Nullable ConsumeModule cons;
+    public ConsumeModule cons;
 
     /** List of (cached) tiles with entities in proximity, used for outputting to */
     private Array<Tile> proximity = new Array<>(8);

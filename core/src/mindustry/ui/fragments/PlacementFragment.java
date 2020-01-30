@@ -12,7 +12,7 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.traits.BuilderTrait.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;

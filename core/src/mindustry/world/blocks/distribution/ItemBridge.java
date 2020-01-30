@@ -8,7 +8,7 @@ import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.util.*;
-import mindustry.entities.traits.BuilderTrait.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.graphics.*;
 import mindustry.type.*;

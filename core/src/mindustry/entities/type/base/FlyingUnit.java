@@ -19,9 +19,9 @@ import static mindustry.Vars.*;
 public class FlyingUnit extends BaseUnit{
     protected float[] weaponAngles = {0,0};
 
-    protected final UnitState
+    protected final StateMachine.UnitState
 
-    attack = new UnitState(){
+    attack = new StateMachine.UnitState(){
         public void entered(){
             target = null;
         }
@@ -75,7 +75,7 @@ public class FlyingUnit extends BaseUnit{
             }
         }
     },
-    rally = new UnitState(){
+    rally = new StateMachine.UnitState(){
         public void update(){
             if(retarget()){
                 targetClosestAllyFlag(BlockFlag.rally);
@@ -94,7 +94,7 @@ public class FlyingUnit extends BaseUnit{
             }
         }
     },
-    retreat = new UnitState(){
+    retreat = new StateMachine.UnitState(){
         public void entered(){
             target = null;
         }
@@ -183,7 +183,7 @@ public class FlyingUnit extends BaseUnit{
     }
 
     @Override
-    public UnitState getStartState(){
+    public StateMachine.UnitState getStartState(){
         return attack;
     }
 

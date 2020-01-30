@@ -19,7 +19,6 @@ import static mindustry.Vars.content;
 /** Class for controlling status effects on an entity. */
 public class Statuses implements Saveable{
     private static final StatusEntry globalResult = new StatusEntry();
-    private static final Array<StatusEntry> removals = new Array<>();
 
     private Array<StatusEntry> statuses = new Array<>();
     private Bits applied = new Bits(content.getBy(ContentType.status).size);

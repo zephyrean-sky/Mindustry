@@ -1,17 +1,11 @@
-package mindustry.entities.units;
+package mindustry.entities;
 
-import arc.math.Mathf;
-import mindustry.Vars;
-import mindustry.content.Items;
-import mindustry.entities.type.BaseUnit;
-import mindustry.entities.type.TileEntity;
-import mindustry.gen.Call;
-import mindustry.type.Item;
-import static mindustry.Vars.*;
+import mindustry.type.*;
 
 public class UnitDrops{
     private static Item[] dropTable;
 
+    /*
     public static void dropItems(BaseUnit unit){
         //items only dropped in waves for enemy team
         if(unit.getTeam() != state.rules.waveTeam || !Vars.state.rules.unitDrops){
@@ -44,5 +38,5 @@ public class UnitDrops{
                 }
             }
         }
-    }
+    }*/
 }

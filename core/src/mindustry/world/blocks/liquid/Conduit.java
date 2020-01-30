@@ -8,7 +8,7 @@ import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.content.*;
-import mindustry.entities.traits.BuilderTrait.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.type.*;
 import mindustry.world.*;

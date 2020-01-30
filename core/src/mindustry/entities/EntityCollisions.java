@@ -3,8 +3,6 @@ package mindustry.entities;
 import arc.struct.Array;
 import arc.math.Mathf;
 import arc.math.geom.*;
-import mindustry.entities.traits.Entity_;
-import mindustry.entities.traits.SolidTrait;
 import mindustry.world.Tile;
 
 import static mindustry.Vars.tilesize;

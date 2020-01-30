@@ -1,16 +1,8 @@
 package mindustry.entities.effect;
 
-import arc.Core;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.TextureRegion;
-import arc.math.Angles;
-import arc.math.Mathf;
-import mindustry.world.Tile;
-
-import static mindustry.Vars.headless;
-import static mindustry.Vars.world;
-
-public class ScorchDecal extends Decal{
+public class ScorchDecal{
+    //TODO replace with a single sprite that looks nicer
+    /*
     private static final int scorches = 5;
     private static final TextureRegion[] regions = new TextureRegion[scorches];
 
@@ -45,5 +37,5 @@ public class ScorchDecal extends Decal{
             region.getHeight() * Draw.scl,
             region.getWidth() / 2f * Draw.scl, 0, rotation - 90);
         }
-    }
+    }*/
 }

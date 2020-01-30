@@ -12,7 +12,6 @@ import mindustry.entities.bullet.*;
 import mindustry.entities.type.*;
 import mindustry.entities.units.*;
 import mindustry.game.*;
-import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
 import mindustry.world.meta.*;
@@ -26,9 +25,9 @@ public class GroundUnit extends BaseUnit{
     protected float stuckTime;
     protected float baseRotation;
 
-    public final UnitState
+    public final StateMachine.UnitState
 
-    attack = new UnitState(){
+    attack = new StateMachine.UnitState(){
         public void entered(){
             target = null;
         }
@@ -54,7 +53,7 @@ public class GroundUnit extends BaseUnit{
             }
         }
     },
-    rally = new UnitState(){
+    rally = new StateMachine.UnitState(){
         public void update(){
             Tile target = getClosest(BlockFlag.rally);
 
@@ -63,7 +62,7 @@ public class GroundUnit extends BaseUnit{
             }
         }
     },
-    retreat = new UnitState(){
+    retreat = new StateMachine.UnitState(){
         public void entered(){
             target = null;
         }
@@ -100,7 +99,7 @@ public class GroundUnit extends BaseUnit{
     }
 
     @Override
-    public UnitState getStartState(){
+    public StateMachine.UnitState getStartState(){
         return attack;
     }
 

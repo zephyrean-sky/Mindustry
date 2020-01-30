@@ -17,18 +17,7 @@ import static arc.Core.camera;
 import static mindustry.Vars.*;
 
 public class Effects{
-    private static Array<Effect> effects = new Array<>();
     private static final float shakeFalloff = 10000f;
-
-    public static Effect getEffect(int id){
-        if(id >= effects.size || id < 0)
-            throw new IllegalArgumentException("The effect with ID \"" + id + "\" does not exist!");
-        return effects.get(id);
-    }
-
-    public static Array<Effect> all(){
-        return effects;
-    }
 
     private static void shake(float intensity, float duration){
         //TODO call methods of renderer system

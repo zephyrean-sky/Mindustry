@@ -22,7 +22,10 @@ import java.io.*;
 
 import static mindustry.Vars.*;
 
-public class Puddle extends SolidEntity implements SaveTrait, Poolable, DrawTrait, SyncTrait{
+//TODO redesign:
+//- use quadtree of puddle objects mapped to the tile grid
+//- puddles should be slightly transparent, maybe have water animation and reflection
+public class Puddle{
     private static final IntMap<Puddle> map = new IntMap<>();
     private static final float maxLiquid = 70f;
     private static final int maxGeneration = 2;

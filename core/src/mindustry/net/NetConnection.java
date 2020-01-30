@@ -3,7 +3,7 @@ package mindustry.net;
 import arc.struct.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.*;
-import mindustry.entities.traits.BuilderTrait.*;
+import mindustry.entities.*;
 import mindustry.entities.type.*;
 import mindustry.gen.*;
 import mindustry.net.Administration.*;

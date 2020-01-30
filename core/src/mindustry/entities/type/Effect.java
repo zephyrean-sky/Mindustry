@@ -3,9 +3,9 @@ package mindustry.entities.type;
 import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
+import arc.math.*;
 import arc.math.geom.*;
 import mindustry.entities.*;
-import mindustry.entities.traits.*;
 
 public class Effect{
     private static final EffectContainer container = new EffectContainer();
@@ -22,7 +22,6 @@ public class Effect{
         this.lifetime = life;
         this.renderer = renderer;
         this.size = clipsize;
-        Effects.effects.add(this);
     }
 
     public Effect(float life, Cons<EffectContainer> renderer){
@@ -59,7 +58,7 @@ public class Effect{
         Draw.reset();
     }
 
-    public static class EffectContainer implements ScaleTrait{
+    public static class EffectContainer implements Scaled{
         public float x, y, time, lifetime, rotation;
         public Color color;
         public int id;

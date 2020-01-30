@@ -28,7 +28,7 @@ import java.io.*;
 
 import static mindustry.Vars.*;
 
-public abstract class Unit extends DestructibleEntity implements SaveTrait, TargetTrait, SyncTrait, DrawTrait, TeamTrait, ShooterTrait{
+public abstract class Unit{
     /** Total duration of hit flash effect */
     public static final float hitDuration = 9f;
     /** Percision divisor of velocity, used when writing. For example a value of '2' would mean the percision is 1/2 = 0.5-size chunks. */

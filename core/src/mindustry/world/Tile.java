@@ -21,7 +21,7 @@ public class Tile implements Position, TargetTrait{
     /** Tile traversal cost. */
     public byte cost = 1;
     /** Tile entity, usually null. */
-    public TileEntity entity;
+    public int ent;
     public short x, y;
     protected Block block;
     protected Floor floor;
@@ -101,11 +101,6 @@ public class Tile implements Position, TargetTrait{
 
     public void configureAny(int value){
         Call.onTileConfig(null, this, value);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends TileEntity> T ent(){
-        return (T)entity;
     }
 
     public float worldx(){

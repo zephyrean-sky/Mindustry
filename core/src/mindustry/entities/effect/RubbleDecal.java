@@ -1,16 +1,11 @@
 package mindustry.entities.effect;
 
-import arc.Core;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.TextureRegion;
-import arc.math.Mathf;
-
-import static mindustry.Vars.headless;
-
-public class RubbleDecal extends Decal{
+//TODO replace with generic tinted region class
+public class RubbleDecal{
+    /*
     private TextureRegion region;
 
-    /** Creates a rubble effect at a position. Provide a block size to use. */
+    /** Creates a rubble effect at a position. Provide a block size to use.
     public static void create(float x, float y, int size){
         if(headless) return;
 
@@ -37,10 +32,5 @@ public class RubbleDecal extends Decal{
             return;
         }
         Draw.rect(region, x, y, Mathf.randomSeed(id, 0, 4) * 90);
-    }
-
-    @Override
-    public float drawSize(){
-        return region.getWidth() * 3f;
-    }
+    }*/
 }

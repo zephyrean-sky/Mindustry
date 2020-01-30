@@ -1,23 +1,22 @@
 package mindustry.entities.type;
 
 import arc.*;
-import mindustry.annotations.Annotations.*;
-import arc.struct.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.struct.*;
 import arc.util.*;
 import arc.util.ArcAnnotate.*;
 import arc.util.pooling.*;
 import mindustry.*;
+import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.core.*;
-import mindustry.ctype.ContentType;
+import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.traits.*;
 import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.input.*;
@@ -96,7 +95,6 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
         baseRotation = 90f;
         dead = false;
         spawner = null;
-        respawns --;
         Sounds.respawn.at(tile);
 
         setNet(tile.drawx(), tile.drawy());
@@ -107,11 +105,6 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
     @Override
     public boolean offloadImmediately(){
         return true;
-    }
-
-    @Override
-    public TypeID getTypeID(){
-        return TypeIDs.player;
     }
 
     @Override
@@ -227,11 +220,6 @@ public class Player extends Unit implements BuilderMinerTrait, ShooterTrait{
     @Override
     public String toString(){
         return "Player{" + name + ", mech=" + mech.name + ", id=" + id + ", local=" + isLocal + ", " + x + ", " + y + "}";
-    }
-
-    @Override
-    public EntityGroup targetGroup(){
-        return playerGroup;
     }
 
     public void setTeam(Team team){

@@ -13,9 +13,6 @@ import mindustry.content.Bullets;
 import mindustry.entities.EntityGroup;
 import mindustry.entities.Units;
 import mindustry.entities.type.Bullet;
-import mindustry.entities.type.TimedEntity;
-import mindustry.entities.traits.DrawTrait;
-import mindustry.entities.traits.TimeTrait;
 import mindustry.entities.type.Unit;
 import mindustry.game.Team;
 import mindustry.gen.Call;
@@ -24,7 +21,7 @@ import mindustry.world.Tile;
 
 import static mindustry.Vars.*;
 
-public class Lightning extends TimedEntity implements DrawTrait, TimeTrait{
+public class Lightning{
     public static final float lifetime = 10f;
 
     private static final Rand random = new Rand();
@@ -37,10 +34,6 @@ public class Lightning extends TimedEntity implements DrawTrait, TimeTrait{
 
     private Array<Vec2> lines = new Array<>();
     private Color color = Pal.lancerLaser;
-
-    /** For pooling use only. Do not call directly! */
-    public Lightning(){
-    }
 
     /** Create a lighting branch at a location. Use Team.none to damage everyone. */
     public static void create(Team team, Color color, float damage, float x, float y, float targetAngle, int length){
