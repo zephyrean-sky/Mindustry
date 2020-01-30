@@ -20,7 +20,7 @@ import mindustry.game.*;
 import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.input.*;
-import mindustry.io.*;
+import mindustry.io.FileTree;
 import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;

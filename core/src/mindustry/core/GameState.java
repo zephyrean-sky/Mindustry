@@ -4,6 +4,7 @@ import arc.*;
 import mindustry.entities.type.*;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
+import mindustry.gen.*;
 
 import static mindustry.Vars.*;
 import static mindustry.gen.Sys.*;
