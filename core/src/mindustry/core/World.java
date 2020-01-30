@@ -30,10 +30,6 @@ public class World{
 
     private boolean generating, invalidMap;
 
-    public World(){
-
-    }
-
     public boolean isInvalidMap(){
         return invalidMap;
     }
@@ -281,7 +277,6 @@ public class World{
         int err = dx - dy;
         int e2;
         while(true){
-
             if(cons.accept(x0, y0)) break;
             if(x0 == x1 && y0 == y1) break;
 

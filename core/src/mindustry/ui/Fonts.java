@@ -21,7 +21,7 @@ import arc.scene.style.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
-import mindustry.core.*;
+import mindustry.systems.*;
 
 import java.util.*;
 
@@ -101,7 +101,7 @@ public class Fonts{
 
     /** Called from a static context for use in the loading screen.*/
     public static void loadDefaultFont(){
-        UI.packer = new PixmapPacker(2048, 2048, Format.RGBA8888, 2, true);
+        UISystem.packer = new PixmapPacker(2048, 2048, Format.RGBA8888, 2, true);
         FileHandleResolver resolver = new InternalFileHandleResolver();
         Core.assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         Core.assets.setLoader(BitmapFont.class, null, new FreetypeFontLoader(resolver){
@@ -120,7 +120,7 @@ public class Fonts{
 
                 parameter.fontParameters.magFilter = TextureFilter.Linear;
                 parameter.fontParameters.minFilter = TextureFilter.Linear;
-                parameter.fontParameters.packer = UI.packer;
+                parameter.fontParameters.packer = UISystem.packer;
                 return super.loadSync(manager, fileName, file, parameter);
             }
         });
@@ -141,15 +141,15 @@ public class Fonts{
         //grab old UI texture and regions...
         Texture texture = atlas.find("logo").getTexture();
 
-        Page page = UI.packer.getPages().first();
+        Page page = UISystem.packer.getPages().first();
 
         Array<AtlasRegion> regions = atlas.getRegions().select(t -> t.getTexture() == texture);
         for(AtlasRegion region : regions){
             //get new pack rect
             page.setDirty(false);
-            Rect rect = UI.packer.pack(region.name + (region.splits != null ? ".9" : ""), atlas.getPixmap(region));
+            Rect rect = UISystem.packer.pack(region.name + (region.splits != null ? ".9" : ""), atlas.getPixmap(region));
             //set new texture
-            region.setTexture(UI.packer.getPages().first().getTexture());
+            region.setTexture(UISystem.packer.getPages().first().getTexture());
             //set its new position
             region.set((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height);
             //add old texture

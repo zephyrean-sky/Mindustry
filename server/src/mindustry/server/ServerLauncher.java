@@ -13,6 +13,7 @@ import mindustry.mod.*;
 import mindustry.mod.Mods.*;
 import mindustry.net.Net;
 import mindustry.net.*;
+import mindustry.systems.*;
 
 import java.time.*;
 
@@ -75,7 +76,7 @@ public class ServerLauncher implements ApplicationListener{
         }
 
         Core.app.addListener(logic = new Logic());
-        Core.app.addListener(netServer = new NetServer());
+        Core.app.addListener(netServer = new ServerSystem());
         Core.app.addListener(new ServerControl(args));
 
         mods.eachClass(Mod::init);

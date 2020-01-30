@@ -1,13 +1,14 @@
-package mindustry.core;
+package mindustry.systems;
 
 import arc.*;
+import arc.ecs.*;
 import arc.util.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
+import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
-import mindustry.entities.TileEntity;
 import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;
@@ -21,71 +22,65 @@ import java.util.*;
 
 import static mindustry.Vars.*;
 
-/**
- * Logic module.
- * Handles all logic for entities and waves.
- * Handles game state events.
- * Does not store any game state itself.
- * <p>
- * This class should <i>not</i> call any outside methods to change state of modules, but instead fire events.
- */
-public class Logic implements ApplicationListener{
+@AutoSystem
+public class LogicSystem extends BaseSystem{
 
-    public Logic(){
-        Events.on(WaveEvent.class, event -> {
-            if(world.isZone()){
-                world.getZone().updateWave(state.wave);
+    @Subscribe
+    public void wave(WaveEvent e){
+        if(world.isZone()){
+            world.getZone().updateWave(state.wave);
+        }
+    }
+
+    @Subscribe
+    public void blockDestroy(BlockDestroyEvent event){
+        //blocks that get broken are appended to the team's broken block queue
+        Tile tile = event.tile;
+        Block block = tile.block();
+        //skip null entities or un-rebuildables, for obvious reasons; also skip client since they can't modify these requests
+        if(tile.entity == null || !tile.block().rebuildable || net.client()) return;
+
+        if(block instanceof BuildBlock){
+
+            BuildEntity entity = tile.ent();
+
+            //update block to reflect the fact that something was being constructed
+            if(entity.cblock != null && entity.cblock.synthetic()){
+                block = entity.cblock;
+            }else{
+                //otherwise this was a deconstruction that was interrupted, don't want to rebuild that
+                return;
             }
-        });
+        }
 
-        Events.on(BlockDestroyEvent.class, event -> {
-            //blocks that get broken are appended to the team's broken block queue
-            Tile tile = event.tile;
-            Block block = tile.block();
-            //skip null entities or un-rebuildables, for obvious reasons; also skip client since they can't modify these requests
-            if(tile.entity == null || !tile.block().rebuildable || net.client()) return;
+        TeamData data = state.teams.get(tile.getTeam());
 
-            if(block instanceof BuildBlock){
+        //remove existing blocks that have been placed here.
+        //painful O(n) iteration + copy
+        for(int i = 0; i < data.brokenBlocks.size; i++){
+            BrokenBlock b = data.brokenBlocks.get(i);
+            if(b.x == tile.x && b.y == tile.y){
+                data.brokenBlocks.removeIndex(i);
+                break;
+            }
+        }
 
-                BuildEntity entity = tile.ent();
+        data.brokenBlocks.addFirst(new BrokenBlock(tile.x, tile.y, tile.rotation(), block.id, tile.entity.config()));
+    }
 
-                //update block to reflect the fact that something was being constructed
-                if(entity.cblock != null && entity.cblock.synthetic()){
-                    block = entity.cblock;
-                }else{
-                    //otherwise this was a deconstruction that was interrupted, don't want to rebuild that
-                    return;
+    @Subscribe
+    public void blockBuildEnd(BlockBuildEndEvent event){
+        if(!event.breaking){
+            TeamData data = state.teams.get(event.team);
+            Iterator<BrokenBlock> it = data.brokenBlocks.iterator();
+            while(it.hasNext()){
+                BrokenBlock b = it.next();
+                Block block = content.block(b.block);
+                if(event.tile.block().bounds(event.tile.x, event.tile.y, Tmp.r1).overlaps(block.bounds(b.x, b.y, Tmp.r2))){
+                    it.remove();
                 }
             }
-
-            TeamData data = state.teams.get(tile.getTeam());
-
-            //remove existing blocks that have been placed here.
-            //painful O(n) iteration + copy
-            for(int i = 0; i < data.brokenBlocks.size; i++){
-                BrokenBlock b = data.brokenBlocks.get(i);
-                if(b.x == tile.x && b.y == tile.y){
-                    data.brokenBlocks.removeIndex(i);
-                    break;
-                }
-            }
-
-            data.brokenBlocks.addFirst(new BrokenBlock(tile.x, tile.y, tile.rotation(), block.id, tile.entity.config()));
-        });
-
-        Events.on(BlockBuildEndEvent.class, event -> {
-            if(!event.breaking){
-                TeamData data = state.teams.get(event.team);
-                Iterator<BrokenBlock> it = data.brokenBlocks.iterator();
-                while(it.hasNext()){
-                    BrokenBlock b = it.next();
-                    Block block = content.block(b.block);
-                    if(event.tile.block().bounds(event.tile.x, event.tile.y, Tmp.r1).overlaps(block.bounds(b.x, b.y, Tmp.r2))){
-                        it.remove();
-                    }
-                }
-            }
-        });
+        }
     }
 
     /** Handles the event of content being used by either the player or some block. */
@@ -117,10 +112,8 @@ public class Logic implements ApplicationListener{
     public void reset(){
         state = new GameState();
 
-        entities.clear();
+        base.deleteAll();
         Time.clear();
-        TileEntity.sleepingEntities = 0;
-
         Events.fire(new ResetEvent());
     }
 
@@ -167,7 +160,7 @@ public class Logic implements ApplicationListener{
         }
 
         for(TileEntity tile : state.teams.playerCores()){
-            Effects.effect(Fx.launch, tile);
+            Fx.launch.at(tile);
         }
 
         if(world.getZone() != null){
@@ -198,33 +191,32 @@ public class Logic implements ApplicationListener{
     }
 
     @Override
-    public void update(){
-        Events.fire(Trigger.update);
+    protected void processSystem(){
+        if(!state.paused()){
+            Time.update();
 
-        if(!state.is(State.menu)){
-            if(!net.client()){
-                state.enemies = unitGroup.count(b -> b.getTeam() == state.rules.waveTeam && b.countsAsEnemy());
-            }
-
-            if(!state.paused()){
-                Time.update();
-
-                base.process();
-
-                if(state.rules.waves && state.rules.waveTimer && !state.gameOver){
-                    if(!state.rules.waitForWaveToEnd || state.enemies == 0){
-                        state.wavetime = Math.max(state.wavetime - Time.delta(), 0);
-                    }
+            if(state.rules.waves && state.rules.waveTimer && !state.gameOver){
+                if(!state.rules.waitForWaveToEnd || state.enemies == 0){
+                    state.wavetime = Math.max(state.wavetime - Time.delta(), 0);
                 }
-
-                if(!net.client() && state.wavetime <= 0 && state.rules.waves){
-                    runWave();
-                }
-            }
-
-            if(!net.client() && !world.isInvalidMap() && !state.isEditor() && state.rules.canGameOver){
-                checkGameOver();
             }
         }
+
+        if(!net.client()){
+            state.enemies = unitGroup.count(b -> b.getTeam() == state.rules.waveTeam && b.countsAsEnemy());
+
+            if(!world.isInvalidMap() && !state.isEditor() && state.rules.canGameOver){
+                checkGameOver();
+            }
+
+            if(state.wavetime <= 0 && state.rules.waves){
+                runWave();
+            }
+        }
+    }
+
+    @Override
+    protected boolean checkProcessing(){
+        return state.playing();
     }
 }

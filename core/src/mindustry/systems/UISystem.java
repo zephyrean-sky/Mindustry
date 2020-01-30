@@ -1,9 +1,9 @@
-package mindustry.core;
+package mindustry.systems;
 
 import arc.*;
 import arc.Graphics.*;
 import arc.Input.*;
-import arc.assets.*;
+import arc.ecs.*;
 import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
@@ -20,6 +20,7 @@ import arc.scene.ui.Tooltip.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import mindustry.annotations.Annotations.*;
 import mindustry.core.GameState.*;
 import mindustry.editor.*;
 import mindustry.game.EventType.*;
@@ -32,7 +33,7 @@ import mindustry.ui.fragments.*;
 import static arc.scene.actions.Actions.*;
 import static mindustry.Vars.*;
 
-public class UI implements ApplicationListener, Loadable{
+public class UISystem extends BaseSystem{
     public static PixmapPacker packer;
 
     public MenuFragment menufrag;
@@ -71,16 +72,11 @@ public class UI implements ApplicationListener, Loadable{
 
     public Cursor drillCursor, unloadCursor;
 
-    public UI(){
+    public UISystem(){
         Fonts.loadFonts();
     }
 
-    @Override
-    public void loadAsync(){
-
-    }
-
-    @Override
+    @Autoload
     public void loadSync(){
         Fonts.outline.getData().markupEnabled = true;
         Fonts.def.getData().markupEnabled = true;
@@ -118,12 +114,7 @@ public class UI implements ApplicationListener, Loadable{
     }
 
     @Override
-    public Array<AssetDescriptor> getDependencies(){
-        return Array.with(new AssetDescriptor<>(Control.class), new AssetDescriptor<>("outline", BitmapFont.class), new AssetDescriptor<>("default", BitmapFont.class), new AssetDescriptor<>("chat", BitmapFont.class));
-    }
-
-    @Override
-    public void update(){
+    public void processSystem(){
         if(disableUI || Core.scene == null) return;
 
         Core.scene.act();
@@ -144,7 +135,7 @@ public class UI implements ApplicationListener, Loadable{
     }
 
     @Override
-    public void init(){
+    public void initialize(){
         menuGroup = new WidgetGroup();
         hudGroup = new WidgetGroup();
 
@@ -202,10 +193,10 @@ public class UI implements ApplicationListener, Loadable{
         new FadeInFragment().build(group);
     }
 
-    @Override
-    public void resize(int width, int height){
+    @Subscribe
+    public void resize(ResizeEvent event){
         if(Core.scene == null) return;
-        Core.scene.resize(width, height);
+        Core.scene.resize(Core.graphics.getWidth(), Core.graphics.getHeight());
         Events.fire(new ResizeEvent());
     }
 

@@ -1,6 +1,7 @@
-package mindustry.core;
+package mindustry.systems;
 
 import arc.*;
+import arc.ecs.*;
 import arc.graphics.*;
 import arc.math.*;
 import arc.struct.*;
@@ -10,6 +11,7 @@ import arc.util.io.*;
 import arc.util.serialization.*;
 import mindustry.*;
 import mindustry.annotations.Annotations.*;
+import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
@@ -30,7 +32,8 @@ import java.util.zip.*;
 
 import static mindustry.Vars.*;
 
-public class NetClient implements ApplicationListener{
+@AutoSystem
+public class ClientSystem extends BaseSystem{
     private final static float dataTimeout = 60 * 18;
     private final static float playerSyncTime = 2;
     public final static float viewScale = 2f;
@@ -54,7 +57,7 @@ public class NetClient implements ApplicationListener{
     private ReusableByteInStream byteStream = new ReusableByteInStream();
     private DataInputStream dataStream = new DataInputStream(byteStream);
 
-    public NetClient(){
+    public ClientSystem(){
 
         net.handleClient(Connect.class, packet -> {
             Log.info("Connecting to server: {0}", packet.addressTCP);
@@ -428,9 +431,7 @@ public class NetClient implements ApplicationListener{
     }
 
     @Override
-    public void update(){
-        if(!net.client()) return;
-
+    public void processSystem(){
         if(!state.is(State.menu)){
             if(!connecting) sync();
         }else if(!connecting){
@@ -446,6 +447,11 @@ public class NetClient implements ApplicationListener{
                 timeoutTime = 0f;
             }
         }
+    }
+
+    @Override
+    protected boolean checkProcessing(){
+        return net.client();
     }
 
     public boolean isConnecting(){

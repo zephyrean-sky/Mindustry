@@ -5,7 +5,6 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.*;
 import mindustry.content.*;
-import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
@@ -14,6 +13,7 @@ import mindustry.game.*;
 import mindustry.io.*;
 import mindustry.maps.*;
 import mindustry.net.Net;
+import mindustry.systems.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
@@ -47,7 +47,7 @@ public class ApplicationTests{
                     content.createBaseContent();
 
                     add(logic = new Logic());
-                    add(netServer = new NetServer());
+                    add(netServer = new ServerSystem());
 
                     content.init();
                 }

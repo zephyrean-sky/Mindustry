@@ -19,6 +19,7 @@ import mindustry.io.*;
 import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;
+import mindustry.systems.*;
 import mindustry.ui.*;
 
 import static arc.Core.*;
@@ -82,11 +83,11 @@ public abstract class ClientLauncher extends ApplicationCore implements Platform
         });
 
         add(logic = new Logic());
-        add(control = new Control());
+        add(control = new InputSystem());
         add(renderer = new Renderer());
-        add(ui = new UI());
-        add(netServer = new NetServer());
-        add(netClient = new NetClient());
+        add(ui = new UISystem());
+        add(netServer = new ServerSystem());
+        add(netClient = new ClientSystem());
 
         assets.load(mods);
         assets.load(schematics);

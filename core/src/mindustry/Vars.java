@@ -27,8 +27,7 @@ import mindustry.maps.*;
 import mindustry.mod.*;
 import mindustry.net.Net;
 import mindustry.net.*;
-import mindustry.type.Weather.*;
-import mindustry.world.blocks.defense.ForceProjector.*;
+import mindustry.systems.*;
 
 import java.io.*;
 import java.nio.charset.*;
@@ -176,12 +175,12 @@ public class Vars implements Loadable{
     public static BlockIndexer indexer;
     public static Pathfinder pathfinder;
 
-    public static Control control;
+    public static InputSystem control;
     public static Logic logic;
     public static Renderer renderer;
-    public static UI ui;
-    public static NetServer netServer;
-    public static NetClient netClient;
+    public static UISystem ui;
+    public static ServerSystem netServer;
+    public static ClientSystem netClient;
 
     public static Player player;
 

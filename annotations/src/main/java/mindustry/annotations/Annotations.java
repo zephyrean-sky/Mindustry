@@ -4,6 +4,13 @@ import java.lang.annotation.*;
 
 public class Annotations{
 
+    /** Registers this as a dialog in Dialogs.*/
+    @Target({ElementType.TYPE, ElementType.METHOD})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Autoload{
+        String[] value() default {};
+    }
+
     //TODO
     /** Registers this as a dialog in Dialogs.*/
     @Target(ElementType.TYPE)

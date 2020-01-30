@@ -1,6 +1,7 @@
-package mindustry.core;
+package mindustry.systems;
 
 import arc.*;
+import arc.ecs.*;
 import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
@@ -10,6 +11,7 @@ import arc.util.CommandHandler.*;
 import arc.util.io.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
+import mindustry.core.*;
 import mindustry.core.GameState.*;
 import mindustry.entities.*;
 import mindustry.entities.TileEntity;
@@ -33,7 +35,8 @@ import java.util.zip.*;
 import static arc.util.Log.*;
 import static mindustry.Vars.*;
 
-public class NetServer implements ApplicationListener{
+@AutoSystem
+public class ServerSystem extends BaseSystem{
     private final static int maxSnapshotSize = 430, timerBlockSync = 0;
     private final static float serverSyncTime = 12, blockSyncTime = 60 * 8;
     private final static Vec2 vector = new Vec2();
@@ -72,7 +75,7 @@ public class NetServer implements ApplicationListener{
     /** Data stream for writing player sync data to. */
     private DataOutputStream dataStream = new DataOutputStream(syncStream);
 
-    public NetServer(){
+    public ServerSystem(){
 
         net.handleServer(Connect.class, (con, connect) -> {
             if(admins.isIPBanned(connect.addressTCP) || admins.isSubnetBanned(connect.addressTCP)){
@@ -279,7 +282,7 @@ public class NetServer implements ApplicationListener{
         });
 
         clientCommands.<Player>register("t", "<message...>", "Send a message only to your teammates.", (args, player) -> {
-            playerGroup.all().each(p -> p.getTeam() == player.getTeam(), o -> o.sendMessage(args[0], player, "[#" + player.getTeam().color.toString() + "]<T>" + NetClient.colorizeName(player.id, player.name)));
+            playerGroup.all().each(p -> p.getTeam() == player.getTeam(), o -> o.sendMessage(args[0], player, "[#" + player.getTeam().color.toString() + "]<T>" + ClientSystem.colorizeName(player.id, player.name)));
         });
 
         //duration of a a kick in seconds
@@ -607,7 +610,7 @@ public class NetServer implements ApplicationListener{
             if(player.con != null){
                 Call.onTraceInfo(player.con, other, info);
             }else{
-                NetClient.onTraceInfo(other, info);
+                ClientSystem.onTraceInfo(other, info);
             }
             Log.info("&lc{0} has requested trace info of {1}.", player.name, other.name);
         }
@@ -645,7 +648,7 @@ public class NetServer implements ApplicationListener{
     }
 
     @Override
-    public void update(){
+    public void processSystem(){
 
         if(!headless && !closing && net.server() && state.is(State.menu)){
             closing = true;
