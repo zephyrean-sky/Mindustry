@@ -280,12 +280,12 @@ public class ClientSystem extends BaseSystem{
 
     @Remote(variants = Variant.both, unreliable = true)
     public static void onEffect(Effect effect, float x, float y, float rotation, Color color){
-        Effects.effect(effect, color, x, y, rotation);
+        effect.at(color, x, y, rotation);
     }
 
     @Remote(variants = Variant.both)
     public static void onEffectReliable(Effect effect, float x, float y, float rotation, Color color){
-        Effects.effect(effect, color, x, y, rotation);
+        effect.at(color, x, y, rotation);
     }
 
     @Remote(variants = Variant.both)

@@ -537,10 +537,10 @@ public class MobileInput extends InputHandler implements GestureListener{
         lineMode = true;
 
         if(mode == breaking){
-            Effects.effect(Fx.tapBlock, cursor.worldx(), cursor.worldy(), 1f);
+            Fx.tapBlock.at(cursor.worldx(), cursor.worldy(), 1f);
         }else if(block != null){
             updateLine(lineStartX, lineStartY, cursor.x, cursor.y);
-            Effects.effect(Fx.tapBlock, cursor.worldx() + block.offset(), cursor.worldy() + block.offset(), block.size);
+            Fx.tapBlock.at(cursor.worldx() + block.offset(), cursor.worldy() + block.offset(), block.size);
         }
 
         return false;

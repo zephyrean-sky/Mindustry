@@ -79,7 +79,7 @@ public class WaveSpawner{
 
         eachGroundSpawn((spawnX, spawnY, doShockwave) -> {
             if(doShockwave){
-                Time.run(20f, () -> Effects.effect(Fx.spawnShockwave, spawnX, spawnY, state.rules.dropZoneRadius));
+                Time.run(20f, () -> Fx.spawnShockwave.at(spawnX, spawnY, state.rules.dropZoneRadius));
                 Time.run(40f, () -> Damage.damage(state.rules.waveTeam, spawnX, spawnY, state.rules.dropZoneRadius, 99999999f, true));
             }
         });
@@ -144,10 +144,10 @@ public class WaveSpawner{
     }
 
     private void spawnEffect(BaseUnit unit){
-        Effects.effect(Fx.unitSpawn, unit.x, unit.y, 0f, unit);
+        Fx.unitSpawn.at(unit.x, unit.y, 0f, unit);
         Time.run(30f, () -> {
             unit.add();
-            Effects.effect(Fx.spawn, unit);
+            Fx.spawn.at(unit);
         });
     }
 

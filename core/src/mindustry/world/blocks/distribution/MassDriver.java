@@ -254,10 +254,10 @@ public class MassDriver extends Block{
         tile.drawx() + Angles.trnsx(angle, translation), tile.drawy() + Angles.trnsy(angle, translation),
         angle, 1f, 1f, data);
 
-        Effects.effect(shootEffect, tile.drawx() + Angles.trnsx(angle, translation),
+        shootEffect.at(tile.drawx() + Angles.trnsx(angle, translation),
         tile.drawy() + Angles.trnsy(angle, translation), angle);
 
-        Effects.effect(smokeEffect, tile.drawx() + Angles.trnsx(angle, translation),
+        smokeEffect.at(tile.drawx() + Angles.trnsx(angle, translation),
         tile.drawy() + Angles.trnsy(angle, translation), angle);
 
         Effects.shake(shake, shake, entity);
@@ -279,7 +279,7 @@ public class MassDriver extends Block{
         }
 
         Effects.shake(shake, shake, entity);
-        Effects.effect(recieveEffect, bullet);
+        recieveEffect.at(bullet);
 
         entity.reload = 1f;
         bullet.remove();

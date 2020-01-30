@@ -28,7 +28,7 @@ public class ArtilleryBulletType extends BasicBulletType{
         super.update(b);
 
         if(b.timer.get(0, 3 + b.fslope() * 2f)){
-            Effects.effect(trailEffect, backColor, b.x, b.y, b.fslope() * 4f);
+            trailEffect.at(backColor, b.x, b.y, b.fslope() * 4f);
         }
     }
 

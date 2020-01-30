@@ -32,7 +32,7 @@ public class MissileBulletType extends BasicBulletType{
         super.update(b);
 
         if(Mathf.chance(Time.delta() * 0.2)){
-            Effects.effect(Fx.missileTrail, trailColor, b.x, b.y, 2f);
+            Fx.missileTrail.at(trailColor, b.x, b.y, 2f);
         }
 
         if(weaveMag > 0){

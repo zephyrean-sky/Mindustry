@@ -78,7 +78,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
             throw new ValidateException(player, "Player cannot drop an item.");
         }
 
-        Effects.effect(Fx.dropItem, Color.white, player.x, player.y, angle, player.item().item);
+        Fx.dropItem.at(Color.white, player.x, player.y, angle, player.item().item);
         player.clearItem();
     }
 

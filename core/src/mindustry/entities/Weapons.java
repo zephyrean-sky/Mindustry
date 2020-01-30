@@ -127,9 +127,9 @@ public class Weapons{
         boolean parentize = ammo.keepVelocity;
 
         Effects.shake(weapon.shake, weapon.shake, x, y);
-        Effects.effect(weapon.ejectEffect, x, y, rotation);
-        Effects.effect(ammo.shootEffect, x + Tmp.v1.x, y + Tmp.v1.y, rotation, parentize ? shooter : null);
-        Effects.effect(ammo.smokeEffect, x + Tmp.v1.x, y + Tmp.v1.y, rotation, parentize ? shooter : null);
+        weapon.ejectEffect.at(x, y, rotation);
+        ammo.shootEffect.at(x + Tmp.v1.x, y + Tmp.v1.y, rotation, parentize ? shooter : null);
+        ammo.smokeEffect.at(x + Tmp.v1.x, y + Tmp.v1.y, rotation, parentize ? shooter : null);
     }
 
     private void bullet(ShooterTrait owner, Weapon weapon, float x, float y, float angle){
