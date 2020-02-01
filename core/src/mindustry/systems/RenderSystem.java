@@ -133,6 +133,13 @@ public class RenderSystem extends BaseEntitySystem{
         }
     }
 
+    @Override
+    public void resume(){
+        if(settings.getBool("bloom") && bloom != null){
+            bloom.resume();
+        }
+    }
+
     void setupBloom(){
         try{
             if(bloom != null){
