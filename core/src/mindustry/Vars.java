@@ -103,7 +103,7 @@ public class Vars implements Loadable{
         Color.valueOf("2cabfe"),
     };
     /** default server port */
-    public static final int port = 6567;
+    public static final int port = 27015;//6567;
     /** multicast discovery port.*/
     public static final int multicastPort = 20151;
     /** multicast group for discovery.*/
